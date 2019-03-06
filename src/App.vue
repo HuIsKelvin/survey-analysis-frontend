@@ -1,20 +1,23 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <div v-if="$auth.ready()">
+      <router-view></router-view>
+    </div>
+    <div v-if="!$auth.ready()">
+      Loading
+    </div>
   </div>
 </template>
 
 <script>
-import router from './router.js'
-
 export default {
-  name: 'app',
-}
+  name: "app"
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

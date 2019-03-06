@@ -8,7 +8,9 @@
         <el-input type="password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm(loginForm)">登录</el-button>
+        <el-button type="primary" @click="submitForm(loginForm)"
+          >登录</el-button
+        >
       </el-form-item>
     </el-form>
   </div>
@@ -21,7 +23,7 @@ export default {
 </script>
 
 <style>
-    #sign-in{
-        height: 250px;
-    }
+#sign-in {
+  height: 250px;
+}
 </style>
