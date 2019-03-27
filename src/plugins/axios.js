@@ -3,6 +3,9 @@
 import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import Store from "../store/store";
+import * as types from "../store/types";
+import router from "../router";
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
@@ -10,7 +13,8 @@ import VueAxios from "vue-axios";
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 let config = {
-  baseURL: "https://api-demo.websanova.com/api/v1"
+  baseURL: "https://api-demo.websanova.com/api/v1",
+  timeout: 5000
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
@@ -20,7 +24,10 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function(config) {
-    // Do something before request is sent
+    if (Store.state.token) {
+      config.headers.Authorization = `token ${Store.state.token}`;
+    }
+
     return config;
   },
   function(error) {
@@ -36,7 +43,17 @@ _axios.interceptors.response.use(
     return response;
   },
   function(error) {
-    // Do something with response error
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          Store.commit(types.LOGOUT);
+          router.currentRoute.path !== "sign" &&
+            router.replace({
+              path: "sign",
+              query: { redirect: router.currentRoute.path }
+            });
+      }
+    }
     return Promise.reject(error);
   }
 );

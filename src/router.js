@@ -2,6 +2,8 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Sign from "./views/Sign.vue";
+import User from "./views/User.vue";
+import Store from "./store/store";
 
 Vue.use(Router);
 
@@ -13,6 +15,11 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/user",
+      name: "user",
+      component: User
     },
     {
       path: "/sign",
@@ -28,5 +35,19 @@ export default new Router({
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     }
-  ]
+  ],
+  beforeEach: (to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      if (!Store.state.token) {
+        next({
+          path: "/sign",
+          query: { redirect: to.fullPath }
+        });
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  }
 });
