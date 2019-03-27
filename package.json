@@ -9,7 +9,6 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@websanova/vue-auth": "^2.21.14-beta",
     "echarts": "^4.1.0",
     "element-ui": "^2.4.5",
     "v-charts": "^1.19.0",
@@ -21,8 +20,8 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-plugin-eslint": "^3.4.0",
-    "@vue/cli-plugin-unit-jest": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
+    "@vue/cli-plugin-unit-jest": "^3.5.2",
+    "@vue/cli-service": "^3.5.2",
     "@vue/eslint-config-prettier": "^4.0.1",
     "@vue/test-utils": "^1.0.0-beta.20",
     "axios": "^0.18.0",
