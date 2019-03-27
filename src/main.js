@@ -4,7 +4,6 @@ import router from "./router";
 import store from "./store";
 import "./plugins/element.js";
 import "./plugins/axios.js";
-import "./plugins/auth.js";
 
 Vue.config.productionTip = false;
 

@@ -2,10 +2,10 @@
   <div id="sign-in" class="sign-component">
     <el-form :model="loginForm">
       <el-form-item label="账号名">
-        <el-input></el-input>
+        <el-input v-model="name"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="pass">
-        <el-input type="password"></el-input>
+        <el-input v-model="password" type="password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm(loginForm)"
@@ -18,7 +18,13 @@
 
 <script>
 export default {
-  name: "SignIn"
+  name: "SignIn",
+  data () {
+    return {
+      name:"",
+      password:"",
+    }
+  },
 };
 </script>
 

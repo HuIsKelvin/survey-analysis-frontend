@@ -1,12 +1,6 @@
 <template>
   <div id="sign-up" class="sign-component">
-    <el-form
-      status-icon
-      :model="signUpForm"
-      :rules="rules"
-      ref="signUpForm"
-      class="signUpForm"
-    >
+    <el-form status-icon :model="signUpForm" :rules="rules" ref="signUpForm" class="signUpForm">
       <el-form-item label="账号名" prop="name">
         <el-input v-model="signUpForm.name"></el-input>
       </el-form-item>
@@ -20,9 +14,7 @@
         <el-input v-model="signUpForm.checkPass" type="password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('signUpForm')"
-          >注册</el-button
-        >
+        <el-button type="primary" @click="submitForm('signUpForm')">注册</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -81,7 +73,7 @@ export default {
           {
             min: 4,
             max: 16,
-            message: "用户名长度须为3-16个字符",
+            message: "用户名长度需为3-16个字符",
             trigger: "blur"
           }
         ],
@@ -96,7 +88,7 @@ export default {
           {
             min: 6,
             max: 32,
-            message: "密码长度须为6-32个字符",
+            message: "密码长度需为6-32个字符",
             trigger: "blur"
           },
           { required: true, validator: validPass, trigger: "blur" }
