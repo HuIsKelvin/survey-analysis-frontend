@@ -3,7 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Sign from "./views/Sign.vue";
 import User from "./views/User.vue";
-import Store from "./store/store";
+import store from "./store/store";
 
 Vue.use(Router);
 
@@ -36,18 +36,17 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     }
   ],
+  /*
   beforeEach: (to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-      if (!Store.state.token) {
-        next({
-          path: "/sign",
-          query: { redirect: to.fullPath }
-        });
-      } else {
-        next();
-      }
+    // 拦截白名单
+    const whitePages = ["/sign", "/about", "/", "/404"];
+    console.log(!whitePages.includes(to.path));
+    console.log(!store.state.token);
+    if (!whitePages.includes(to.path) && !store.state.token) {
+      next("/sign");
     } else {
       next();
     }
   }
+  */
 });

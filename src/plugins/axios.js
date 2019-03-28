@@ -3,7 +3,7 @@
 import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import Store from "../store/store";
+import store from "../store/store";
 import * as types from "../store/types";
 import router from "../router";
 
@@ -24,8 +24,8 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function(config) {
-    if (Store.state.token) {
-      config.headers.Authorization = `token ${Store.state.token}`;
+    if (store.state.token) {
+      config.headers.Authorization = `token ${store.state.token}`;
     }
 
     return config;
@@ -46,7 +46,7 @@ _axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          Store.commit(types.LOGOUT);
+          store.commit(types.SIGNOUT);
           router.currentRoute.path !== "sign" &&
             router.replace({
               path: "sign",
