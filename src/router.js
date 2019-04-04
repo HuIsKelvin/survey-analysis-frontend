@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Sign from "./views/Sign.vue";
 import User from "./views/User.vue";
+import UserInfo from "./views/user/UserInfo.vue";
 import store from "./store/store";
 
 Vue.use(Router);
@@ -19,7 +20,14 @@ export default new Router({
     {
       path: "/user",
       name: "user",
-      component: User
+      component: User,
+      children: [
+        {
+          path: "info",
+          name: "userInfo",
+          component: UserInfo
+        }
+      ]
     },
     {
       path: "/sign",
