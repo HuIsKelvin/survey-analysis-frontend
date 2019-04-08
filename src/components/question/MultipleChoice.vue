@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isView" class="view">
+    <div class="view">
       <div class="question_title view">
         <p>{{ title }}</p>
       </div>
@@ -8,6 +8,7 @@
         <el-radio-group v-model="select">
           <el-radio v-for="(choice, no) in choices" :key="no" v-bind:label="no">{{ choice }}</el-radio>
         </el-radio-group>
+        <el-button v-on:click="isEdit=true">编辑</el-button>
       </div>
     </div>
     <div v-if="isEdit" class="edit">
@@ -22,6 +23,8 @@
         <el-button v-on:click="removeChoice(no)" icon="el-icon-minus" circle></el-button>
         </div>
         <el-button v-on:click="addChoice()">添加选项</el-button>
+        <el-button v-on:click="isEdit=false">完成编辑</el-button>
+        
       </div>
     </div>
   </div>
@@ -35,7 +38,6 @@ export default {
       title: "标题",
       choices: ["选项1", "选项2"],
       select: null,
-      isView: true,
       isEdit: true
     };
   },
