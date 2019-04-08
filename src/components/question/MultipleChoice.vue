@@ -44,7 +44,7 @@ export default {
           if (typeof(no) == "undefined") {
             this.choices.push("")
           } else {
-            this.choices.splice(no, 0, "")
+            this.choices.splice(no+1, 0, "")
           }
       },
       "removeChoice": function (no) {
