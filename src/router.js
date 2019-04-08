@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import Sign from "./views/Sign.vue";
 import User from "./views/User.vue";
 import UserInfo from "./views/user/UserInfo.vue";
+import Preview from "./views/questionaire/Preview.vue";
 import store from "./store/store";
 
 Vue.use(Router);
@@ -42,8 +43,13 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () =>
         import(/* webpackChunkName: "about" */ "./views/About.vue")
+    },
+    {
+      path: "/preview",
+      name: "preview",
+      component: Preview
     }
-  ],
+  ]
   /*
   beforeEach: (to, from, next) => {
     // 拦截白名单
