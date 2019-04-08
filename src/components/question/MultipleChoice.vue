@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { truncate } from 'fs';
 export default {
   name: "MultipleChoice",
   data: function() {
@@ -41,7 +42,7 @@ export default {
       title: "标题",
       choices: ["选项1", "选项2"],
       select: null,
-      isOperate: false,
+      isOperate: true,
       editPanel: true
     };
   },
