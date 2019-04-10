@@ -13,6 +13,8 @@
           >
             <el-menu-item index="1"><span>LOGO</span></el-menu-item>
         </el-menu>
+        <!-- 头像 -->
+        <div class="avator"></div>
       </el-header>
       <el-container class="main">
         <el-aside class="aside">
@@ -65,8 +67,19 @@ $box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 .header {
   text-align: left;
   width: 100%;
-  height: 40px;
-  line-height: 40px;
+  height: 3em;
+  line-height: 3em;
+
+  .avator {
+    position: absolute;
+    right: 1.5em;
+    top: 1.5em;
+    background-color: #fff;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+  }
+
   .header-nav {
     // width: 100%;
   }
@@ -97,10 +110,11 @@ $box-shadow: 0 15px 30px rgba(0,0,0,0.1);
       background-color: #fff;
       position: absolute;
       top: 2em;
-      right: 1em;
+      right: 2em;
       bottom: 1em;
-      left: 1em;
+      left: 2em;
       box-shadow: $box-shadow;
+      padding: 3em 2em;
     }
   }
 
