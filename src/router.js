@@ -5,6 +5,7 @@ import Sign from "./views/Sign.vue";
 import User from "./views/User.vue";
 import UserInfo from "./views/user/UserInfo.vue";
 import Preview from "./views/questionaire/Preview.vue";
+import Survey from "./views/questionaire/Survey.vue";
 import store from "./store/store";
 
 Vue.use(Router);
@@ -48,6 +49,11 @@ export default new Router({
       path: "/preview",
       name: "preview",
       component: Preview
+    },
+    {
+      path: "/survey",
+      name: "survey",
+      component: Survey
     }
   ]
   /*

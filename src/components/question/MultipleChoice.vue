@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import { truncate } from 'fs';
 export default {
   name: "MultipleChoice",
   data: function() {

@@ -14,8 +14,6 @@ export default {
         "multiple-choice": MultipleChoice
     }
 
-
-    
 }
 </script>
 
