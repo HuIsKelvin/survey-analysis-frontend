@@ -5,8 +5,7 @@
         <el-col :span="8">
           <div class="avator"></div>
         </el-col>
-        <el-col 
-          :span="16">
+        <el-col :span="16">
           <div class="infomation">
             <div id="name" class="info-item">name</div>
             <div id="job" class="info-item">job</div>
@@ -31,7 +30,6 @@ $border-side: 1px solid #e0e0e0;
 
 .info-board {
   margin: 0 auto;
-  width: 80%;
   text-align: left;
 
   .info-item {
