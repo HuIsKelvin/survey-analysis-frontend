@@ -7,6 +7,7 @@ import UserInfo from "./views/user/UserInfo.vue";
 import Preview from "./views/questionaire/Preview.vue";
 import Survey from "./views/questionaire/Survey.vue";
 import store from "./store/store";
+import questionEdit from "./views/questionaire/questionEdit.vue";
 
 Vue.use(Router);
 
@@ -54,6 +55,11 @@ export default new Router({
       path: "/survey",
       name: "survey",
       component: Survey
+    },
+    {
+      path:"/questionEdit",
+      name:"questionEdit",
+      component:questionEdit
     }
   ]
   /*
