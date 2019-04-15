@@ -5,6 +5,7 @@ import store from "./store/store";
 import "./plugins/element.js";
 import axios from "./plugins/axios.js";
 import "./plugins/vcharts";
+import "@/assets/css/override-element-ui.css";
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;

@@ -1,0 +1,11 @@
+.question-edit-box .el-input__inner {
+    border:0px;
+    border-radius: 0px;
+}
+.question-edit-box .el-input__inner:hover {
+    /* border-style:dotted solid double dashed; */
+    border:1px dashed #BCBCBC;
+    border-radius: 2px;
+}
+
+
