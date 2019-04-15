@@ -24,7 +24,11 @@
             mode="vertical"
             @select="handleSelect"
           >
-            <el-menu-item index="1"><span>问卷管理</span></el-menu-item>
+            <el-menu-item index="1">
+              <router-link 
+                :to="{name: 'questionireManage'}"
+                tag="div">问卷管理</router-link>
+            </el-menu-item>
             <el-menu-item index="2">
               <router-link 
                 :to="{name: 'userInfo'}"

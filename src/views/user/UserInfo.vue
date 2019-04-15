@@ -18,21 +18,7 @@
 
 <script>
 export default {
-  data() {
-    return {
-      form: {
-        answer: {},
-        formSettings:{}
-      }
-    }
-  },
-  methods: {
-    submit() {
-      this.$http.post("./back", answer)
-        .then(e => {})
-        .catch(err => {})
-    }
-  }
+  
 }
 </script>
 
