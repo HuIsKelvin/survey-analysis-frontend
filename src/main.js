@@ -6,6 +6,7 @@ import "./plugins/element.js";
 import axios from "./plugins/axios.js";
 import "./plugins/vcharts";
 import "@/assets/css/override-element-ui.css";
+import "@/assets/css/questionEdit.css";
 
 Vue.config.productionTip = false;
 Vue.prototype.$http = axios;

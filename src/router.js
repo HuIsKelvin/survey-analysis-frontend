@@ -57,9 +57,9 @@ export default new Router({
       component: Survey
     },
     {
-      path:"/questionEdit",
-      name:"questionEdit",
-      component:questionEdit
+      path: "/questionEdit",
+      name: "questionEdit",
+      component: questionEdit
     }
   ]
   /*

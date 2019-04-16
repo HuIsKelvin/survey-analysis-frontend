@@ -1,14 +1,17 @@
 <template>
-<div class="question-edit-box" >
-    <el-input v-model="title"></el-input>
-    <el-input v-model="introduction" ></el-input>
-</div>
+<el-form class="question-edit-box" >
+    <el-form-item>
+        <el-input v-model="title"></el-input>
+        <el-input v-model="introduction" ></el-input>
+    </el-form-item>
+</el-form>
 </template>
 <script>
 import "@/assets/css/questionEdit.css"
 // import "@/assets/css/override-element-ui.css"
 
 export default {
+    nama:"introduction",
     data() {
         return {
             title:"问卷标题",
