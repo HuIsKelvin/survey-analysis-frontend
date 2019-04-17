@@ -7,7 +7,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     user: null,
-    token: null
+    token: null,
+    userQuestionList: {
+      questionnaireTitle: "",
+      introContents: "",
+      questionList: [],
+      endContents: ""
+    }
   },
   mutations: {
     [types.SIGNIN]: (state, data) => {
@@ -17,7 +23,22 @@ export default new Vuex.Store({
     [types.SIGNOUT]: state => {
       localStorage.removeItem("token");
       state.token = null;
+    },
+    // [types.SET_USER_QUESTIONLIST]: (state, questionList) => {
+    //   state.userQuestionList.questionList = questionList;
+    // },
+    [types.SET_INTROCONTENTS]: (state, introContents) => {
+      state.userQuestionList.introContents = introContents;
+    },
+    [types.SET_QUESTIONAIRETITLE]: (state, questionnaireTitle) => {
+      state.userQuestionList.questionnaireTitle = questionnaireTitle;
+    },
+    [types.SET_QUESTIONAIREEND]: (state, endContents) => {
+      state.userQuestionList.endContents = endContents;
     }
   },
-  actions: {}
+  actions: {},
+  getters: {
+    introContents: state => state.userQuestionList.introContents
+  }
 });
