@@ -5,14 +5,14 @@
   </el-header>
   <el-main>
     <el-row>
-
       <el-col :span="4" class="">
         <el-menu
           default-active="2">
-            <el-button size="small" @click="addMutipleChoie()">单选题</el-button><br>
-            <el-button size="small" @click="addMutipleAnswers()">多选题</el-button><br>
-            <el-button size="small" @click="addTextInput()">填空题</el-button><br>
-            <el-button size="small" @click="addTextInput()">量尺题</el-button><br>
+            <el-button size="small" @click="addQuestion('radio')">单选题</el-button><br>
+            <el-button size="small" @click="addQuestion('checkbox')">多选题</el-button><br>
+            <el-button size="small" @click="addQuestion('textarea')">填空题</el-button><br>
+            <el-button size="small" @click="addQuestion('slider')">量表题</el-button><br>
+            <el-button size="small" @click="addQuestion('rate')">评分题</el-button><br>
         </el-menu>
       </el-col>
 
@@ -22,6 +22,7 @@
           <introduction></introduction>
           <multiple-choice></multiple-choice>
           <multiple-answers></multiple-answers>
+
           <end></end>
         </el-col>
         <el-col :span="5" class="">
@@ -43,7 +44,28 @@ export default {
   name:"question-edit-view",
   data(){
     return{
-
+      userId:"1234", // 根据userId来确定questionList的存储字段
+      questionList:[], // 本地存储问卷数据
+      userQuestionList:{} // 发送给vuex的数据
+    }
+  },
+  computed:{
+    // 获取当前用户的id
+  },
+  methods:{
+    addQuestion(type){
+      let option = {
+        title: '问题题目',
+        type: type
+      }
+      if (type !== 'textarea') {
+        option.answers = ['选项1', '选项2']
+        // option.answersData = [this.getRandomNumber(), this.getRandomNumber()]
+      } else {
+        // option.required = false
+        option.text = ''
+      }
+      this.questionList.push(option)
     }
   },
   components:{

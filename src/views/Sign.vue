@@ -6,6 +6,12 @@
     <el-card class="sign-card">
       <template v-if="hasCount">
         <sign-in></sign-in>
+        <p>忘记密码？
+          <router-link 
+            :to="{name: 'findPwd'}"
+            tag="span"
+            class="sign-container-switch">找回密码</router-link>
+        </p>
         <p>
           没有账号？<span
             class="sign-container-switch"
