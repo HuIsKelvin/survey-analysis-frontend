@@ -9,7 +9,7 @@ import Preview from "./views/questionaire/Preview.vue";
 import Survey from "./views/questionaire/Survey.vue";
 import Manage from "./views/questionaire/Manage.vue";
 // import store from "./store/store";
-import questionEdit from "./views/questionaire/questionEdit.vue";
+import QuestionEdit from "./views/questionaire/QuestionEdit.vue";
 
 Vue.use(Router);
 
@@ -66,7 +66,7 @@ export default new Router({
     {
       path: "/questionEdit",
       name: "questionEdit",
-      component: questionEdit
+      component: QuestionEdit
     },
     {
       path: "/findPwd",
