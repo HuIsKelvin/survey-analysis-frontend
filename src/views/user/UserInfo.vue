@@ -8,7 +8,7 @@
         <el-col :span="16">
           <div class="infomation">
             <div id="name" class="info-item">name</div>
-            <div id="job" class="info-item">job</div>
+            <div id="mail" class="info-item">mail</div>
           </div>
         </el-col>
       </el-row>

@@ -28,6 +28,12 @@ export default new Router({
       component: User,
       children: [
         {
+          path: "/",
+          name: "",
+          // component: UserInfo
+          redirect: { name: "questionireManage" }
+        },
+        {
           path: "info",
           name: "userInfo",
           component: UserInfo

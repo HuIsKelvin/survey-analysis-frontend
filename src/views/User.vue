@@ -12,34 +12,23 @@
             active-text-color="#ffd04b"
           >
             <el-menu-item index="1"><span>LOGO</span></el-menu-item>
-        </el-menu>
-        <!-- 头像 -->
-        <div class="avator"></div>
-      </el-header>
-      <el-container class="main">
-        <el-aside class="aside">
-          <el-menu
-            :default-active="activeIndex"
-            class="aside-nav"
-            mode="vertical"
-            @select="handleSelect"
-          >
-            <el-menu-item index="1">
+            <el-menu-item index="2">
               <router-link 
                 :to="{name: 'questionireManage'}"
                 tag="div">问卷管理</router-link>
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="3">
               <router-link 
                 :to="{name: 'userInfo'}"
                 tag="div">个人信息</router-link>
             </el-menu-item>
-          </el-menu>
-        </el-aside>
-        <el-main class="main-content">
-          <router-view class="main-content-view"></router-view>
-        </el-main>
-      </el-container>
+        </el-menu>
+        <!-- 头像 -->
+        <div class="avator"></div>
+      </el-header>
+      <el-main class="main-content">
+        <router-view class="main-content-view"></router-view>
+      </el-main>
     </el-container>
   </div>
 </template>
@@ -89,41 +78,21 @@ $box-shadow: 0 15px 30px rgba(0,0,0,0.1);
   }
 }
 
-.main {
-  width: 100%;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: row;
+.main-content {
+  height: 100%;
+  background-color: #E5E9F2;
+  position: relative;
 
-  .aside {
-    width: 200px;
-    height: 100%;
-    .aside-nav {
-      height: 100%;
-    }
+  .main-content-view {
+    // min-height: calc(100vh - 200px);
+    background-color: #fff;
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    bottom: 1em;
+    left: 2em;
+    box-shadow: $box-shadow;
+    padding: 3em 2em;
   }
-
-  .main-content {
-    height: 100%;
-    background-color: #E5E9F2;
-    position: relative;
-    flex-grow: 1;
-
-    .main-content-view {
-      // min-height: calc(100vh - 200px);
-      background-color: #fff;
-      position: absolute;
-      top: 2em;
-      right: 2em;
-      bottom: 1em;
-      left: 2em;
-      box-shadow: $box-shadow;
-      padding: 3em 2em;
-    }
-  }
-
 }
-
-
-
 </style>
