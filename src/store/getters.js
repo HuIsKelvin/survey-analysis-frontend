@@ -1,0 +1,1 @@
+export const introContents = state => state.userQuestionList.introContents;

@@ -1,5 +1,5 @@
 <template>
-  <div class="question-edit-box">
+  <div>
       <el-form>
       <el-form-item :label="getNoTitle" :required="required" class="question_title view">
         <el-radio-group v-model="select">
