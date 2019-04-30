@@ -45,7 +45,9 @@ export default {
         this.$router.push({path:"user"})
       })
       .catch(error => {
-        this.$message.error("登录失败，请重新输入账号和密码!");
+        if (error) {
+          this.$message.error("登录失败，请重新输入账号和密码!");
+        }
       });
     }
   }

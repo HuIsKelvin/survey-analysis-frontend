@@ -1,7 +1,7 @@
 <template>
   <div id="question-list">
     <el-card
-      v-for="(qitem, index) in qusetionList"
+      v-for="(qitem, index) in questionnaires"
       :key="index"
       class="box-card list-item"
       shadow="hover"
@@ -11,12 +11,12 @@
           <el-col :span="12">
             <div class="q-main-info">
               <span class="q-info">
-                id:
+                ID:
                 <span>{{qitem.id}}</span>
               </span>
               <span class="q-info">
-                title:
-                <span>{{qitem.title}}</span>
+                问卷名:
+                <span>{{qitem.name}}</span>
               </span>
             </div>
           </el-col>
@@ -32,7 +32,7 @@
               </span>
               <span class="title q-info">
                 发布日期:
-                <span class="status">4月20日 20:20</span>
+                <span class="status">{{qitem.createTime}}</span>
               </span>
             </div>
           </el-col>
@@ -55,18 +55,17 @@ export default {
   name: "QuestionList",
   data() {
     return {
-      qusetionList: [
-        {
-          id: 123,
-          title: "第一"
-        },
-        {
-          id: 123,
-          title: "第二"
-        }
-      ]
+      questionnaires: []
     };
+  },
+  created: function() {
+    axios.get("/questionnaires/search/userId?userId="+this.$store.state.userId)
+    .then(response => {
+      // TODO: 对数据进行处理已获得更好的展示效果
+      this.questionnaires = response.data._embedded.questionnaires;
+    })
   }
+
 };
 </script>
 

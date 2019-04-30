@@ -8,6 +8,7 @@ import UserInfo from "./views/user/UserInfo.vue";
 import Preview from "./views/questionaire/Preview.vue";
 import Survey from "./views/questionaire/Survey.vue";
 import Manage from "./views/questionaire/Manage.vue";
+import CreateQuestionnaire from "./views/questionaire/CreateQuestionnaire.vue";
 // import store from "./store/store";
 import QuestionEdit from "./views/questionaire/QuestionEdit.vue";
 
@@ -20,7 +21,7 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Sign 
+      component: Sign
     },
     {
       path: "/user",
@@ -42,6 +43,11 @@ export default new Router({
           path: "manage",
           name: "questionireManage",
           component: Manage
+        },
+        {
+          path: "/createQuestionnaire",
+          name: "createQuestionnaire",
+          component: CreateQuestionnaire
         }
       ]
     },
@@ -78,7 +84,7 @@ export default new Router({
       path: "/findPwd",
       name: "findPwd",
       component: FindPwd
-    }
+    },
   ]
   /*
   beforeEach: (to, from, next) => {

@@ -122,7 +122,9 @@ export default {
               this.$message.success("注册成功，请前往登录!");
             })
             .catch(error => {
-              this.$message.error("注册失败，请修改账号名或Email之后重新注册");
+              if (error) {
+                this.$message.error("注册失败，请修改账号名或Email之后重新注册");
+              }
             });
         } else {
           console.log("error submit!");
