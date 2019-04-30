@@ -1,10 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import * as types from "./types";
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     userId: null,
     token: null,
@@ -17,14 +19,10 @@ export default new Vuex.Store({
   },
   mutations: {
     [types.SIGNIN]: (state, data) => {
-      localStorage.token = data.token;
-      localStorage.userId = data.userId;
       state.token = data.token;
       state.userId = data.userId;
     },
     [types.SIGNOUT]: state => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
       state.token = null;
       state.userId = null;
     },
