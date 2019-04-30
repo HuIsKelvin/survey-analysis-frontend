@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store/store";
+import store from "./store/store.js";
 import "./plugins/element.js";
 import axios from "./plugins/axios.js";
 import "./plugins/vcharts";

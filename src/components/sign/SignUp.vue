@@ -1,8 +1,11 @@
 <template>
   <div id="sign-up" class="sign-component">
     <el-form status-icon :model="signUpForm" :rules="rules" ref="signUpForm" class="signUpForm">
-      <el-form-item label="账号名" prop="name">
+      <el-form-item label="用户名" prop="name">
         <el-input v-model="signUpForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="账号名" prop="username">
+        <el-input v-model="signUpForm.username"></el-input>
       </el-form-item>
       <el-form-item label="电子邮件地址" type="email" prop="email">
         <el-input v-model="signUpForm.email"></el-input>
@@ -62,6 +65,7 @@ export default {
     };
     return {
       signUpForm: {
+        username: "",
         name: "",
         email: "",
         pass: "",
@@ -69,7 +73,10 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
+          { required: true, message: "请输入用户名", trigger: "blur" }
+        ],
+        username: [
+          { required: true, message: "请输入账号名", trigger: "blur" },
           {
             min: 4,
             max: 16,
@@ -103,19 +110,32 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          axios
+            .post("/auth/register", {
+              username: this.signUpForm.username,
+              name: this.signUpForm.name,
+              email: this.signUpForm.email,
+              password: this.signUpForm.pass
+            })
+            .then(response => {
+              console.log(response)
+              this.$message.success("注册成功，请前往登录!");
+            })
+            .catch(error => {
+              this.$message.error("注册失败，请修改账号名或Email之后重新注册");
+            });
         } else {
           console.log("error submit!");
           return false;
         }
       });
-    }
+    },
   }
 };
 </script>
 
 <style>
 #sign-up {
-  height: 450px;
+  height: 550px;
 }
 </style>
