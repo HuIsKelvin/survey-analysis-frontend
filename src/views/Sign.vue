@@ -4,7 +4,7 @@
       <img alt="Vue logo" src="../assets/logo.png" />
     </div>
     <el-card class="sign-card">
-      <template v-if="hasCount">
+      <template v-if="hasAccount">
         <sign-in></sign-in>
         <p>忘记密码？
           <router-link 
@@ -15,7 +15,7 @@
         <p>
           没有账号？<span
             class="sign-container-switch"
-            @click="hasCount = false"
+            @click="hasAccount = false"
             >注册</span
           >
         </p>
@@ -23,7 +23,7 @@
       <template v-else>
         <sign-up></sign-up>
         <p>
-          已有账号？<span class="sign-container-switch" @click="hasCount = true"
+          已有账号？<span class="sign-container-switch" @click="hasAccount = true"
             >登录</span
           >
         </p>
@@ -40,7 +40,7 @@ export default {
   name: "Sign",
   data: function() {
     return {
-      hasCount: true
+      hasAccount: true
     };
   },
   components: {

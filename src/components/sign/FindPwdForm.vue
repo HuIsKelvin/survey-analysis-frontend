@@ -8,6 +8,9 @@
       <el-form-item label="电子邮件地址" type="email" prop="email">
         <el-input v-model="findPwdForm.email"></el-input>
       </el-form-item>
+      <el-form-item label="新密码" type="password" prop="password">
+        <el-input v-model="findPwdForm.password"></el-input>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('findPwdForm')">提交</el-button>
       </el-form-item>

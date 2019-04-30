@@ -1,12 +1,14 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import * as types from "./types";
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
-    user: null,
+    userId: null,
     token: null,
     userQuestionList: {
       questionnaireTitle: "",
@@ -17,12 +19,12 @@ export default new Vuex.Store({
   },
   mutations: {
     [types.SIGNIN]: (state, data) => {
-      localStorage.token = data;
-      state.token = data;
+      state.token = data.token;
+      state.userId = data.userId;
     },
     [types.SIGNOUT]: state => {
-      localStorage.removeItem("token");
       state.token = null;
+      state.userId = null;
     },
     // [types.SET_USER_QUESTIONLIST]: (state, questionList) => {
     //   state.userQuestionList.questionList = questionList;
