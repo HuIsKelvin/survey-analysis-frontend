@@ -3,28 +3,31 @@
     <el-container>
       <el-header class="header">
         <el-menu
-            :default-active="activeIndex"
-            class="header-nav"
-            @select="handleSelect"
-            mode="horizontal"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-          >
-            <el-menu-item index="1"><span>LOGO</span></el-menu-item>
-            <el-menu-item index="2">
-              <router-link 
-                :to="{name: 'questionireManage'}"
-                tag="div">问卷管理</router-link>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <router-link 
-                :to="{name: 'userInfo'}"
-                tag="div">个人信息</router-link>
-            </el-menu-item>
+          :default-active="activeIndex"
+          class="header-nav"
+          mode="horizontal"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+        >
+          <el-menu-item>
+            <span>LOGO</span>
+          </el-menu-item>
+          <el-menu-item index="1">
+            <router-link :to="{name: 'user.manage'}" tag="div">问卷管理</router-link>
+          </el-menu-item>
+          <el-menu-item index="2">
+            <router-link :to="{name: 'user.info'}" tag="div">个人信息</router-link>
+          </el-menu-item>
+          <!-- 头像 -->
+          <div class="avator"></div>
+          <el-menu-item>
+            <el-button type="danger" @click="signout">登出</el-button>
+          </el-menu-item>
+          <el-menu-item>
+            <span>{{ name }}</span>
+          </el-menu-item>
         </el-menu>
-        <!-- 头像 -->
-        <div class="avator"></div>
       </el-header>
       <el-main class="main-content">
         <router-view class="main-content-view"></router-view>
@@ -34,17 +37,27 @@
 </template>
 
 <script>
+import * as types from "@/store/types.js"
+
 export default {
+  name: "User",
   data() {
     return {
-      activeIndex: 1
+      activeIndex: "1",
+      name: this.$store.state.name
     };
+  },
+  methods: {
+    signout: function() {
+      this.$store.commit(types.SIGNOUT);
+      this.$router.push({name:"sign"});
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-$box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+$box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 
 .el-header {
   padding: 0;
@@ -80,7 +93,7 @@ $box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 
 .main-content {
   height: 100%;
-  background-color: #E5E9F2;
+  background-color: #e5e9f2;
   position: relative;
 
   .main-content-view {
