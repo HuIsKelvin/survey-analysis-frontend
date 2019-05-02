@@ -74,7 +74,7 @@ export default new Router({
       component: Survey
     },
     {
-      path: "/questionEdit",
+      path: "/questionEdit/:qid",
       name: "questionEdit",
       component: QuestionEdit
     },

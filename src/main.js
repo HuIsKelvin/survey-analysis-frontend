@@ -10,7 +10,7 @@ import "@/assets/css/questionEdit.css";
 import "@/assets/font/font_4.15/iconfont.css";
 
 Vue.config.productionTip = false;
-Vue.prototype.$http = axios;
+//Vue.prototype.$http = axios;
 
 //router.beforeEach((to, from, next) => {
 //  // 拦截白名单
@@ -27,5 +27,6 @@ Vue.prototype.$http = axios;
 new Vue({
   router,
   store,
+  axios,
   render: h => h(App)
 }).$mount("#app");

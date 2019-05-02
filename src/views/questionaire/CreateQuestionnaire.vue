@@ -29,7 +29,7 @@ export default {
               .then(response => {
                   this.$message.success("创建问卷成功,跳转到编辑页面");
                   let qid = response.data;
-                  this.$router.push({name:"questionEdit"});
+                  this.$router.push({name:"questionEdit", params:{qid:qid}});
               })
               .then(error => {
                   if (error) {

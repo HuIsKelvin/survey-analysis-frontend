@@ -24,7 +24,7 @@
             <div class="q-sub-info">
               <span class="title q-info">
                 ·
-                <span class="status">运行中</span>
+                <span class="status">运行状态: {{qitem.state}}</span>
               </span>
               <span class="title q-info">
                 答卷:
@@ -39,10 +39,10 @@
         </el-row>
       </div>
       <div class="q-controll">
-        <el-button class="controll-button" type="primary" size="small">编辑</el-button>
+        <el-button class="controll-button" type="primary" size="small" @click="editQuestionnaire(qitem.id)">编辑</el-button>
         <el-button class="controll-button" type="primary" size="small">发布</el-button>
         <el-button class="controll-button" type="primary" size="small">停止</el-button>
-        <el-button class="controll-button" type="primary" size="small">删除</el-button>
+        <el-button class="controll-button" type="danger" size="small">删除</el-button>
         <el-button class="controll-button" type="primary" size="small">分析</el-button>
         <el-button class="controll-button" type="primary" size="small">查看下载</el-button>
       </div>
@@ -57,6 +57,12 @@ export default {
     return {
       questionnaires: []
     };
+  },
+  methods : {
+    editQuestionnaire(qid) {
+      this.$router.push({name: "questionEdit", params:{qid:qid}});
+    }
+
   },
   created: function() {
     axios.get("/questionnaires/search/userId?userId="+this.$store.state.userId)
