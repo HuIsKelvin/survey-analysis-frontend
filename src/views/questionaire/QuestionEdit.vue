@@ -14,10 +14,10 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('rate')">编辑段落说明</el-button>
+                  <el-button type="text" @click="addQuestion('description')">编辑段落说明</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('rate')">设置分页</el-button>
+                  <el-button type="text" @click="addQuestion('pagination')">设置分页</el-button>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -53,10 +53,10 @@
                   <el-button type="text" @click="addQuestion('rate')">评分题</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('rate')">量表题</el-button>
+                  <el-button type="text" @click="addQuestion('scale')">量表题</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('rate')">排序题</el-button>
+                  <el-button type="text" @click="addQuestion('sort')">排序题</el-button>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -66,16 +66,16 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('rate')">姓名</el-button>
+                  <el-button type="text" @click="addQuestion('name')">姓名</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('rate')">性别</el-button>
+                  <el-button type="text" @click="addQuestion('sex')">性别</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('rate')">年龄</el-button>
+                  <el-button type="text" @click="addQuestion('age')">年龄</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('rate')">地址</el-button>
+                  <el-button type="text" @click="addQuestion('address')">地址</el-button>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
