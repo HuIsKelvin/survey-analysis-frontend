@@ -25,27 +25,25 @@ export default new Router({
     },
     {
       path: "/user",
-      name: "user",
       component: User,
       children: [
         {
           path: "/",
-          name: "",
-          // component: UserInfo
-          redirect: { name: "questionireManage" }
+          name: "user",
+          redirect: { name: "user.manage" }
         },
         {
           path: "info",
-          name: "userInfo",
+          name: "user.info",
           component: UserInfo
         },
         {
           path: "manage",
-          name: "questionireManage",
+          name: "user.manage",
           component: Manage
         },
         {
-          path: "/createQuestionnaire",
+          path: "createQuestionnaire",
           name: "createQuestionnaire",
           component: CreateQuestionnaire
         }
@@ -76,7 +74,7 @@ export default new Router({
       component: Survey
     },
     {
-      path: "/questionEdit",
+      path: "/questionEdit/:qid",
       name: "questionEdit",
       component: QuestionEdit
     },
