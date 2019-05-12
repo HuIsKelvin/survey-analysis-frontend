@@ -17,7 +17,7 @@
                 class="input"
                 contenteditable>{{ answer }}</p>
             </div> 
-            <ul id="option-tools" class="option-panel">
+            <!-- <ul id="option-tools" class="option-panel">
                 <li>
                     <i 
                     class="el-icon-arrow-up" 
@@ -37,7 +37,7 @@
                     @click="deleteOption(qIndex, $index)"
                     ></i>
                 </li>
-            </ul>
+            </ul> -->
         </div>
 
         </li>

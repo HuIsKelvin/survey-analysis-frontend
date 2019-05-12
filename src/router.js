@@ -84,7 +84,7 @@ export default new Router({
       path: "/findPwd",
       name: "findPwd",
       component: FindPwd
-    },
+    }
   ]
   /*
   beforeEach: (to, from, next) => {
