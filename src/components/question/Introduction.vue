@@ -1,18 +1,12 @@
 <template>
-<el-form class="question-edit-box" >
-    <!-- <el-form-item> -->
-        <!-- <el-input v-model="title"></el-input>
-        <el-input v-model="introduction" ></el-input> -->
+<el-card class="question-edit-box" >
         <p
         @keyup="changeQuestionTitle($event)"
         class="input title" contenteditable>{{this.title}}</p>
         <p
         @keyup="changeQuestionIntro($event)"
         class="input intro" contenteditable>{{ this.introduction }}</p>
-
-    <!-- </el-form-item> -->
-    <!-- <el-button @click="sendIntro">send Intro</el-button> -->
-</el-form>
+</el-card>
 </template>
 <script>
 import "@/assets/css/questionEdit.css"
@@ -78,6 +72,6 @@ export default {
 }
 .input:hover{
     border-color: black;
-    background-color: yellow;
+    background-color: #e5e9f2;
 }
 </style>

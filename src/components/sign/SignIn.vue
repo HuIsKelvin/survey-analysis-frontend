@@ -38,11 +38,11 @@ export default {
         password: this.signInForm.password
       })
       .then(response => {
-        console.log(response);
+        console.log(response.data);
         this.$message.success("登录成功!");
         let data = response.data;
         this.$store.commit(types.SIGNIN, data);
-        this.$router.push({path:"user"})
+        this.$router.push({name:"user"})
       })
       .catch(error => {
         if (error) {

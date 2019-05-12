@@ -21,10 +21,12 @@ export default new Vuex.Store({
     [types.SIGNIN]: (state, data) => {
       state.token = data.token;
       state.userId = data.userId;
+      state.name = data.name;
     },
     [types.SIGNOUT]: state => {
       state.token = null;
       state.userId = null;
+      state.name = null;
     },
     // [types.SET_USER_QUESTIONLIST]: (state, questionList) => {
     //   state.userQuestionList.questionList = questionList;

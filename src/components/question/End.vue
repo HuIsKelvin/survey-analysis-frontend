@@ -56,6 +56,6 @@ export default {
 }
 .input:hover{
     border-color: black;
-    background-color: yellow;
+    background-color: #e5e9f2;
 }
 </style>
