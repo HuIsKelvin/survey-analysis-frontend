@@ -23,15 +23,52 @@ export default {
         content: {
           options: ["ans1", "ans2"]
         }
+      },
+      {
+        type: "text",
+        index: 3,
+        title: "题目3",
+        isRequired: true,
+        content: {
+          input: "shuru"
+        }
       }
     ],
-    answerSheet: {}
+    answerSheet: [
+      {
+        type: "radio",
+        content: 2
+      },
+      {
+        type: "checkbox",
+        content: [1, 2]
+      },
+      {
+        type: "text",
+        content: ""
+      }
+    ]
   },
   getters: {
     surveyQuestionList(state) {
       return state.questionList;
+    },
+    answerSheet(state) {
+      return state.answerSheet;
     }
   },
-  mutations: {},
-  actions: {}
+  mutations: {
+    updateValue(state, payload) {
+      if (payload.value) {
+        this.answerSheet[payload.index - 1]["content"] = payload.value;
+      }
+      console.log("from survey:" + payload);
+    }
+  },
+  actions: {
+    updateValue(context, payload) {
+      console.log(payload)
+      context.commit("updateValue", payload);
+    }
+  }
 };
