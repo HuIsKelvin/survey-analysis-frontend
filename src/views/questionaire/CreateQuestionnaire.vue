@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import {mapMutations} from "vuex";
+
 export default {
   name: "CreateQuestionnaire",
   data: function() {
@@ -18,27 +20,41 @@ export default {
     };
   },
   methods: {
+      ...mapMutations({
+        setID: "set_userID",
+        setTitle: "set_questionnaire_title",
+        setQlist: "set_questionList",
+        setLogic: "set_jumplogic"
+      }),
       createQuestionnaire: function() {
           if (this.questionnaireName === "") {
               this.$message.error("问卷名称不能为空");
           } else {
-              axios.post("/questionnaires/empty", {
-                  userId: this.$store.state.userId,
-                  name: this.questionnaireName
-              })
-              .then(response => {
+              // axios.post("/questionnaires/empty", {
+              //     userId: this.$store.state.userId,
+              //     name: this.questionnaireName 
+              // })
+              // .then(response => {
+              //     this.setTitle(this.questionnaireName);
+              //     this.setQlist([]); // 清空questionList
+              //     this.$message.success("创建问卷成功,跳转到编辑页面");
+              //     let qid = response.data;
+              //     this.$router.push({name:"questionEdit", params:{qid:qid}});
+              // })
+              // .then(error => {
+              //     if (error) {
+              //       this.$message.error("创建问卷失败，请重试");
+              //     }
+              // })
+                  this.setTitle(this.questionnaireName);
+                  this.setQlist([]); // 清空questionList
+                  this.setLogic({}); // 清空jumplogic
                   this.$message.success("创建问卷成功,跳转到编辑页面");
-                  let qid = response.data;
+                  let qid = this.questionnaireName;
                   this.$router.push({name:"questionEdit", params:{qid:qid}});
-              })
-              .then(error => {
-                  if (error) {
-                    this.$message.error("创建问卷失败，请重试");
-                  }
-              })
           }
-
       }
+
   }
 };
 </script>

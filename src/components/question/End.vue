@@ -20,7 +20,7 @@ export default {
             this.set_end($event.target.textContent);
         },
         ...mapMutations({
-            set_end: "set_questionaire_end",
+            set_end: "set_questionnaire_end",
         })
     },
 }

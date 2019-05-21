@@ -53,7 +53,6 @@ import End from "@/components/question/End.vue";
 // 问卷题型组件
 import MultipleChoice from "@/components/question/MultipleChoice.vue";
 import MultipleAnswers from "@/components/question/MultipleAnswers.vue";
-import TextInput from "@/components/question/TextInput.vue";
 // vuex组件
 import { mapGetters } from "vuex";
 
@@ -86,7 +85,7 @@ export default {
         option.text = "";
         // option.answersData = [this.getRandomNumber(), this.getRandomNumber()]
       }
-      if (type = "radio")) {
+      if (type = "radio") {
         option.title = "单选题";
         option.answers = ["选项1", "选项2"];
       }
@@ -107,7 +106,6 @@ export default {
     end: End,
     radio: MultipleChoice,
     checkbox: MultipleAnswers,
-    textarea: TextInput
   }
 };
 </script>

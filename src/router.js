@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
+// import Home from "./views/Home.vue";
 import Sign from "./views/Sign.vue";
 import User from "./views/User.vue";
 import FindPwd from "./views/FindPwd.vue";
@@ -74,7 +74,7 @@ export default new Router({
       component: Survey
     },
     {
-      path: "/questionEdit/:qid",
+      path: "/questionEdit",
       name: "questionEdit",
       component: QuestionEdit
     },

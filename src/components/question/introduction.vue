@@ -1,27 +1,31 @@
 <template>
-<el-card class="question-edit-box" >
+<el-card @click="testclick" class="question-edit-box" >
         <p
         @keyup="changeQuestionTitle($event)"
-        class="input title" contenteditable>{{this.title}}</p>
+        class="input title" contenteditable>{{this.get_title}}</p>
         <p
         @keyup="changeQuestionIntro($event)"
         class="input intro" contenteditable>{{ this.introduction }}</p>
 </el-card>
 </template>
 <script>
-import "@/assets/css/questionEdit.css"
 // import "@/assets/css/override-element-ui.css"
-import {mapMutations} from "vuex"
+import {mapMutations, mapGetters} from "vuex"
 
 export default {
     name:"introduction",
     data() {
         return {
-            title:"问卷标题",
+            title: this.get_title,
             introduction:"感谢您能抽出几分钟时间来参加本次答题，现在我们就马上开始吧！",
         }
     },
     created(){
+    },
+    computed: {
+        ...mapGetters({
+            get_title: "questionnaireTitle"
+        })
     },
     methods:{
         changeQuestionTitle($event){
@@ -31,10 +35,14 @@ export default {
             this.set_intro($event.target.textContent);
         },
         ...mapMutations({
-            set_intro: "set_intro_contents",
-            set_title: "set_questionaire_title"
+            set_intro: "set_questionnaire_intro",
+            set_title: "set_questionnaire_title"
 
-        })
+        }),
+        testclick() {
+            console.log("intro点击");
+        }
+
     }
 }
 </script>

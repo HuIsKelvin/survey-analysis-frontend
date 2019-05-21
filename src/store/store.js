@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import * as types from "./types";
 import createPersistedState from 'vuex-persistedstate'
 
-Vue.use(Vuex);
+// Vue.use(Vuex);
 
 export default new Vuex.Store({
   plugins: [createPersistedState()],

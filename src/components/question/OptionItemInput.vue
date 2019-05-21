@@ -1,18 +1,10 @@
-<!--
-* 作用于哪些页面:QuestionCard.vue根据不同的题型会选择调用本组件
-* 功能说明: 问卷编辑页面中，用于每一个题型的标题输入的组件
-* @liushi
-* @2019/5/11
-* @version
--->
 <template>
   <div>
-    <i class="el-icon-s-comment" v-if="description"></i>
     <p 
     @keyup="changeOptionValue($event)"
     class="question-content-input"
     contenteditable>
-    {{this.qContent}}
+    {{this.optionItem}}
     </p>
   </div>
 </template>
@@ -21,13 +13,10 @@ import { mapGetters, mapMutations } from "vuex"
 export default {
   name:"question-content-input",
   props: {
-    qContent:{
+    optionItem:{
       type:String
     },
-    qType:{
-      type:String
-    },
-    qIndex:{
+    iIndex:{
       type:Number
     }
   },
