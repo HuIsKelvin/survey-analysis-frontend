@@ -1,22 +1,20 @@
 <template>
   <div id="text-input">
-    <el-form-item :label="setting.title">
-      <div class="content">
-        <el-input
-          class="el-input"
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 4}"
-          placeholder="请输入内容"
-          v-model="textArea"
-          @change="handleTextChange">
-        </el-input>
-      </div>
-    </el-form-item>
+    <div class="content">
+      <el-input
+        class="el-input"
+        type="textarea"
+        :autosize="{ minRows: 2, maxRows: 6}"
+        placeholder="请输入内容"
+        v-model="content"
+        @change="handleTextChange">
+      </el-input>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 
 export default {
   name: "TextInput",
@@ -25,52 +23,54 @@ export default {
   },
   data() {
     return {
-      textArea: ""
+      text: "",
+      index: null
     }
   },
   created() {
-    this.textArea = this.setting.content.input;
+    this.text = this.setting.content.input;
+    this.index = this.setting.index - 1;
   },
   computed: {
-    // textArea: {
-    //   get() {
-    //     return this.setting.content.input;
-    //   },
-    //   set(val) {
-    //     // this.store.dispatch("updateValue", {
-    //     //   index: this.setting.index,
-    //     //   value: val
-    //     // })
-    //     console.log(val)
-    //     this.updateValue({
-    //       index: this.setting.index,
-    //       value: val
-    //     })
-    //   }
-    // }
+    content: {
+      get() {
+        return this.getContentByIndex(this.setting.index);
+        // return this.$store.getters["survey/answerSheet"][this.setting.index-1]["content"];
+        // return this.$store.state.survey.answerSheet[this.setting.index-1];
+        // return this.$store.state.survey.answerSheet;
+      },
+      set(val) {
+        this.updateValue({
+          qindex: this.setting.index,
+          value: val
+        })
+        // this.$store.commit("survey/updateValue", {
+        //   qindex: this.setting.index,
+        //   value: val
+        // })
+      }
+    },
+    ...mapGetters("survey", {
+      "getContentByIndex": "getContentByIndex",
+      // "answerSheet": "answerSheet"
+    })
   },
   methods: {
     handleTextChange(val) {
-      // 这个事件响应太慢了
-      console.log("from textarea: "+val)
-      // this.updateValue({
-      //   index: this.setting.index,
-      //   value: val
-      // })
     },
-    ...mapActions("survey", [
-      "updateValue"
-    ])
+    ...mapActions("survey", {
+      "updateValue": "updateValue"
+    })
   },
-  watch: {
-    textArea() {
-      // console.log(this.textArea)
-      this.updateValue({
-        index: this.setting.index,
-        value: this.textArea
-      })
-    }
-  }
+  // watch: {
+  //   textArea() {
+  //     // console.log(this.textArea)
+  //     this.updateValue({
+  //       qindex: this.setting.index,
+  //       value: this.textArea
+  //     })
+  //   }
+  // }
 }
 </script>
 

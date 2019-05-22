@@ -1,12 +1,21 @@
+import Vue from "vue";
+
 export default {
   namespaced: true,
   state: {
+    // 答卷的题型的默认值
+    valueType: {
+      radio: 0,
+      checkouBox: [],
+      text: "",
+      scale: 0
+    },
     questionList: [
       {
         type: "radio",
         index: 1,
         title: "题目1",
-        isRequired: false,
+        isRequired: true,
         content: {
           options: ["ans1", "ans2"]
         },
@@ -19,7 +28,7 @@ export default {
         type: "checkBox",
         index: 2,
         title: "题目2",
-        isRequired: true,
+        isRequired: false,
         content: {
           options: ["ans1", "ans2"]
         }
@@ -32,42 +41,70 @@ export default {
         content: {
           input: "shuru"
         }
+      },
+      {
+        type: "scale",
+        index: 4,
+        title: "题目4",
+        isRequired: true,
+        content: {
+          top: 5
+        }
       }
     ],
-    answerSheet: [
-      {
-        type: "radio",
-        content: 2
-      },
-      {
-        type: "checkbox",
-        content: [1, 2]
-      },
-      {
-        type: "text",
-        content: ""
-      }
-    ]
+    answerSheet: []
   },
   getters: {
     surveyQuestionList(state) {
-      return state.questionList;
+      // 显示isShow==true的题
+      return state.questionList.filter(el => {
+        return el.isShow === true;
+      });
     },
     answerSheet(state) {
       return state.answerSheet;
+    },
+    getContentByIndex: state => index => {
+      return state.answerSheet[index - 1]["content"];
     }
   },
   mutations: {
+    // 将接收的 questionList 进行整备，增加相应字段
+    prepareQuestionList(state) {
+      state.questionList.forEach(element => {
+        Vue.set(element, "isShow", true);
+      });
+    },
+    // 生成默认答卷
+    generateAnswerSheet(state) {
+      state.answerSheet = [];
+      state.questionList.forEach(el => {
+        let answer = {
+          type: el.type,
+          content: state["valueType"][el.type]
+        };
+        state.answerSheet.push(answer);
+      });
+    },
+    // 更新答卷的值
+    // payload = {qindex:number, value: number|array}
     updateValue(state, payload) {
-      if (payload.value) {
-        this.answerSheet[payload.index - 1]["content"] = payload.value;
+      if (payload.value && state.answerSheet[payload.qindex - 1]) {
+        state.answerSheet[payload.qindex - 1]["content"] = payload.value;
+        console.log("after update");
+        console.log(state.answerSheet[payload.qindex - 1]);
       }
-      console.log("from survey:" + payload);
     }
   },
   actions: {
+    // 用于测试，到时删除此方法
+    prepareQuestionList(context) {
+      context.commit("prepareQuestionList");
+    },
+    generateAnsSheet(context) {
+      context.commit("generateAnswerSheet");
+    },
     updateValue(context, payload) {
-      console.log(payload)
       context.commit("updateValue", payload);
     }
   }

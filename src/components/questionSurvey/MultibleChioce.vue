@@ -1,22 +1,22 @@
 <template>
   <div id="multible-chioce">
-    <el-form-item :label="setting.title">
-      <div class="content">
-        <el-checkbox-group 
-          v-model="checkList"
-          @change="handleCheckedOptionsChange">
-          <el-checkbox
-            v-for="(option, index) in options"
-            :key="index"
-            :label="option">
-          </el-checkbox> 
-        </el-checkbox-group>
-      </div>
-    </el-form-item>
+    <div class="content">
+      <el-checkbox-group 
+        v-model="checkBox"
+        @change="handleCheckedOptionsChange">
+        <el-checkbox
+          v-for="(option, index) in options"
+          :key="index"
+          :label="index+1">{{option}}
+        </el-checkbox> 
+      </el-checkbox-group>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex"
+
 export default {
   name: "MultibleChioce",
   props: {
@@ -24,19 +24,34 @@ export default {
   },
   data() {
     return {
-      checkList: []
+      checkBox: []
     }
   },
   computed: {
     options() {
       return this.setting.content.options;
-    }
+    },
+    // checkBox: {
+    //   get() {
+    //     return this.$store.state.survey.answerSheet[this.setting.index-1]["content"];
+    //   },
+    //   set(val) {
+    //     console.log(val)
+    //   }
+    // }
   },
   methods: {
-    handleCheckedOptionsChange(value) {
+    handleCheckedOptionsChange(val) {
       // value 应该为已选中选项的数组
-      this.checkList = value;
-    }
+      this.checkBox = val;
+      this.updateValue({
+        qindex: this.setting.index,
+        value: val
+      })
+    },
+    ...mapActions("survey", {
+      "updateValue": "updateValue"
+    })
   }
 }
 </script>

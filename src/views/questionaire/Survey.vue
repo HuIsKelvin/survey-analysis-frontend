@@ -1,12 +1,14 @@
 <template>
   <div id="survey">
     <div class="survey-container">
-      <el-card>
+      <el-card shadow="always">
         <!-- 问卷标题 -->
-        <div class="survey-title"></div>
+        <h1 class="survey-title">标题</h1>
         <!-- 问卷题目 -->
         <div class="survey-questions">
-          <el-form label-position="top">
+          <el-form 
+            label-position="top"
+            ref="answerForm">
             <div
               class="question-item"
               v-for="(setting, index) in questionList"
@@ -27,7 +29,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import DynamicQueation from "@/components/questionSurvey/DynamicQuestion";
 
 export default {
@@ -38,20 +40,50 @@ export default {
   data() {
     return {
       // questionList: []
+      validateRules: {},
     }
   },
   computed: {
-    ...mapGetters({
-      "questionList": "survey/surveyQuestionList"
+    ...mapGetters("survey", {
+      "questionList": "surveyQuestionList",
+      // "answerSheet": "answerSheet"
     })
   },
   created() {
+    // 获取问卷数据
     // axios.get()
+    this.gerAnswerSheet();
+    this.prepareQuestionList();
+    // this.generateValidateRules();
+    console.log("create survey");
+    console.log(this.$store.state.survey.questionList);
   },
   methods: {
     submitQuestionire() {
-      // 
-    }
+      console.log("submit answer");
+      // this.$refs["answerForm"].validate((valid) => {
+      //   if (valid) {
+      //     alert('submit!');
+      //   } else {
+      //     console.log('error submit!!');
+      //     return false;
+      //   }
+      // });
+    },
+    // 生成校验规则
+    generateValidateRules() {
+      let rule = { required: true, message: "此项为必填", trigger: "change" }
+      this.questionList
+        .filter(el=> el.isRequired == true)
+        .forEach(el => {
+          // this.Vue.set(this.validateRules, el.title, rule)
+          this.validateRules[el.title] = [rule]
+        });
+    },
+    ...mapActions("survey", {
+      gerAnswerSheet: "generateAnsSheet",
+      prepareQuestionList: "prepareQuestionList"
+    })
   }
 }
 </script>
@@ -68,6 +100,10 @@ export default {
     padding: 0 20px;
     padding-top: 50px; 
     padding-bottom: 50px;
+
+    .survey-title {
+      margin: 30px auto;
+    }
 
     .survey-questions{
       .question-item {
