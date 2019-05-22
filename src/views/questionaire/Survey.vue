@@ -91,8 +91,9 @@ export default {
 <style lang="scss" scoped>
 #survey {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   // background-color: #e0e0e0;
+  background-color: #A7D75F;
 
   .survey-container {
     max-width: 1300px;
