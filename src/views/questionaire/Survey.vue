@@ -1,7 +1,7 @@
 <template>
   <div id="survey">
     <div class="survey-container">
-      <el-card shadow="always">
+      <el-card shadow="never">
         <!-- 问卷标题 -->
         <h1 class="survey-title">标题</h1>
         <!-- 问卷题目 -->
@@ -13,7 +13,7 @@
               class="question-item"
               v-for="(setting, index) in questionList"
               :key="index">
-              <el-card shadow="never">
+              <el-card shadow="always">
                 <dynamic-question :setting="setting"></dynamic-question>
               </el-card>
             </div>
@@ -92,8 +92,8 @@ export default {
 #survey {
   width: 100%;
   height: 100%;
-  // background-color: #e0e0e0;
-  background-color: #A7D75F;
+  background-color: #e0e0e0;
+  // background-color: #A7D75F;
 
   .survey-container {
     max-width: 1300px;
@@ -108,7 +108,9 @@ export default {
 
     .survey-questions{
       .question-item {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
+        margin-left: 20px;
+        margin-right: 20px;
       }
     }
   }

@@ -2,11 +2,10 @@
   <div id="dynamic-question">
     <el-row :gutter="20">
       <el-col :span="2">
-        <div class="question-prefix">
-          <span 
-            class="question-index"
-            v-if="setting.index">{{setting.index}}
-          </span>
+        <div 
+          class="question-prefix"
+          v-if="setting.index">
+          <span class="question-index">{{setting.index}}</span>
           <span 
             class="question-alarm"
             v-if="isRequired === true">*(必填)
@@ -28,6 +27,12 @@
           <div v-if="setting.type === 'scale'">
             <scale-question :setting="setting"></scale-question>
           </div>
+          <div v-if="setting.type === 'rate'">
+            <rate-question :setting="setting"></rate-question>
+          </div>
+          <div v-if="setting.type === 'description'">
+            <!-- <description-holder :setting="setting"></description-holder> -->
+          </div>
         </el-form-item>
       </el-col>
     </el-row>
@@ -41,10 +46,12 @@ export default {
     setting: Object
   },
   components: {
-    "single-chioce": () => import("./SingleChioce.vue"), //单选题
-    "multible-chioce": () => import("./MultibleChioce.vue"), //多选题
-    "text-input": () => import("./TextInput.vue"), //多选题
-    "scale-question": () => import("./ScaleQuestion"),  //量表题
+    "single-chioce": () => import("./SingleChioce"), // 单选题
+    "multible-chioce": () => import("./MultibleChioce"), // 多选题
+    "text-input": () => import("./TextInput"), // 多选题
+    "scale-question": () => import("./ScaleQuestion"),  // 量表题
+    "rate-question": () => import("./RateQuestion"),  // 评分题
+    "description-holder": () => import("./DescriptionPlaceholder"), // 段落描述
   },
   data() {
     return {

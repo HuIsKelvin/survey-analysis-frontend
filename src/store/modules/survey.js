@@ -8,7 +8,8 @@ export default {
       radio: 0,
       checkouBox: [],
       text: "",
-      scale: 0
+      scale: 0,
+      rate: 0
     },
     questionList: [
       {
@@ -50,6 +51,20 @@ export default {
         content: {
           top: 5
         }
+      },
+      {
+        type: "rate",
+        index: 5,
+        title: "题目5",
+        isRequired: true,
+        content: {
+          top: 5
+        }
+      },
+      {
+        type: "description",
+        index: 0,
+        title: "段落描述"
       }
     ],
     answerSheet: []
@@ -79,6 +94,9 @@ export default {
     generateAnswerSheet(state) {
       state.answerSheet = [];
       state.questionList.forEach(el => {
+        if (el.type === "description") {
+          return;
+        }
         let answer = {
           type: el.type,
           content: state["valueType"][el.type]
