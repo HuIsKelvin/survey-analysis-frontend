@@ -3,7 +3,7 @@
     <div class="content">
       <el-checkbox-group 
         v-model="checkBox"
-        @change="handleCheckedOptionsChange">
+        @change="handleCheckedChange">
         <el-checkbox
           v-for="(option, index) in options"
           :key="index"
@@ -30,18 +30,10 @@ export default {
   computed: {
     options() {
       return this.setting.content.options;
-    },
-    // checkBox: {
-    //   get() {
-    //     return this.$store.state.survey.answerSheet[this.setting.index-1]["content"];
-    //   },
-    //   set(val) {
-    //     console.log(val)
-    //   }
-    // }
+    }
   },
   methods: {
-    handleCheckedOptionsChange(val) {
+    handleCheckedChange(val) {
       // value 应该为已选中选项的数组
       this.checkBox = val;
       this.updateValue({

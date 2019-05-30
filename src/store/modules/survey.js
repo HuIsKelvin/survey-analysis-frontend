@@ -18,7 +18,7 @@ export default {
         title: "题目1",
         isRequired: true,
         content: {
-          options: ["ans1", "ans2"]
+          options: ["ans1", "ans2", "ans3", "ans4"]
         },
         jumpLogic: {
           0: 3,
@@ -31,7 +31,7 @@ export default {
         title: "题目2",
         isRequired: false,
         content: {
-          options: ["ans1", "ans2"]
+          options: ["ans1", "ans2", "ans3", "ans4"]
         }
       },
       {
@@ -65,6 +65,15 @@ export default {
         type: "description",
         index: 0,
         title: "段落描述"
+      },
+      {
+        type: "sort",
+        index: 6,
+        isRequired: false,
+        title: "排序题",
+        content: {
+          options: ["ans1", "ans2", "ans3", "ans4"]
+        }
       }
     ],
     answerSheet: []

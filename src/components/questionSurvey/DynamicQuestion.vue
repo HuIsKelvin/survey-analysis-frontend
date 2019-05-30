@@ -30,6 +30,9 @@
           <div v-if="setting.type === 'rate'">
             <rate-question :setting="setting"></rate-question>
           </div>
+          <div v-if="setting.type === 'sort'">
+            <sort-question :setting="setting"></sort-question>
+          </div>
           <div v-if="setting.type === 'description'">
             <!-- <description-holder :setting="setting"></description-holder> -->
           </div>
@@ -51,6 +54,7 @@ export default {
     "text-input": () => import("./TextInput"), // 多选题
     "scale-question": () => import("./ScaleQuestion"),  // 量表题
     "rate-question": () => import("./RateQuestion"),  // 评分题
+    "sort-question": () => import("./SortQuestion"),  // 排序题
     "description-holder": () => import("./DescriptionPlaceholder"), // 段落描述
   },
   data() {
