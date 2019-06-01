@@ -1,7 +1,8 @@
 <template>
   <div id="survey">
     <survey-questionire 
-      :questionList="questionList">
+      :questionire="questionire"
+      :isSubmit="true">
     </survey-questionire>
   </div>
 </template>
@@ -17,21 +18,27 @@ export default {
   },
   computed: {
     ...mapGetters("survey", {
-      "questionList": "surveyQuestionList"
+      "questionList": "surveyQuestionList",
+      "questionire": "surveyQuestionire"
     })
   },
   created() {
     // 获取问卷数据
     // axios.get()
-    this.gerAnswerSheet();
+    console.log("qestion id: " + this.$route.params.qid);
+    let qid = this.$route.params.qid;
+    // axios.get("..." + qid)
+    //   .then(res => {
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   })
+    // this.gerAnswerSheet();
     this.prepareQuestionList();
-    // this.generateValidateRules();
-    console.log("create survey");
-    console.log(this.$store.state.survey.questionList);
   },
   methods: {
     ...mapActions("survey", {
-      gerAnswerSheet: "generateAnsSheet",
+      // gerAnswerSheet: "generateAnsSheet",
       prepareQuestionList: "prepareQuestionList"
     })
   }

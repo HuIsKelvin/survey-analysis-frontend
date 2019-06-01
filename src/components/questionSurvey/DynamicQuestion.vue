@@ -8,7 +8,7 @@
           <span class="question-index">{{setting.index}}</span>
           <span 
             class="question-alarm"
-            v-if="isRequired === true">*(必填)
+            v-if="isRequired === true">*
           </span>
         </div>
       </el-col>

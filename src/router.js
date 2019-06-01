@@ -69,7 +69,7 @@ export default new Router({
       component: Preview
     },
     {
-      path: "/survey",
+      path: "/survey/:qid",
       name: "survey",
       component: Survey
     },

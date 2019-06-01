@@ -1,8 +1,8 @@
 <template>
     <div id="preview">
-        <h3>预览界面</h3>
+        <h3>预览页面</h3>
         <survey-questionire 
-            :questionList="questionList">
+            :questionire="questionire">
         </survey-questionire>
     </div>
 </template>
@@ -21,7 +21,7 @@ export default {
     },
     computed: {
         ...mapGetters("survey", {
-            "questionList": "surveyQuestionList"
+            "questionire": "surveyQuestionire"
         })
     }
 

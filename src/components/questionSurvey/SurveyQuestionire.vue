@@ -3,7 +3,7 @@
     <div class="survey-container">
       <el-card shadow="always">
         <!-- 问卷标题 -->
-        <h1 class="survey-title">标题</h1>
+        <h1 class="survey-title">{{ questionName }}</h1>
         <!-- 问卷题目 -->
         <div class="survey-questions">
           <el-form 
@@ -13,9 +13,7 @@
               class="question-item"
               v-for="(setting, index) in questionList"
               :key="index">
-              <!-- <el-card shadow="always"> -->
-                <dynamic-question :setting="setting"></dynamic-question>
-              <!-- </el-card> -->
+              <dynamic-question :setting="setting"></dynamic-question>
             </div>
           </el-form>
         </div>
@@ -42,19 +40,28 @@ export default {
     "dynamic-question": DynamicQueation
   },
   props: {
-    questionList: {
-      type: Array
+    questionire: {
+      type: Object
+    },
+    isSubmit: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
+      questionList: this.questionire.questionList,
+      questionName: this.questionire.name,
       validateRules: {},
-      isSubmit: false
+      // isSubmit: false
     }
   },
   methods: {
     submitQuestionire() {
-      console.log("submit answer");
+      console.log("from button: submit answer");
+      this.submitAnswerSheet({
+        qid: this.questionire.id
+      });
       // this.$refs["answerForm"].validate((valid) => {
       //   if (valid) {
       //     alert('submit!');
@@ -71,9 +78,12 @@ export default {
         .filter(el=> el.isRequired == true)
         .forEach(el => {
           // this.Vue.set(this.validateRules, el.title, rule)
-          this.validateRules[el.title] = [rule]
+          this.validateRules[el.title] = [rule];
         });
-    }
+    },
+    ...mapActions("survey", {
+      "submitAnswerSheet": "submitAnswerSheet"
+    })
   }
 }
 </script>
