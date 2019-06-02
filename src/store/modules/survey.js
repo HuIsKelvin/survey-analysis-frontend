@@ -106,14 +106,16 @@ export default {
     },
     // 将接收的 questionList 进行整备，增加相应字段
     prepareQuestionList(state) {
-      state.questionList.forEach(element => {
+      state.questionire.questionList.forEach(element => {
         Vue.set(element, "isShow", true);
+        Vue.set(element, "tipMsg", "");
       });
+      console.log(state.questionire.questionList);
     },
     // 生成默认答卷
     generateAnswerSheet(state) {
       state.answerSheet = [];
-      state.questionList.forEach(el => {
+      state.questionire.questionList.forEach(el => {
         if (el.type === "description") {
           return;
         }
@@ -141,7 +143,7 @@ export default {
       console.log("from vuex: submit answer");
       console.log(payload.qid);
       console.log("-------------------");
-      
+
       // 弹出消息提示
       ElementUI.Message({
         showClose: true,

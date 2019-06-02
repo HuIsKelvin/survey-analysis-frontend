@@ -1,5 +1,10 @@
 <template>
   <div id="dynamic-question">
+    <div 
+      class="queston-tip"
+      v-if="setting.tipMsg">
+      {{ setting.tipMsg }}
+    </div>
     <el-row :gutter="20">
       <el-col :span="2">
         <div 
