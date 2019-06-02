@@ -8,7 +8,7 @@
           v-for="(option, index) in options"
           :key="index"
           :label="index+1">{{option}}
-        </el-checkbox> 
+        </el-checkbox>
       </el-checkbox-group>
     </div>
     <div class="sort-result">

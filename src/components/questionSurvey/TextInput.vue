@@ -34,10 +34,9 @@ export default {
   computed: {
     content: {
       get() {
-        return this.getContentByIndex(this.setting.index);
-        // return this.$store.getters["survey/answerSheet"][this.setting.index-1]["content"];
-        // return this.$store.state.survey.answerSheet[this.setting.index-1];
-        // return this.$store.state.survey.answerSheet;
+        let content = this.getContentByIndex(this.setting.index);
+        return content ? content : " ";
+        // return this.getContentByIndex(this.setting.index);
       },
       set(val) {
         this.updateValue({

@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     submitQuestionire() {
-      console.log("from button: submit answer");
+      console.log("from button: click to submit answer");
       this.submitAnswerSheet({
         qid: this.questionire.id
       });

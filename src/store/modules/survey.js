@@ -10,8 +10,11 @@ export default {
       checkouBox: [],
       text: "",
       scale: 0,
-      rate: 0
+      rate: 0,
+      sort: []
     },
+    // 是否提交答卷
+    submitFlag: false,
     questionire: {
       name: "my first questionire",
       id: 123456,
@@ -81,7 +84,10 @@ export default {
         }
       ]
     },
-    answerSheet: []
+    answerSheet: {
+      quesId: 0,
+      answer: []
+    }
   },
   getters: {
     surveyQuestionList(state) {
@@ -97,58 +103,106 @@ export default {
       return state.answerSheet;
     },
     getContentByIndex: state => index => {
-      return state.answerSheet[index - 1]["content"];
+      return state.answerSheet.answer[index - 1]["data"];
     }
   },
   mutations: {
     setQuestionire(state, payload) {
       state.questionire = payload.questionire;
+      this.commit("survey/generateAnswerSheet");
     },
     // 将接收的 questionList 进行整备，增加相应字段
     prepareQuestionList(state) {
       state.questionire.questionList.forEach(element => {
         Vue.set(element, "isShow", true);
-        Vue.set(element, "tipMsg", "");
+        // 增加提示字段
+        // Vue.set(element, "tipMsg", "");
       });
       console.log(state.questionire.questionList);
     },
     // 生成默认答卷
     generateAnswerSheet(state) {
-      state.answerSheet = [];
+      state.answerSheet = {
+        quesId: state.questionire.id,
+        answer: []
+      };
       state.questionire.questionList.forEach(el => {
         if (el.type === "description") {
           return;
         }
         let answer = {
           type: el.type,
-          content: state["valueType"][el.type]
+          data: state["valueType"][el.type]
         };
-        state.answerSheet.push(answer);
+        state.answerSheet.answer.push(answer);
       });
     },
     // 更新答卷的值
     // payload = {qindex:number, value: number|array}
     updateValue(state, payload) {
-      if (payload.value && state.answerSheet[payload.qindex - 1]) {
-        state.answerSheet[payload.qindex - 1]["content"] = payload.value;
+      if (payload.value && state.answerSheet.answer[payload.qindex - 1]) {
+        state.answerSheet.answer[payload.qindex - 1]["data"] = payload.value;
         console.log("after update");
-        console.log(state.answerSheet[payload.qindex - 1]);
+        console.log(state.answerSheet.answer[payload.qindex - 1]);
       }
     },
     // 发送已填写的问卷
     submitAnswerSheet(state, payload) {
-      // let qid = payload.qid;
-      // axios.post("url/answersheet/" + qid)
-      console.log("-------------------");
-      console.log("from vuex: submit answer");
-      console.log(payload.qid);
-      console.log("-------------------");
-
-      // 弹出消息提示
-      ElementUI.Message({
-        showClose: true,
-        message: "未填完！",
-        type: "error"
+      let qid = payload.qid;
+      this.commit("survey/checkRequiredQuestion");
+      
+      // 若可以发送
+      if(state.submitFlag) {
+        console.log("from vuex: submit answer");
+        this.commit("survey/prepareAnswerToSubmit");
+        console.log(state.answerSheet);
+        // 发送答卷
+        // axios.post("url/answersheet/" + qid)
+      } else {
+        // 提示未填完
+        ElementUI.Message({
+          showClose: true,
+          message: "您有必做题还未填！",
+          type: "error"
+        });
+      }
+    },
+    // 遍历检查必做题是否已做
+    checkRequiredQuestion(state) {
+      state.submitFlag = true;
+      // 答卷的答案数据
+      let answer = state.answerSheet.answer;
+      // 遍历检查
+      state.questionire.questionList.forEach(question => {
+        // 排除分页、段落说明等题目
+        if(question.index <= 0) { return; }
+        if(question.isRequired && question.isShow) {
+          let data = answer[question.index-1]["data"];
+          if(data === null || data === 0 || data === []) {
+            state.submitFlag = false;
+          }
+        }
+      })
+    },
+    // 发送答卷前，预处理
+    // 将非必答题，且未答的题目答案，设为null
+    prepareAnswerToSubmit(state) {
+      // 答卷的答案数据
+      let answer = state.answerSheet.answer;
+      state.questionire.questionList.forEach(question => {
+        // 排除分页、段落说明等题目
+        if(question.index <= 0) { return; }
+        let ansData = answer[question.index-1]["data"];
+        if(!question.isShow) {
+          // 题目被跳转逻辑隐藏
+          ansData = -3;
+        } else {
+          // 用户未答该题，且不是必做题
+          // 因为必做题已经检验过了
+          if(ansData === null || ansData === 0 || ansData.length === 0) {
+            answer[question.index-1]["data"] = null;
+          }
+        }
       })
     }
   },
@@ -156,10 +210,11 @@ export default {
     // 用于测试，到时删除此方法
     prepareQuestionList(context) {
       context.commit("prepareQuestionList");
+      context.commit("generateAnswerSheet");
     },
     setQuestionire(context) {
-      context.commit("setQuestionire");
-      context.commit("generateAnswerSheet");
+      context.commit("setQuestionire", payload);
+      // context.commit("generateAnswerSheet");
     },
     generateAnsSheet(context) {
       context.commit("generateAnswerSheet");

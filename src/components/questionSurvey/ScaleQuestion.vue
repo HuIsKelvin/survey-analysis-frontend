@@ -41,12 +41,13 @@ export default {
         Vue.set(this.sliderSetting.marks, i, i+"");
       }
     };
-    console.log(this.sliderSetting.marks);
   },
   computed: {
     content: {
       get() {
-        return this.getContentByIndex(this.setting.index);
+        let content = this.getContentByIndex(this.setting.index);
+        if(content === null) { content = 0; }
+        return content;
       },
       set(val) {
         this.updateValue({
