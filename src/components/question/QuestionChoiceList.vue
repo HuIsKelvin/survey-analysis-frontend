@@ -31,6 +31,7 @@
       </li>
     </draggable> -->
     <el-button icon="el-icon-plus" @click="addItem()" circle></el-button>
+    
     <!-- <p contenteditable><p> -->
   </div>
 </template>

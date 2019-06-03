@@ -14,10 +14,10 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('description')">备注说明</el-button>
+                  <el-button type="text" @click="addDescription()">备注说明</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('pagination')">设置分页</el-button>
+                  <el-button type="text" @click="addPagination()">设置分页</el-button>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -88,6 +88,7 @@
               <!--问卷标题和说明-->
               <intro></intro>
               <!--问卷主体-->
+              <pagination v-if="this.isPagination" :question="{isDraggable: false}"></pagination>
               <div id="questionList" v-if="this.qList.length !==0" class>
 
                 <!--draggable拽拖盒子-->
@@ -105,11 +106,13 @@
                   </qCard> 
                 </draggable>
               </div>
+              <!--测试查看qList-->
               {{this.qList}}
+              <br/>
               <!--问卷底部-->
               <end></end>
             </div>
-            
+            <el-button type="primary" @click="emptyPage()">清空分页</el-button>
             <el-button type="primary">保存问卷</el-button>
             <el-button type="primary">发布并分享</el-button>
           </el-col>
@@ -170,7 +173,7 @@ import MultipleAnswers from "@/components/question/MultipleAnswers.vue";
 // 拽拖组件
 import draggable from 'vuedraggable';
 // vuex组件
-import { mapMutations, mapGetters, mapActions } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "question-edit-view",
@@ -185,24 +188,19 @@ export default {
     // 获取当前用户的id
     ...mapGetters({
       intro: "introContents",
-      // qList: "questionList"
+      isPagination: "isPagination",
+      totalPage: "totalPage",
+      totalQuestionNum: "totalQuestionNum"
     }),
     qList: {
         get() {
-          // console.log(this.$store.state);
+          // return this.changeQJump(this.$store.state.questionnaire.userQuestionList.questionList);
           return this.$store.state.questionnaire.userQuestionList.questionList;
         },
         set(value) {
-          // console.log(value);
           this.$store.commit('update_questionList', value);
-          // this.$store.dipatch("update", value)
         }
       },
-    // watch: {
-    //   qList: function(newVal) {
-
-    //   }
-    // },
     qList_length: function() {
       if(this.qList.length !== null){
         return this.qList.length;
@@ -215,34 +213,50 @@ export default {
   methods: {
     ...mapMutations({
       add_qList_obj: "add_questionList_object",
-      update_qList: "update_questionList"
+      update_qList: "update_questionList",
+      set_pagination: "set_pagination",
+      set_totalPage: "set_totalPage",
+      set_isPagination: "set_isPagination",
+      set_totalQNum: "set_totalQuestionNum"
     }),
-    addQuestion(type) {
-      let qListObj = {
-        // title: '问题题目',
-        type: type,
+    get_init() {
+      let initialType = {
+        type: "",
         title:"",
-        // index:0,
+        index: 0,
         isRequired: true,
+        isDraggable: true,
         content:{
           options:[],
-          max:0
-        }
+          max:5,
+          min:1,
+          input: ""
+        },
+        // 添加时默认没有逻辑跳转
+        jumpLogic: [
+          {
+            startValue: "",
+            endValue: ""
+          }
+        ]
       };
+      return initialType;
+    },
+    addQuestion(type) {
+      let newNum = this.totalQuestionNum + 1;
+      this.set_totalQNum(newNum);
+      let qListObj = this.get_init();
+      qListObj.type = type;
+      qListObj.index = newNum;
       if (type == "textarea") {
         qListObj.title = "文字输入题";
-        qListObj.index = this.qList_length + 1;
-
-        // option.answersData = [this.getRandomNumber(), this.getRandomNumber()]
       }
       if ((type == "radio")) {
         qListObj.title = "单选题";
-        qListObj.index = this.qList_length + 1;
         qListObj.content.options = ["选项1", "选项2"];
       }
       if ((type == "checkbox")) {
         qListObj.title = "多选题";
-        qListObj.index = this.qList_length + 1;
         qListObj.content.options = ["选项1", "选项2"];
       }
       if ((type == "description")) {
@@ -250,11 +264,9 @@ export default {
       }
       if ((type == "rate")) {
         qListObj.title = "请给本项打分";
-        qListObj.content.max = 5;
       }
       if ((type == "scale")) {
         qListObj.title = "您向朋友或同事推荐我们的可能性有多大？";
-        qListObj.content.max = 5;
       }
       if ((type == "sort")) {
         qListObj.title = "请给以下选项排序";
@@ -272,20 +284,65 @@ export default {
       if ((type == "address")) {
         qListObj.title = "地址";
       }
-      if ((type == "pagination")) {
-        // something todo
-      }
       this.add_qList_obj(qListObj);
-
     },
-    onEnd() {
-      // this.qList;
-
+    addPagination() {
+      let page = 0;
+      let qListObj = this.get_init();
+      qListObj.type = "pagination";
+      if (this.totalPage == 0) {
+        page = 2;
+        this.set_isPagination(true);
+        qListObj.index = 2;
+      } else {
+        page = this.totalPage
+        page += 1;
+        qListObj.index = page;
+      }
+      this.set_totalPage(page);
+      this.add_qList_obj(qListObj);
     },
-          handleOpen(key, keyPath) {
+    addDescription() {
+      let qListObj = this.get_init();
+      qListObj.type = "description";
+      qListObj.title = "这是一段段落说明";
+    },
+    // 用于将vuex的jumpLogic转换成组件需要的字段格式，返回修改过jumpLogic的整个qList
+    // changeQJump(qList_simple) {
+    //   // console.log(originQList);
+    //   for (let q in qList_simple) {
+    //     if ( Object.keys(q.jumpLogic).length == 0 ) {
+    //       q.jumpLogic = []; 
+    //     } else {
+    //       let jumpLogic = [];
+    //       for (let i in q.jumpLogic) {
+    //         // console.log(i);
+    //         // console.log(this.question.jumpLogic[i]);
+    //         // 转化成数字类型
+    //         let j = parseInt(i);
+    //         let k = j + 1; // 选项号，这个信息对其他有些功能非常重要，必须存在。
+    //         let startValue = k + "." + q.content.options[j];
+    //         let endValue = "Q" + q.index + ":" + q.title;
+    //         jumpLogic.push({
+    //           "startValue": startValue,
+    //           "endValue": endValue,
+    //         })
+    //       }
+    //       q.jumpLogic = jumpLogic;
+    //       jumpLogic = [];
+    //     }
+    //   }
+    //   // console.log(jumpLogic);
+    //   return qList_simple;
+    // },
+    emptyPage() {
+        this.set_isPagination(false);
+        this.set_totalPage(0);
+    },
+    handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
-      handleClose(key, keyPath) {
+    handleClose(key, keyPath) {
         console.log(key, keyPath);
       }
   },
@@ -295,7 +352,8 @@ export default {
     radio: MultipleChoice,
     checkbox: MultipleAnswers,
     qCard: () => import("@/components/question/QuestionCard.vue"),
-    draggable
+    draggable,
+    "pagination": () => import("@/components/question/QuestionPagination.vue")
   }
 };
 </script>
