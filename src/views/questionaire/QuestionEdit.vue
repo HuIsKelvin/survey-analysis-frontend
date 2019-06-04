@@ -1,9 +1,11 @@
 <template>
   <el-container class="question-edit-container">
     <el-header class="question-edit-header">
-      <el-button>预览</el-button>
-      <el-button plain>保存编辑</el-button>
+      <!-- <el-button>预览</el-button>
+      <el-button plain>保存编辑</el-button> -->
+      <bread-header></bread-header>
     </el-header>
+    
     <el-main>
       <el-row>
         <el-col :span="4" class>
@@ -115,11 +117,14 @@
               <end></end>
             </div>
             <el-button type="primary" @click="emptyPage()">清空分页</el-button>
+            <el-button type="primary">预览问卷</el-button>
             <el-button type="primary">保存问卷</el-button>
             <el-button type="primary">发布并分享</el-button>
           </el-col>
 
           <el-col :span="8" class>
+            <qDate :dateValue="dateValue"></qDate>
+            <el-input-number v-model="num" @change="numLimitChange" :min="1" label="描述文字"></el-input-number>
           <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
@@ -167,12 +172,9 @@
   </el-container>
 </template>
 <script>
-// 问卷开头和结尾组件
-import Introduction from "@/components/question/Introduction.vue";
-import End from "@/components/question/End.vue";
-// 问卷题型组件
-import MultipleChoice from "@/components/question/MultipleChoice.vue";
-import MultipleAnswers from "@/components/question/MultipleAnswers.vue";
+// import MultipleChoice from "@/components/question/MultipleChoice.vue";
+// import MultipleAnswers from "@/components/question/MultipleAnswers.vue";
+
 // 拽拖组件
 import draggable from 'vuedraggable';
 // vuex组件
@@ -193,8 +195,16 @@ export default {
       intro: "introContents",
       isPagination: "isPagination",
       totalPage: "totalPage",
-      totalQuestionNum: "totalQuestionNum"
+      totalQuestionNum: "totalQuestionNum",
+      beginTime: "beginTime",
+      endTime: "endTime",
     }),
+    dateValue() {
+      let arr = [];
+      arr[0] = this.beginTime;
+      arr[1] = this.endTime;
+      return arr;
+    },
     qList: {
         get() {
           // return this.changeQJump(this.$store.state.questionnaire.userQuestionList.questionList);
@@ -333,6 +343,9 @@ export default {
       console.log(evt);
       console.log(originalEvent);
     },
+    numLimitChange() {
+
+    },
     handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
@@ -341,13 +354,15 @@ export default {
       }
   },
   components: {
-    intro: Introduction,
-    end: End,
-    radio: MultipleChoice,
-    checkbox: MultipleAnswers,
-    qCard: () => import("@/components/question/QuestionCard.vue"),
     draggable,
-    "pagination": () => import("@/components/question/QuestionPagination.vue")
+    "intro": () => import("@/components/question/Introduction.vue"),
+    "end": () => import("@/components/question/End.vue"),
+    // radio: MultipleChoice,
+    // checkbox: MultipleAnswers,
+    "qCard": () => import("@/components/question/QuestionCard.vue"),
+    "pagination": () => import("@/components/question/QuestionPagination.vue"),
+    "qDate": () => import("@/components/question/QuestionDate.vue"),
+    "bread-header": () => import("@/components/common/BreadHeader.vue")
   }
 };
 </script>
@@ -357,7 +372,8 @@ export default {
 }
 
 .question-edit-header {
-  background-color: #009a61;
+  background-color:#45B39D;
+  text-align: center;
 }
 
 body {

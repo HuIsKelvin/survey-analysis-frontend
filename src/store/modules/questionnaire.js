@@ -9,16 +9,18 @@ export default {
     },
     userQuestionList: {
       userId: "1234",
-      name: "",
-      comment: "",
-      endComment: "",
-      beginTime: "",
-      endTime: "",
+      name: "问卷标题",
+      comment: "问卷头部说明",
+      endComment: "问卷结束语",
+      numLimit: 0,
+      beginTime: "Sun May 05 2019 23:52:45 GMT+0800 (中国标准时间)",
+      endTime: "Tue Jun 04 2019 23:52:45 GMT+0800 (中国标准时间)",
       pagination: {
         isPagination: false,
         totalPage: 0,
         index: []
       },
+
       totalQuestionNum: 0,
       questionList: [
         {
@@ -70,6 +72,10 @@ export default {
     },
     [types.SET_USERQUESTIONLIST]: (state, userQuestionList) => {
       state.userQuestionList = userQuestionList;
+    },
+    [types.SET_BEGINANDENDTIME]: (state, arr) => {
+      state.userQuestionList.beginTime = arr[0];
+      state.userQuestionList.endTime = arr[1];
     },
     [types.SET_QUESTIONLIST]: (state, questionList) => {
       state.userQuestionList.questionList = questionList;
@@ -136,6 +142,8 @@ export default {
     questionnaireTitle: state => state.userQuestionList.name,
     introContents: state => state.userQuestionList.comment,
     endContents: state => state.userQuestionList.endComment,
+    beginTime: state => state.userQuestionList.beginTime,
+    endTime: state => state.userQuestionList.endTime,
     questionList: state => state.userQuestionList.questionList,
     isPagination: state => state.userQuestionList.pagination.isPagination,
     totalPage: state => state.userQuestionList.pagination.totalPage,
