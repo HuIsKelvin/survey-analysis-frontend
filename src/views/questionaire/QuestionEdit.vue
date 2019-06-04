@@ -27,10 +27,10 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('radio')">单选题</el-button>
+                  <el-button type="text" @click="addQuestion({type: 'radio', title:'单选题'})">单选题</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('checkbox')">多选题</el-button>
+                  <el-button type="text" @click="addQuestion({type: 'checkbox', title:'多选题'})">多选题</el-button>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -40,7 +40,7 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('textarea')">填空题</el-button>
+                  <el-button type="text" @click="addQuestion({type: 'textarea', title:'填空题'})">填空题</el-button>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -50,13 +50,13 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('rate')">评分题</el-button>
+                  <el-button type="text" @click="addQuestion({type: 'rate', title:'请给本项打分'})">评分题</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('scale')">量表题</el-button>
+                  <el-button type="text" @click="addQuestion({type: 'scale', title:'您向朋友或同事推荐我们的可能性有多大？'})">量表题</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('sort')">排序题</el-button>
+                  <el-button type="text" @click="addQuestion({type: 'sort', title:'请给以下选项排序'})">排序题</el-button>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -66,16 +66,16 @@
               </template>
               <el-menu-item-group>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('name')">姓名</el-button>
+                  <el-button type="text" @click="addQuestion({type:'textInput', title: '姓名'})">姓名</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('sex')">性别</el-button>
+                  <el-button type="text" @click="addQuestion({type: 'radio', title: '性别'})">性别</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('age')">年龄</el-button>
+                  <el-button type="text" @click="addQuestion({type: 'numInput', title: '年龄'})">年龄</el-button>
                 </el-menu-item>
                 <el-menu-item>
-                  <el-button type="text" @click="addQuestion('address')">地址</el-button>
+                  <el-button type="text" @click="addQuestion({type: 'textInput', title: '地址'})">地址</el-button>
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
@@ -94,8 +94,10 @@
                 <!--draggable拽拖盒子-->
                 <draggable 
                 :list="this.qList"
-                @start="isDragging=true"
-                @end="isDragging=false">
+                @start="dragStart"
+                @end="dragEnd"
+                @change="dragChange"
+                :move="dragMove">
                   <qCard
                     v-for="(q, qIndex) in this.qList"
                     track-by="$index"
@@ -116,11 +118,12 @@
             <el-button type="primary">保存问卷</el-button>
             <el-button type="primary">发布并分享</el-button>
           </el-col>
+
           <el-col :span="8" class>
-                      <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-  <el-radio-button :label="false">展开</el-radio-button>
-  <el-radio-button :label="true">收起</el-radio-button>
-</el-radio-group>
+          <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+            <el-radio-button :label="false">展开</el-radio-button>
+            <el-radio-button :label="true">收起</el-radio-button>
+          </el-radio-group>
 <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
   <el-submenu index="1">
     <template slot="title">
@@ -242,48 +245,22 @@ export default {
       };
       return initialType;
     },
-    addQuestion(type) {
+    addQuestion(obj) {
       let newNum = this.totalQuestionNum + 1;
       this.set_totalQNum(newNum);
       let qListObj = this.get_init();
-      qListObj.type = type;
+      qListObj.type = obj.type;
       qListObj.index = newNum;
-      if (type == "textarea") {
-        qListObj.title = "文字输入题";
+      qListObj.title = obj.title;
+
+      if ((obj.type == "radio" || obj.type == "checkbox" || obj.type == "sort")) {
+        if (obj.title !== "性别") {
+          qListObj.content.options = ["选项1", "选项2"];
+        } else {
+          qListObj.content.options = ["男", "女"];
+        }
       }
-      if ((type == "radio")) {
-        qListObj.title = "单选题";
-        qListObj.content.options = ["选项1", "选项2"];
-      }
-      if ((type == "checkbox")) {
-        qListObj.title = "多选题";
-        qListObj.content.options = ["选项1", "选项2"];
-      }
-      if ((type == "description")) {
-        qListObj.title = "请阅读本项说明，然后回答问题";
-      }
-      if ((type == "rate")) {
-        qListObj.title = "请给本项打分";
-      }
-      if ((type == "scale")) {
-        qListObj.title = "您向朋友或同事推荐我们的可能性有多大？";
-      }
-      if ((type == "sort")) {
-        qListObj.title = "请给以下选项排序";
-        qListObj.content.options = ["item1", "item2"];
-      }
-      if ((type == "name")) {
-        qListObj.title = "名字";
-      }
-      if ((type == "sex")) {
-        qListObj.title = "性别";
-      }
-      if ((type == "age")) {
-        qListObj.title = "年龄";
-      }
-      if ((type == "address")) {
-        qListObj.title = "地址";
-      }
+
       this.add_qList_obj(qListObj);
     },
     addPagination() {
@@ -338,6 +315,23 @@ export default {
     emptyPage() {
         this.set_isPagination(false);
         this.set_totalPage(0);
+    },
+    dragStart(evt) {
+      console.log("dragStart!");
+      console.log(evt);
+    },
+    dragEnd(evt) {
+      console.log("drag end!");
+      console.log(evt);
+    },
+    dragChange(evt) {
+      console.log("drag move!");
+      console.log(evt)
+    },
+    dragMove(evt,originalEvent) {
+      console.log("drag move!");
+      console.log(evt);
+      console.log(originalEvent);
     },
     handleOpen(key, keyPath) {
         console.log(key, keyPath);

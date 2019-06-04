@@ -9,14 +9,11 @@ export default {
     },
     userQuestionList: {
       userId: "1234",
-      questionnaireTitle: "",
-      // name: "",
-      introContents: "",
-      // comment: "",
-      endContents: "",
-      // endComment: "",
-      // beginTime: "",
-      // endTime: "",
+      name: "",
+      comment: "",
+      endComment: "",
+      beginTime: "",
+      endTime: "",
       pagination: {
         isPagination: false,
         totalPage: 0,
@@ -26,18 +23,17 @@ export default {
       questionList: [
         {
           // 题目类型，单选radio || 多选checkbox || 排序sort || 填空textarea
-          // 打分rate || 量表scale || 段落说明description || 名字name ||
-          // 性别sex || 年龄age || 地址address
+          // 打分rate || 量表scale || 段落说明description || 短文字填空textInput ||
+          // 数字填空numInput
           type: "radio",
           index: 1, // 题号
           title: "单选题", // 题目标题
           isRequired: true, // 是否必填 true || false， 默认true
           content: {
             // 题目内容
-            options: ["item1", "item2"], // radio，checkbox，sort‘类型有意义
+            options: ["item1", "item2"], // radio，checkbox，sort类型有意义
             max: 5, // rate，scale有意义
             min: 1, // rate，scale有意义
-            input: "" // textarea，name，sex，age，address有意义
           },
           jumpLogic: [
             // 跳转逻辑。radio，checkbox有意义
@@ -58,13 +54,13 @@ export default {
       state.userQuestionList.userID = userID;
     },
     [types.SET_QUESTIONNAIRE_TITLE]: (state, questionnaireTitle) => {
-      state.userQuestionList.questionnaireTitle = questionnaireTitle;
+      state.userQuestionList.name = questionnaireTitle;
     },
     [types.SET_QUESTIONNAIRE_INTRO]: (state, introContents) => {
-      state.userQuestionList.introContents = introContents;
+      state.userQuestionList.comment = introContents;
     },
     [types.SET_QUESTIONNAIRE_END]: (state, endContents) => {
-      state.userQuestionList.endContents = endContents;
+      state.userQuestionList.endComment = endContents;
     },
     [types.SET_TOTALQUESTIONNUM]: (state, num) => {
       state.userQuestionList.totalQuestionNum = num;
@@ -137,9 +133,9 @@ export default {
   getters: {
     isClick: state => state.pageManage.isClick,
     q_userID: state => state.userQuestionList.userID,
-    questionnaireTitle: state => state.userQuestionList.questionnaireTitle,
-    introContents: state => state.userQuestionList.introContents,
-    endContents: state => state.userQuestionList.endContents,
+    questionnaireTitle: state => state.userQuestionList.name,
+    introContents: state => state.userQuestionList.comment,
+    endContents: state => state.userQuestionList.endComment,
     questionList: state => state.userQuestionList.questionList,
     isPagination: state => state.userQuestionList.pagination.isPagination,
     totalPage: state => state.userQuestionList.pagination.totalPage,

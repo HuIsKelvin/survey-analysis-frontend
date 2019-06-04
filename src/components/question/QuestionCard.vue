@@ -54,6 +54,14 @@
         </el-input>
       </div>
 
+      <!--短文字输入textInput || 数字输入numInput-->
+      <div v-if="question.type == 'textInput' || question.type == 'numInput'">
+        <el-input type="text"
+          :placeholder="question.type == 'textInput' ? '请输入一段文字' : '请输入一个数字（只能输入数字的输入框）'"
+          disabled>
+        </el-input>
+      </div>
+
       <!--评分星星组件-->
       <div v-if="question.type == 'rate'">
         <!-- <el-rate>
@@ -70,13 +78,6 @@
         </el-slider>
       </div>
 
-      <!--姓名、性别、年龄、地址组件-->
-      <div v-if="question.type == 'name' || question.type == 'sex' || question.type == 'age' || question.type == 'address'">
-        <el-input
-          placeholder="请输入内容"
-          disabled>
-        </el-input>
-      </div>
     </div>
 
     <!--工具栏-->
