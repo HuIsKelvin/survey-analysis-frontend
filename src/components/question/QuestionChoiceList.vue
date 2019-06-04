@@ -12,9 +12,11 @@
     <ul>
         <li v-for="(item, index) in listContent.options">
           <p 
-          @keyup="changeOptionValue($event)"
-          class="question-choice-input"
-          contenteditable>{{item}}</p>
+            @keyup="changeOptionValue($event, index)"
+            class="question-choice-input"
+            contenteditable>
+            {{item}}  
+            </p>
         </li>
       </ul>
     <!-- <draggable :list="this.listContent.options">
@@ -87,10 +89,12 @@ export default {
     addItem: function() {
       this.add_item(this.qIndex);
     },
-    changeOptionValue: function($event) {
+    changeOptionValue: function($event,index) {
+      // console.log($event);
+      // console.log(index);
       let obj = {
         type: "options",
-        iIndex: parseInt($event.key),
+        iIndex: index,
         QIndex: this.qIndex,
         iString: $event.target.outerText
       }

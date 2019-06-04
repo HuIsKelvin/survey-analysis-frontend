@@ -79,7 +79,7 @@ export default {
       state.userQuestionList.questionList = questionList;
     },
     [types.SET_JUMPLOGIC]: (state, obj) => {
-      state.userQuestionList.questionList[obj.index].jumplogic = obj.jumplogic;
+      state.userQuestionList.questionList[obj.qIndex].jumpLogic = obj.jumpLogic;
     },
     [types.ADD_QUESTIONLIST_OBJECT]: (state, obj) => {
       state.userQuestionList.questionList.push(obj);
@@ -113,7 +113,7 @@ export default {
         qList[obj.index][obj.type] = obj.content;
       }
       if (obj.type == "options") {
-        qList[obj.QIndex].content[obj.type][obj.iIndex - 1] = obj.iString;
+        qList[obj.QIndex].content[obj.type][obj.iIndex] = obj.iString;
       }
       state.userQuestionList.questionList = qList;
     },
