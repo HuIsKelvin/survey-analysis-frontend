@@ -31,42 +31,57 @@ export default {
           if (this.questionnaireName === "") {
               this.$message.error("问卷名称不能为空");
           } else {
-              // axios.post("/questionnaires/empty", {
-              //     userId: this.$store.state.userId,
-              //     name: this.questionnaireName 
-              // })
-              // .then(response => {
-              //     this.setTitle(this.questionnaireName);
-              //     this.setQlist([]); // 清空questionList
-              //     this.$message.success("创建问卷成功,跳转到编辑页面");
-              //     let qid = response.data;
-              //     this.$router.push({name:"questionEdit", params:{qid:qid}});
-              // })
-              // .then(error => {
-              //     if (error) {
-              //       this.$message.error("创建问卷失败，请重试");
-              //     }
-              // })
-                  // this.setTitle(this.questionnaireName);
-                  // this.setQlist([]); // 清空questionList
-                  // this.setLogic({}); // 清空jumplogic
+              axios.post("/questionnaires/empty", {
+                  userId: this.$store.state.userId,
+                  name: this.questionnaireName
+              })
+              .then(response => {
+                // 返回问卷id
+                  let qid = response.data;
+
                   let uQL = {
-                    userId: "1234",
-                    questionnaireTitle: this.questionnaireName,
-                    introContents: "",
-                    endContents: "",
+                    userId: this.$store.state.userId,
+                    name: this.questionnaireName,
+                    questionnaireId: qid,
+                    comment: "",
+                    endComment: "",
+                    numLimit: 0,
+                    beginTime: "",
+                    endTime: "",
                     pagination: {
                       isPagination: false,
                       totalPage: 0,
-                      index: []
                     },
                     totalQuestionNum: 0,
                     questionList: []
                   }
-                  this.set_uQL(uQL); // 清空问卷
+                  this.set_uQL(uQL); // 初始化问卷
                   this.$message.success("创建问卷成功,跳转到编辑页面");
-                  let qid = this.questionnaireName;
                   this.$router.push({name:"questionEdit", params:{qid:qid}});
+              })
+              .then(error => {
+                  if (error) {
+                    this.$message.error("创建问卷失败，请重试");
+                  }
+              })
+                  // 本地测试
+                  // let uQL = {
+                  //   userId: "1234",
+                  //   questionnaireTitle: this.questionnaireName,
+                  //   introContents: "",
+                  //   endContents: "",
+                  //   pagination: {
+                  //     isPagination: false,
+                  //     totalPage: 0,
+                  //     index: []
+                  //   },
+                  //   totalQuestionNum: 0,
+                  //   questionList: []
+                  // }
+                  // this.set_uQL(uQL); // 清空问卷
+                  // this.$message.success("创建问卷成功,跳转到编辑页面");
+                  // let qid = this.questionnaireName;
+                  // this.$router.push({name:"questionEdit", params:{qid:qid}});
           }
       }
 

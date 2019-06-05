@@ -8,7 +8,14 @@ export const SET_ISCLICK = "set_isClick";
 //设置userQuestionList：一般用于创建新问卷时初始化情况列表
 export const SET_USERQUESTIONLIST = "set_userQuestionList";
 
+// 设置问卷id
+export const SET_QUESTIONNAIREID = "set_questionnaireId";
+
+// 设置问卷的开始和结束时间
 export const SET_BEGINANDENDTIME = "set_begin_end_time";
+
+// 设置问卷的人数限制
+export const SET_NUMLIMIT = "set_numLimit";
 
 // 设置总题数
 export const SET_TOTALQUESTIONNUM = "set_totalQuestionNum";

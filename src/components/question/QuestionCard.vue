@@ -5,13 +5,14 @@
         (1) 题目内容输入框：QuestionContentInput.vue,
         (2) 单选、多选和排序题的选项列表组件：QuestionChoiceList.vue,
         (3) 打分题的星星组件：QuestionRate.vue
-        (4)       
+        (4) 分页组件QuestionpPagination.vue
+        (5) 
 * 功能说明: 
     1.接受QuestionEdit.vue父组件的props对象，props对象包括question对象和qIndex对象
     2.所有的题型都会需要一个"题目内容输入组件",其余根据question对象中的type字段来判刑需要显示哪一个题型小组件。
     3.通过v-if控制题型小组件的显示
 * @liushi
-* @2019/6/4
+* @2019/6/5
 * @version
 -->
 <template>

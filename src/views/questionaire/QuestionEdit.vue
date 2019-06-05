@@ -1,3 +1,22 @@
+<!--
+* 作用于哪些页面：
+    1.第一种可能：由CreateQuestionnaire.vue跳转到本组件，即创建新问卷；
+    2.第二种可能：由用户问卷管理页面点击“编辑”，然后跳转到本组件。
+    3.本组件是问卷编辑页面的全体视图，包括: 
+        (1) 顶部bread-header组件，就是一个导航栏；
+        (1) 左侧题目栏，用于点击添加各种类型的题型；
+        (2) 问卷主体的QuestionCard.vue组件，用于生成各种题型、分页、和备注说明；
+        (3) 底部有4个button，“清空分页”是用于开发测试的button，“预览问卷”用于
+        (4) 右侧有问卷时间输入组件QuestionDate.vue和限制人数输入栏QuestionCounter.vue组件。
+        (5) 右侧展开收起功能仅仅所欲开发测试，请忽略。
+* 功能说明: 
+    1.点击左侧栏，向questionList添加问题、分页、注释等obj
+    2.在draggable标签内部利用v-for生成questionCard组件，实现题目的生成和拽拖
+    3.
+* @liushi
+* @2019/6/5
+* @version
+-->
 <template>
   <el-container class="question-edit-container">
     <el-header class="question-edit-header">
@@ -44,6 +63,12 @@
                 <el-menu-item>
                   <el-button type="text" @click="addQuestion({type: 'textarea', title:'填空题'})">填空题</el-button>
                 </el-menu-item>
+                <el-menu-item>
+                  <el-button type="text" @click="addQuestion({type: 'numInput', title:'数字输入题'})">数字输入题</el-button>
+                </el-menu-item>
+                <el-menu-item>
+                  <el-button type="text" @click="addQuestion({type: 'textInput', title:'短文本输入题'})">短文本输入题</el-button>
+                </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
             <el-submenu index="4">
@@ -64,7 +89,7 @@
             </el-submenu>
             <el-submenu index="5">
               <template slot="title">
-                <span>个人信息</span>
+                <span>快速创建个人信息</span>
               </template>
               <el-menu-item-group>
                 <el-menu-item>
@@ -88,43 +113,47 @@
           <el-col :span="16" class>
             <div id="questionaire-wrapper" class>
               <!--问卷标题和说明-->
-              <intro></intro>
+              <intro class="question-card"></intro>
               <!--问卷主体-->
-              <pagination v-if="this.isPagination" :question="{isDraggable: false}"></pagination>
+              <pagination class="question-card" v-if="this.isPagination" :question="{isDraggable: false}"></pagination>
               <div id="questionList" v-if="this.qList.length !==0" class>
 
                 <!--draggable拽拖盒子-->
                 <draggable 
                 :list="this.qList"
-                @start="dragStart"
-                @end="dragEnd"
+                :options="dragOption"
+                @start="isDragging = true"
+                @end="isDragging =false"
                 @change="dragChange"
                 :move="dragMove">
-                  <qCard
-                    v-for="(q, qIndex) in this.qList"
-                    track-by="$index"
-                    :qIndex="qIndex"
-                    :question="q"
-                    :key="qIndex"
-                  >
-                  </qCard> 
+                  <transition-group type="transition">
+                    <qCard
+                      v-for="(q, qIndex) in this.qList"
+                      track-by="$index"
+                      :qIndex="qIndex"
+                      :question="q"
+                      :key="qIndex"
+                      class="question-card"
+                    >
+                    </qCard>
+                  </transition-group>
                 </draggable>
               </div>
               <!--测试查看qList-->
               {{this.qList}}
               <br/>
               <!--问卷底部-->
-              <end></end>
+              <end class="question-card"></end>
             </div>
             <el-button type="primary" @click="emptyPage()">清空分页</el-button>
             <el-button type="primary">预览问卷</el-button>
-            <el-button type="primary">保存问卷</el-button>
+            <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
             <el-button type="primary">发布并分享</el-button>
           </el-col>
 
           <el-col :span="8" class>
             <qDate :dateValue="dateValue"></qDate>
-            <el-input-number v-model="num" @change="numLimitChange" :min="1" label="描述文字"></el-input-number>
+            <num-limit :num="num"></num-limit>
           <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
             <el-radio-button :label="false">展开</el-radio-button>
             <el-radio-button :label="true">收起</el-radio-button>
@@ -186,18 +215,21 @@ export default {
     return {
       userId: "1234", // 根据userId来确定questionList的存储字段
       isDragging:false,
-      isCollapse: true
+      isCollapse: true,
     };
   },
   computed: {
     // 获取当前用户的id
     ...mapGetters({
+      userQuestionList: "userQuestionList",
       intro: "introContents",
       isPagination: "isPagination",
       totalPage: "totalPage",
       totalQuestionNum: "totalQuestionNum",
       beginTime: "beginTime",
       endTime: "endTime",
+      num: "numLimit",
+      questionnaireId: "questionnaireId"
     }),
     dateValue() {
       let arr = [];
@@ -207,7 +239,6 @@ export default {
     },
     qList: {
         get() {
-          // return this.changeQJump(this.$store.state.questionnaire.userQuestionList.questionList);
           return this.$store.state.questionnaire.userQuestionList.questionList;
         },
         set(value) {
@@ -221,6 +252,11 @@ export default {
         return 0;
       }
     },
+    dragOption() {
+      return {
+        animation:300,
+      }
+    }
   },
   created() {},
   methods: {
@@ -294,57 +330,42 @@ export default {
       qListObj.type = "description";
       qListObj.title = "这是一段段落说明";
     },
-    // 用于将vuex的jumpLogic转换成组件需要的字段格式，返回修改过jumpLogic的整个qList
-    // changeQJump(qList_simple) {
-    //   // console.log(originQList);
-    //   for (let q in qList_simple) {
-    //     if ( Object.keys(q.jumpLogic).length == 0 ) {
-    //       q.jumpLogic = []; 
-    //     } else {
-    //       let jumpLogic = [];
-    //       for (let i in q.jumpLogic) {
-    //         // console.log(i);
-    //         // console.log(this.question.jumpLogic[i]);
-    //         // 转化成数字类型
-    //         let j = parseInt(i);
-    //         let k = j + 1; // 选项号，这个信息对其他有些功能非常重要，必须存在。
-    //         let startValue = k + "." + q.content.options[j];
-    //         let endValue = "Q" + q.index + ":" + q.title;
-    //         jumpLogic.push({
-    //           "startValue": startValue,
-    //           "endValue": endValue,
-    //         })
-    //       }
-    //       q.jumpLogic = jumpLogic;
-    //       jumpLogic = [];
-    //     }
-    //   }
-    //   // console.log(jumpLogic);
-    //   return qList_simple;
-    // },
+    // 保存问卷按钮
+    saveQuestionnaire() {
+      // patc是直接更新当前的数据
+      axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
+      .then(response => {
+        this.$message({
+          message:'问卷已保存',
+          type: "success"
+        })
+      })
+      .then(error => {
+        if (error) {
+          this.$message.error("保存问卷失败，请重试");
+        }
+      })
+    },
     emptyPage() {
         this.set_isPagination(false);
         this.set_totalPage(0);
     },
     dragStart(evt) {
-      console.log("dragStart!");
-      console.log(evt);
+      // console.log("dragStart!");
+      // console.log(evt);
     },
     dragEnd(evt) {
-      console.log("drag end!");
-      console.log(evt);
+      // console.log("drag end!");
+      // console.log(evt);
     },
     dragChange(evt) {
       console.log("drag move!");
       console.log(evt)
     },
     dragMove(evt,originalEvent) {
-      console.log("drag move!");
-      console.log(evt);
-      console.log(originalEvent);
-    },
-    numLimitChange() {
-
+      // console.log("drag move!");
+      // console.log(evt);
+      // console.log(originalEvent);
     },
     handleOpen(key, keyPath) {
         console.log(key, keyPath);
@@ -362,7 +383,8 @@ export default {
     "qCard": () => import("@/components/question/QuestionCard.vue"),
     "pagination": () => import("@/components/question/QuestionPagination.vue"),
     "qDate": () => import("@/components/question/QuestionDate.vue"),
-    "bread-header": () => import("@/components/common/BreadHeader.vue")
+    "bread-header": () => import("@/components/common/BreadHeader.vue"),
+    "num-limit": () => import("@/components/question/QuestionCounter.vue")
   }
 };
 </script>
@@ -375,7 +397,12 @@ export default {
   background-color:#45B39D;
   text-align: center;
 }
-
+.question-card {
+  margin-left:2em;
+  margin-right: 2em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
 body {
   margin: 0px;
 }
