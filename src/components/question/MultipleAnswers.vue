@@ -17,7 +17,7 @@
                 class="input"
                 contenteditable>{{ answer }}</p>
             </div> 
-            <ul id="option-tools" class="option-panel">
+            <!-- <ul id="option-tools" class="option-panel">
                 <li>
                     <i 
                     class="el-icon-arrow-up" 
@@ -37,7 +37,7 @@
                     @click="deleteOption(qIndex, $index)"
                     ></i>
                 </li>
-            </ul>
+            </ul> -->
         </div>
 
         </li>
@@ -46,7 +46,6 @@
 </el-form>
 </template>
 <script>
-import "@/assets/css/questionEdit.css"
 // import "@/assets/css/override-element-ui.css"
 import {mapMutations} from "vuex"
 
@@ -78,7 +77,7 @@ export default {
         //     // this.set_Intro()
         // },
         ...mapMutations({
-            set_intro: "set_intro_contents"
+            set_intro: "set_questionnaire_intro"
 
         })
     }

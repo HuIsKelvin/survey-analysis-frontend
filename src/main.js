@@ -1,15 +1,14 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store/store.js";
+// import store from "./store/store.js";
+import store from "./store/index.js";// 用index.js替换了原来的store.js
 import "./plugins/element.js";
 import axios from "./plugins/axios.js";
 import "./plugins/vcharts";
 import "@/assets/css/override-element-ui.css";
-import "@/assets/css/questionEdit.css";
 import "@/assets/font/font_4.15/iconfont.css";
 
-Vue.config.productionTip = false;
 //Vue.prototype.$http = axios;
 
 //router.beforeEach((to, from, next) => {
