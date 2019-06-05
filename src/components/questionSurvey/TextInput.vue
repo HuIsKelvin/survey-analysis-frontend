@@ -48,6 +48,9 @@ export default {
     })
   },
   methods: {
+    // handleEnter(e) {
+    //   e.prevent();
+    // },
     ...mapActions("survey", {
       "updateValue": "updateValue"
     })

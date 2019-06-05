@@ -8,7 +8,8 @@
         <div class="survey-questions">
           <el-form 
             label-position="top"
-            ref="answerForm">
+            ref="answerForm"
+            @submit.native.prevent>
             <div
               class="question-item"
               v-for="(setting, index) in questionList"
