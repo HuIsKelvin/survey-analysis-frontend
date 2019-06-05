@@ -148,7 +148,7 @@
             <el-button type="primary" @click="emptyPage()">清空分页</el-button>
             <el-button type="primary">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
-            <el-button type="primary">发布并分享</el-button>
+            <el-button type="primary" @click="releaseAndShare">发布并分享</el-button>
           </el-col>
 
           <el-col :span="8" class>
@@ -229,7 +229,8 @@ export default {
       beginTime: "beginTime",
       endTime: "endTime",
       num: "numLimit",
-      questionnaireId: "questionnaireId"
+      questionnaireId: "questionnaireId",
+      qState: "q_state",
     }),
     dateValue() {
       let arr = [];
@@ -266,7 +267,8 @@ export default {
       set_pagination: "set_pagination",
       set_totalPage: "set_totalPage",
       set_isPagination: "set_isPagination",
-      set_totalQNum: "set_totalQuestionNum"
+      set_totalQNum: "set_totalQuestionNum",
+      set_state: "set_state"
     }),
     get_init() {
       let initialType = {
@@ -332,7 +334,7 @@ export default {
     },
     // 保存问卷按钮
     saveQuestionnaire() {
-      // patc是直接更新当前的数据
+      // patch是直接更新当前的数据
       axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
       .then(response => {
         this.$message({
@@ -345,6 +347,31 @@ export default {
           this.$message.error("保存问卷失败，请重试");
         }
       })
+    },
+    // 发布并分享按钮
+    releaseAndShare() {
+      this.set_state(true);
+      axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
+      .then(response => {
+        //跳转到发布页面Release.vue
+        let qid = response.data.id;
+        this.$message({
+          message: "成功保存并发布问卷",
+          type: "success"
+        })
+        this.$router.push({name:"releaseQuestionnaire", params:{qid:qid}});
+      })
+      .then(error => {
+        if (error) {
+          console.log(error)
+          this.$message({
+            message: "发布问卷失败，请重试",
+            type: "error"
+          })
+        }
+      })
+      
+
     },
     emptyPage() {
         this.set_isPagination(false);

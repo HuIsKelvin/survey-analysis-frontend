@@ -11,6 +11,9 @@ export const SET_USERQUESTIONLIST = "set_userQuestionList";
 // 设置问卷id
 export const SET_QUESTIONNAIREID = "set_questionnaireId";
 
+// 设置问卷状态
+export const SET_STATE = "set_state";
+
 // 设置问卷的开始和结束时间
 export const SET_BEGINANDENDTIME = "set_begin_end_time";
 

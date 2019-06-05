@@ -11,6 +11,7 @@ import Manage from "./views/questionaire/Manage.vue";
 import CreateQuestionnaire from "./views/questionaire/CreateQuestionnaire.vue";
 // import store from "./store/store";
 import QuestionEdit from "./views/questionaire/QuestionEdit.vue";
+import Release from "./views/questionaire/Release.vue";
 
 Vue.use(Router);
 
@@ -74,14 +75,19 @@ export default new Router({
       component: Survey
     },
     {
-      path: "/questionEdit",
+      path: "/findPwd",
+      name: "findPwd",
+      component: FindPwd
+    },
+    {
+      path: "/questionEdit/:qid",
       name: "questionEdit",
       component: QuestionEdit
     },
     {
-      path: "/findPwd",
-      name: "findPwd",
-      component: FindPwd
+      path: "/releaseQuestionnaire/:qid",
+      name: "releaseQuestionnaire",
+      component: Release
     }
   ]
   /*

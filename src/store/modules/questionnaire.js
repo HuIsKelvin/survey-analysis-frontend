@@ -10,6 +10,7 @@ export default {
     userQuestionList: {
       userId: "5ca1d85c5239c7260876465c",
       questionnaireId: "",
+      state: false,
       name: "问卷标题",
       comment: "问卷头部说明",
       endComment: "问卷结束语",
@@ -54,6 +55,9 @@ export default {
     },
     [types.SET_USERID]: (state, userID) => {
       state.userQuestionList.userID = userID;
+    },
+    [types.SET_STATE]: (state, boolean) => {
+      state.userQuestionList.state = boolean;
     },
     [types.SET_QUESTIONNAIREID]: (state, questionnaireId) => {
       state.userQuestionList.questionnaireId = questionnaireId;
@@ -146,6 +150,7 @@ export default {
     userQuestionList: state => state.userQuestionList,
     isClick: state => state.pageManage.isClick,
     q_userID: state => state.userQuestionList.userID,
+    q_state: state => state.userQuestionList.state,
     questionnaireId: state => state.userQuestionList.questionnaireId,
     questionnaireTitle: state => state.userQuestionList.name,
     introContents: state => state.userQuestionList.comment,
