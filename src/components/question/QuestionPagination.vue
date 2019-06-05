@@ -58,7 +58,7 @@ export default {
       if (this.question.isDraggable==false) {
         return 1
       } else {
-        return this.question.index;
+        return this.question.currentPage;
       }
     },
     QIndex: function() {

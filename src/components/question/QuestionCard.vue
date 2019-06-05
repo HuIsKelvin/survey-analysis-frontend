@@ -21,9 +21,10 @@
     <div v-if="question.type == 'pagination'">
       <pagination :question="question" :qIndex="qIndex"></pagination>
     </div>
-    <div>{{this.question.index}}</div>
+    
     <!--如果不是分页，则显示以下内容-->
     <div v-on:click="changeClass" v-if="question.type !== 'pagination'">
+      <div>{{this.question.index}}</div>
       <!--题目内容组件-->
       <div>
         <!--题目内容输入组件-->
@@ -271,8 +272,6 @@ export default {
         this.set_totalQNum(this.totalQuestionNum - 1);
         this.set_qList(qList);
       }
-      
-
     },
     // 删除跳转逻辑
     deleteJump(jIndex) {

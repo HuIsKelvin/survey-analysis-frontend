@@ -123,8 +123,9 @@
                 :list="this.qList"
                 :options="dragOption"
                 @start="isDragging = true"
-                @end="isDragging =false"
+                @end="dragEnd"
                 @change="dragChange"
+                @update="dragUpdate"
                 :move="dragMove">
                   <transition-group type="transition">
                     <qCard
@@ -263,18 +264,20 @@ export default {
   methods: {
     ...mapMutations({
       add_qList_obj: "add_questionList_object",
-      update_qList: "update_questionList",
+      set_qList: "set_questionList",
       set_pagination: "set_pagination",
       set_totalPage: "set_totalPage",
       set_isPagination: "set_isPagination",
       set_totalQNum: "set_totalQuestionNum",
       set_state: "set_state"
     }),
+    // 获取初始化的问题对象
     get_init() {
       let initialType = {
         type: "",
-        title:"",
         index: 0,
+        currentPage: 0,
+        title:"",
         isRequired: true,
         isDraggable: true,
         content:{
@@ -293,6 +296,7 @@ export default {
       };
       return initialType;
     },
+    // 添加问题
     addQuestion(obj) {
       let newNum = this.totalQuestionNum + 1;
       this.set_totalQNum(newNum);
@@ -311,6 +315,7 @@ export default {
 
       this.add_qList_obj(qListObj);
     },
+    // 添加分页组件
     addPagination() {
       let page = 0;
       let qListObj = this.get_init();
@@ -318,15 +323,16 @@ export default {
       if (this.totalPage == 0) {
         page = 2;
         this.set_isPagination(true);
-        qListObj.index = 2;
+        qListObj.currentPage = 2;
       } else {
         page = this.totalPage
         page += 1;
-        qListObj.index = page;
+        qListObj.currentPage = page;
       }
       this.set_totalPage(page);
       this.add_qList_obj(qListObj);
     },
+    // 添加备注说明组件
     addDescription() {
       let qListObj = this.get_init();
       qListObj.type = "description";
@@ -382,17 +388,36 @@ export default {
       // console.log(evt);
     },
     dragEnd(evt) {
-      // console.log("drag end!");
+      console.log("drag end!");
       // console.log(evt);
+      let qList = this.userQuestionList.questionList;
+      let pCount = 2;
+      let qCount = 1;
+      for (let i in qList) {
+        if (qList[i].type === "pagination") {
+          qList[i].currentPage = pCount;
+          pCount++;
+        } else if (qList[i].type === "description"){
+            
+        } else {
+          qList[i].index = qCount;
+          qCount++;
+        }
+      }
+      console.log(qList);
+      this.set_qList(qList);
     },
     dragChange(evt) {
-      console.log("drag move!");
-      console.log(evt)
+      // console.log("drag change!");
+      // console.log(evt)
     },
     dragMove(evt,originalEvent) {
       // console.log("drag move!");
       // console.log(evt);
       // console.log(originalEvent);
+    },
+    dragUpdate(evt) {
+      // console.log(evt);
     },
     handleOpen(key, keyPath) {
         console.log(key, keyPath);
