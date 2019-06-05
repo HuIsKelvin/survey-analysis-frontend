@@ -56,7 +56,8 @@ export default {
           title: "题目4",
           isRequired: true,
           content: {
-            top: 5
+            max: 5,
+            min: 1
           }
         },
         {
@@ -65,7 +66,7 @@ export default {
           title: "题目5",
           isRequired: true,
           content: {
-            top: 5
+            max: 5
           }
         },
         {

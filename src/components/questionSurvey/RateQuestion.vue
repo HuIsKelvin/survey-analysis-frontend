@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      max: this.setting.content.top
+      max: this.setting.content.max
     }
   },
   created() {
