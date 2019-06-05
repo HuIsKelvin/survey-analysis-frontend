@@ -337,7 +337,7 @@ export default {
     },
     // 保存问卷按钮
     saveQuestionnaire() {
-      // patc是直接更新当前的数据
+      // patch是直接更新当前的数据
       axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
       .then(response => {
         this.$message({
@@ -354,20 +354,24 @@ export default {
     // 发布并分享按钮
     releaseAndShare() {
       this.set_state(true);
-      axios.patch("/questionnaires/"+this.questionnaireId, this.userQuestionList)
+      axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
       .then(response => {
+        //跳转到发布页面Release.vue
+        let qid = response.data.id;
         this.$message({
           message: "成功保存并发布问卷",
           type: "success"
         })
-        //跳转到发布页面Release.vue
         this.$router.push({name:"releaseQuestionnaire", params:{qid:qid}});
       })
       .then(error => {
-        this.$message({
-          message: "发布问卷失败，请重试",
-          type: "error"
-        })
+        if (error) {
+          console.log(error)
+          this.$message({
+            message: "发布问卷失败，请重试",
+            type: "error"
+          })
+        }
       })
       
 

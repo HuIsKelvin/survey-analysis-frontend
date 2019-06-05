@@ -23,16 +23,16 @@
           <div v-if="setting.type === 'radio'">
             <single-chioce :setting="setting"></single-chioce>
           </div>
-          <div v-if="setting.type === 'checkBox'">
+          <div v-if="setting.type === 'checkbox'">
             <multible-chioce :setting="setting"></multible-chioce>
           </div>
           <div v-if="setting.type === 'textarea'">
             <text-area :setting="setting"></text-area>
           </div>
-          <div v-if="setting.type === 'textinput'">
+          <div v-if="setting.type === 'textInput'">
             <text-input :setting="setting"></text-input>
           </div>
-          <div v-if="setting.type === 'numinput'">
+          <div v-if="setting.type === 'numInput'">
             <num-input :setting="setting"></num-input>
           </div>
           <div v-if="setting.type === 'scale'">

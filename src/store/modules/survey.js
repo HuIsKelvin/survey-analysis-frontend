@@ -7,13 +7,13 @@ export default {
     // 答卷的题型的默认值
     valueType: {
       radio: 0,
-      checkouBox: [],
+      checkbox: [],
       textarea: "",
       scale: 0,
       rate: 0,
       sort: [],
-      textinput: "",
-      numinput: 0
+      textInput: "",
+      numInput: 0
     },
     // 是否提交答卷
     submitFlag: false,
