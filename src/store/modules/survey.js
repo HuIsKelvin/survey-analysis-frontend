@@ -17,7 +17,7 @@ export default {
     },
     // 是否提交答卷
     submitFlag: false,
-    questionire: {
+    userQuestionList: {
       name: "my first questionire",
       id: 123456,
       questionList: [
@@ -88,10 +88,14 @@ export default {
           type: "textinput",
           index: 7,
           title: "文字输入题",
-          isRequired: false,
-          content: {
-          }
+          isRequired: false
         },
+        {
+          type: "numinput",
+          index: 8,
+          title: "数字输入题",
+          isRequired: false
+        }
       ]
     },
     answerSheet: {
@@ -102,12 +106,12 @@ export default {
   getters: {
     surveyQuestionList(state) {
       // 显示isShow==true的题
-      return state.questionire.questionList.filter(el => {
+      return state.userQuestionList.questionList.filter(el => {
         return el.isShow === true;
       });
     },
     surveyQuestionire(state) {
-      return state.questionire;
+      return state.userQuestionList;
     },
     answerSheet(state) {
       return state.answerSheet;
@@ -118,25 +122,27 @@ export default {
   },
   mutations: {
     setQuestionire(state, payload) {
-      state.questionire = payload.questionire;
+      state.userQuestionList = payload.questionire;
+      console.log("after set questionire");
+      console.log(state.userQuestionList);
       this.commit("survey/generateAnswerSheet");
     },
     // 将接收的 questionList 进行整备，增加相应字段
     prepareQuestionList(state) {
-      state.questionire.questionList.forEach(element => {
+      state.userQuestionList.questionList.forEach(element => {
         Vue.set(element, "isShow", true);
         // 增加提示字段
         // Vue.set(element, "tipMsg", "");
       });
-      console.log(state.questionire.questionList);
+      console.log(state.userQuestionList.questionList);
     },
     // 生成默认答卷
     generateAnswerSheet(state) {
       state.answerSheet = {
-        quesId: state.questionire.id,
+        quesId: state.userQuestionList.questionnaireId,
         answer: []
       };
-      state.questionire.questionList.forEach(el => {
+      state.userQuestionList.questionList.forEach(el => {
         if (el.type === "description") {
           return;
         }
@@ -183,7 +189,7 @@ export default {
       // 答卷的答案数据
       let answer = state.answerSheet.answer;
       // 遍历检查
-      state.questionire.questionList.forEach(question => {
+      state.userQuestionList.questionList.forEach(question => {
         // 排除分页、段落说明等题目
         if(question.index <= 0) { return; }
         if(question.isRequired && question.isShow) {
@@ -199,7 +205,7 @@ export default {
     prepareAnswerToSubmit(state) {
       // 答卷的答案数据
       let answer = state.answerSheet.answer;
-      state.questionire.questionList.forEach(question => {
+      state.userQuestionList.questionList.forEach(question => {
         // 排除分页、段落说明等题目
         if(question.index <= 0) { return; }
         let ansData = answer[question.index-1]["data"];
@@ -222,7 +228,7 @@ export default {
       context.commit("prepareQuestionList");
       context.commit("generateAnswerSheet");
     },
-    setQuestionire(context) {
+    setQuestionire(context, payload) {
       context.commit("setQuestionire", payload);
       // context.commit("generateAnswerSheet");
     },

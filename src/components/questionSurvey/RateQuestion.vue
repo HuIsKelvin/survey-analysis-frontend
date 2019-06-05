@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     ...mapActions("survey", {
-      "updateValue": "updateValue"
+        "updateValue": "updateValue"
     })
   }
 }

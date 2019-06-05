@@ -1,6 +1,7 @@
 <template>
     <div id="preview">
         <h3>预览页面</h3>
+        <el-button type="primary" @click="backToEdit">返回编辑</el-button>
         <survey-questionire 
             :questionire="questionire">
         </survey-questionire>
@@ -23,6 +24,11 @@ export default {
         ...mapGetters("survey", {
             "questionire": "surveyQuestionire"
         })
+    },
+    methods: {
+        backToEdit() {
+            this.$router.push({name: "questionEdit"})
+        }
     }
 
 }

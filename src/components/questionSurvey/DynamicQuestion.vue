@@ -32,6 +32,9 @@
           <div v-if="setting.type === 'textinput'">
             <text-input :setting="setting"></text-input>
           </div>
+          <div v-if="setting.type === 'numinput'">
+            <num-input :setting="setting"></num-input>
+          </div>
           <div v-if="setting.type === 'scale'">
             <scale-question :setting="setting"></scale-question>
           </div>
@@ -61,6 +64,7 @@ export default {
     "multible-chioce": () => import("./MultibleChioce"), // 多选题
     "text-area": () => import("./Textarea"), // 文字输入题-多行
     "text-input": () => import("./TextInput"), // 文字输入题-单行
+    "num-input": () => import("./NumInput"), // 数字输入题
     "scale-question": () => import("./ScaleQuestion"),  // 量表题
     "rate-question": () => import("./RateQuestion"),  // 评分题
     "sort-question": () => import("./SortQuestion"),  // 排序题

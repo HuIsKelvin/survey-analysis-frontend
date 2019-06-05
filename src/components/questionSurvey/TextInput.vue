@@ -25,7 +25,6 @@ export default {
     }
   },
   created() {
-    this.text = this.setting.content.input;
     this.index = this.setting.index - 1;
   },
   computed: {
