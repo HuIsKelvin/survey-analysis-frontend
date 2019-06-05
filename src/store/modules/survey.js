@@ -8,10 +8,12 @@ export default {
     valueType: {
       radio: 0,
       checkouBox: [],
-      text: "",
+      textarea: "",
       scale: 0,
       rate: 0,
-      sort: []
+      sort: [],
+      textinput: "",
+      numinput: 0
     },
     // 是否提交答卷
     submitFlag: false,
@@ -47,7 +49,6 @@ export default {
           title: "题目3",
           isRequired: true,
           content: {
-            input: "shuru"
           }
         },
         {
@@ -82,7 +83,15 @@ export default {
           content: {
             options: ["ans1", "ans2", "ans3", "ans4"]
           }
-        }
+        },
+        {
+          type: "textinput",
+          index: 7,
+          title: "文字输入题",
+          isRequired: false,
+          content: {
+          }
+        },
       ]
     },
     answerSheet: {

@@ -29,6 +29,9 @@
           <div v-if="setting.type === 'textarea'">
             <text-area :setting="setting"></text-area>
           </div>
+          <div v-if="setting.type === 'textinput'">
+            <text-input :setting="setting"></text-input>
+          </div>
           <div v-if="setting.type === 'scale'">
             <scale-question :setting="setting"></scale-question>
           </div>
@@ -56,7 +59,8 @@ export default {
   components: {
     "single-chioce": () => import("./SingleChioce"), // 单选题
     "multible-chioce": () => import("./MultibleChioce"), // 多选题
-    "text-area": () => import("./Textarea"), // 多选题
+    "text-area": () => import("./Textarea"), // 文字输入题-多行
+    "text-input": () => import("./TextInput"), // 文字输入题-单行
     "scale-question": () => import("./ScaleQuestion"),  // 量表题
     "rate-question": () => import("./RateQuestion"),  // 评分题
     "sort-question": () => import("./SortQuestion"),  // 排序题

@@ -1,5 +1,5 @@
 <template>
-  <div id="text-input">
+  <div id="textarea">
     <div class="content">
       <el-input
         class="el-input"
@@ -17,7 +17,7 @@
 import { mapGetters, mapActions } from "vuex"
 
 export default {
-  name: "TextInput",
+  name: "Textarea",
   props: {
     setting: Object
   },
@@ -43,10 +43,6 @@ export default {
           qindex: this.setting.index,
           value: val
         })
-        // this.$store.commit("survey/updateValue", {
-        //   qindex: this.setting.index,
-        //   value: val
-        // })
       }
     },
     ...mapGetters("survey", {
@@ -61,15 +57,6 @@ export default {
       "updateValue": "updateValue"
     })
   },
-  // watch: {
-  //   textArea() {
-  //     // console.log(this.textArea)
-  //     this.updateValue({
-  //       qindex: this.setting.index,
-  //       value: this.textArea
-  //     })
-  //   }
-  // }
 }
 </script>
 

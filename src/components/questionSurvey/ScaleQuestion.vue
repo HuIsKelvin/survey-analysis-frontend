@@ -27,7 +27,8 @@ export default {
     return {
       sliderSetting: {
         max: this.setting.content.max,
-        min: this.setting.content.min,
+        // min: this.setting.content.min,
+        min: 1,
         step: 1,
         marks: {}
       }
