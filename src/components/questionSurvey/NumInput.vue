@@ -1,5 +1,5 @@
 <template>
-  <div id="text-input">
+  <div id="num-input">
     
   </div>
 </template>

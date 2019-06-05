@@ -42,7 +42,7 @@ export default {
           }
         },
         {
-          type: "text",
+          type: "textarea",
           index: 3,
           title: "题目3",
           isRequired: true,
@@ -178,7 +178,7 @@ export default {
         if(question.index <= 0) { return; }
         if(question.isRequired && question.isShow) {
           let data = answer[question.index-1]["data"];
-          if(data === null || data === 0 || data === []) {
+          if(data === null || data === 0 || data === [] || data === " ") {
             state.submitFlag = false;
           }
         }
