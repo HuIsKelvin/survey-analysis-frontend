@@ -260,17 +260,12 @@ export default {
         // 删除qList里面的题目对象
         this.del_obj(this.qIndex);
         let qList = this.questionList;
-        let count = 1;
-        // 更新题号
-        for (let i in this.questionList) {
-          if (qList[i].type !== "pagination" && qList[i].type !== "description") {
-            qList[i].index = count;
-            count++;
-          }
-        }
+        // 更新题号和currentPage
+        let update_qList = this.update_index_currentPage(qList);
+
         // 删除分页不改变题号
         this.set_totalQNum(this.totalQuestionNum - 1);
-        this.set_qList(qList);
+        this.set_qList(update_qList);
       }
     },
     // 删除跳转逻辑
@@ -345,30 +340,22 @@ export default {
         }
       }
     },
-    // 用于将组件需要的跳转逻辑格式转换成vuex需要的格式
-    // 和QuesstionEdit.vue的函数changeQList()功能相反
-    // 但是传入值只是一个问题的obj数据，而不是整个问卷列表数据
-    // simplifyJumpLogic(question) {
-    //   let jumpLogic_simple = {};
-    //   for (let i in q.jumpLogic) {
-    //     let startValue = i.startValue;
-    //     let endValue = i.endValue;
-    //     if (startValue != "") {
-    //       jumpLogic_simple["add"+endValue] = endValue;
-    //     } else {
-    //       jumpLogic_simple[startValue.substring(0,1)] = parseInt(endValue.substring(1,2));
-    //     }
-        
-    //   }
-    //   question.jumpLogic = jumpLogic_simple;
-    //   return question; // 只返回一个问题的obj
-    // },
-    removeByValue(arr, value) {
-      for (let i in arr) {
-        if (arr[i] == value) {
-          arr.splice(i, 1);
+    update_index_currentPage(questionList) {
+      let qList = questionList;
+      let pCount = 2;
+      let qCount = 1;
+      for (let i in qList) {
+        if (qList[i].type === "pagination") {
+          qList[i].currentPage = pCount;
+          pCount++;
+        } else if (qList[i].type === "description"){
+            
+        } else {
+          qList[i].index = qCount;
+          qCount++;
         }
       }
+      return qList
     }
   },
   components: {

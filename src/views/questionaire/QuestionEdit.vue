@@ -391,21 +391,9 @@ export default {
       console.log("drag end!");
       // console.log(evt);
       let qList = this.userQuestionList.questionList;
-      let pCount = 2;
-      let qCount = 1;
-      for (let i in qList) {
-        if (qList[i].type === "pagination") {
-          qList[i].currentPage = pCount;
-          pCount++;
-        } else if (qList[i].type === "description"){
-            
-        } else {
-          qList[i].index = qCount;
-          qCount++;
-        }
-      }
-      console.log(qList);
-      this.set_qList(qList);
+      let update_qList = this.update_index_currentPage(qList);
+      console.log(update_qList);
+      this.set_qList(update_qList);
     },
     dragChange(evt) {
       // console.log("drag change!");
@@ -421,10 +409,27 @@ export default {
     },
     handleOpen(key, keyPath) {
         console.log(key, keyPath);
-      },
+    },
     handleClose(key, keyPath) {
         console.log(key, keyPath);
+    },
+    update_index_currentPage(questionList) {
+      let qList = questionList;
+      let pCount = 2;
+      let qCount = 1;
+      for (let i in qList) {
+        if (qList[i].type === "pagination") {
+          qList[i].currentPage = pCount;
+          pCount++;
+        } else if (qList[i].type === "description"){
+            
+        } else {
+          qList[i].index = qCount;
+          qCount++;
+        }
       }
+      return qList
+    }
   },
   components: {
     draggable,
