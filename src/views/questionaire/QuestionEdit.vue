@@ -141,56 +141,24 @@
                 </draggable>
               </div>
               <!--测试查看qList-->
-              {{this.qList}}
+              <!-- {{this.qList}} -->
               <br/>
               <!--问卷底部-->
               <end class="question-card"></end>
             </div>
             <el-button type="primary" @click="emptyPage()">清空分页</el-button>
-            <el-button type="primary">预览问卷</el-button>
+            <el-button type="primary" @click="previewQuestionire">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
             <el-button type="primary" @click="releaseAndShare">发布并分享</el-button>
           </el-col>
 
           <el-col :span="8" class>
+            <!--问卷题目设置-->
+            <transition name="question-setting">
+              <question-setting v-if=""></question-setting> 
+            </transition>
             <qDate :dateValue="dateValue"></qDate>
             <num-limit :num="num"></num-limit>
-          <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-            <el-radio-button :label="false">展开</el-radio-button>
-            <el-radio-button :label="true">收起</el-radio-button>
-          </el-radio-group>
-<el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-  <el-submenu index="1">
-    <template slot="title">
-      <i class="el-icon-location"></i>
-      <span slot="title">导航一</span>
-    </template>
-    <el-menu-item-group>
-      <span slot="title">分组一</span>
-      <el-menu-item index="1-1">选项1</el-menu-item>
-      <el-menu-item index="1-2">选项2</el-menu-item>
-    </el-menu-item-group>
-    <el-menu-item-group title="分组2">
-      <el-menu-item index="1-3">选项3</el-menu-item>
-    </el-menu-item-group>
-    <el-submenu index="1-4">
-      <span slot="title">选项4</span>
-      <el-menu-item index="1-4-1">选项1</el-menu-item>
-    </el-submenu>
-  </el-submenu>
-  <el-menu-item index="2">
-    <i class="el-icon-menu"></i>
-    <span slot="title">导航二</span>
-  </el-menu-item>
-  <el-menu-item index="3" disabled>
-    <i class="el-icon-document"></i>
-    <span slot="title">导航三</span>
-  </el-menu-item>
-  <el-menu-item index="4">
-    <i class="el-icon-setting"></i>
-    <span slot="title">导航四</span>
-  </el-menu-item>
-</el-menu>
           </el-col>
         </el-container>
 
@@ -208,7 +176,7 @@
 // 拽拖组件
 import draggable from 'vuedraggable';
 // vuex组件
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "question-edit-view",
@@ -271,7 +239,9 @@ export default {
       set_totalQNum: "set_totalQuestionNum",
       set_state: "set_state"
     }),
-    // 获取初始化的问题对象
+    ...mapActions("survey", {
+      "setQuestionirePreview": "setQuestionire"
+    }),
     get_init() {
       let initialType = {
         type: "",
@@ -314,6 +284,9 @@ export default {
       }
 
       this.add_qList_obj(qListObj);
+    },
+    changeStyle(qIndex) {
+      console.log("click qCard!")
     },
     // 添加分页组件
     addPagination() {
@@ -383,6 +356,15 @@ export default {
         this.set_isPagination(false);
         this.set_totalPage(0);
     },
+    // 预览问卷
+    previewQuestionire() {
+      this.setQuestionirePreview({
+        questionire: this.userQuestionList
+      });
+      this.$router.push({
+        name: "preview"
+      })
+    },
     dragStart(evt) {
       // console.log("dragStart!");
       // console.log(evt);
@@ -392,7 +374,7 @@ export default {
       // console.log(evt);
       let qList = this.userQuestionList.questionList;
       let update_qList = this.update_index_currentPage(qList);
-      console.log(update_qList);
+      // console.log(update_qList);
       this.set_qList(update_qList);
     },
     dragChange(evt) {
@@ -441,7 +423,8 @@ export default {
     "pagination": () => import("@/components/question/QuestionPagination.vue"),
     "qDate": () => import("@/components/question/QuestionDate.vue"),
     "bread-header": () => import("@/components/common/BreadHeader.vue"),
-    "num-limit": () => import("@/components/question/QuestionCounter.vue")
+    "num-limit": () => import("@/components/question/QuestionCounter.vue"),
+    "question-setting": () => import("@/components/question/QuestionSetting.vue")
   }
 };
 </script>
@@ -463,8 +446,25 @@ export default {
 body {
   margin: 0px;
 }
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
-  }
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.question-setting-enter-active {
+  transition: all .3s ease;
+}
+.question-setting-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.question-setting-enter, .question-setting-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+.active {
+  border-color:royalblue;
+  border-width: 5px;
+}
 </style>

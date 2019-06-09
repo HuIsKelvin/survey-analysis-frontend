@@ -12,11 +12,13 @@
     2.所有的题型都会需要一个"题目内容输入组件",其余根据question对象中的type字段来判刑需要显示哪一个题型小组件。
     3.通过v-if控制题型小组件的显示
 * @liushi
-* @2019/6/5
+* @2019/6/6
 * @version
 -->
 <template>
-  <el-card :class="this.activeClass == 0 ? 'active':''">
+  <!-- <el-card :class="this.activeClass == 0 ? 'active':''"> -->
+  <el-card @click="changeStyle(qIndex)"
+    :class="qIndex == this.activeClass ? 'active': ''">
     <!--如果是分页则显示调用分页组件-->
     <div v-if="question.type == 'pagination'">
       <pagination :question="question" :qIndex="qIndex"></pagination>
@@ -246,27 +248,24 @@ export default {
     deleteCard() {
       if (this.question.type == "pagination") {
         // 如果当前只有两页
-        if (this.question.index == 2) {
+        if (this.totalPage == 2) {
           this.set_isPagination(false); // 取消置顶分页卡
           this.set_totalPage(0); // 归零总页数
         } else {
           this.set_totalPage(this.totalPage - 1);// 总页数-1
         }
-        this.del_obj(this.qIndex);
-
       } else if (this.question.type == "description") {
-        this.del_obj(this.qIndex);
+        // 也许这里将来会需要做点什么
       } else {
-        // 删除qList里面的题目对象
+        // 如果是删除题目则总题数-1
+        this.set_totalQNum(this.totalQuestionNum - 1);
+      }
+        // 删除qList里面的obj对象
         this.del_obj(this.qIndex);
         let qList = this.questionList;
         // 更新题号和currentPage
         let update_qList = this.update_index_currentPage(qList);
-
-        // 删除分页不改变题号
-        this.set_totalQNum(this.totalQuestionNum - 1);
         this.set_qList(update_qList);
-      }
     },
     // 删除跳转逻辑
     deleteJump(jIndex) {
@@ -285,6 +284,10 @@ export default {
     changeClass() {
       // console.log("change class");
       // this.activeClass = 0;
+    },
+    changeStyle(qIndex) {
+      console.log("click qCard!")
+      this.activeClass = qIndex;
     },
     changeCheckedValue(newValue) {
       let qIndex = this.qIndex;
@@ -367,10 +370,15 @@ export default {
 }
 </script>
 <style scoped>
+
+.question-card {
+  margin-left:2em;
+  margin-right: 2em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
 .active {
   border-color:royalblue;
   border-width: 5px;
 }
-
-
 </style>
