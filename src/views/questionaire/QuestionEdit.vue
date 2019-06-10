@@ -129,12 +129,14 @@
                 :move="dragMove">
                   <transition-group type="transition">
                     <qCard
+                      ref="qCard"
                       v-for="(q, qIndex) in this.qList"
                       track-by="$index"
                       :qIndex="qIndex"
                       :question="q"
                       :key="qIndex"
-                      class="question-card"
+                      :class="activeClass == qIndex ? 'active': ''"
+                      @click.native="changeClass(qIndex)"
                     >
                     </qCard>
                   </transition-group>
@@ -155,10 +157,15 @@
           <el-col :span="8" class>
             <!--问卷题目设置-->
             <transition name="question-setting">
-              <question-setting v-if=""></question-setting> 
+              <question-setting
+                ref="qSetting" 
+                v-if="isClick"
+                :class="navBarFixed == true ? 'navBarWrap' :''"
+              ></question-setting> 
             </transition>
             <qDate :dateValue="dateValue"></qDate>
             <num-limit :num="num"></num-limit>
+            <el-button @click="changeClass(-1)">隐藏侧栏</el-button>
           </el-col>
         </el-container>
 
@@ -185,6 +192,8 @@ export default {
       userId: "1234", // 根据userId来确定questionList的存储字段
       isDragging:false,
       isCollapse: true,
+      activeClass:-1,
+      navBarFixed: false,
     };
   },
   computed: {
@@ -200,6 +209,7 @@ export default {
       num: "numLimit",
       questionnaireId: "questionnaireId",
       qState: "q_state",
+      isClick: "isClick"
     }),
     dateValue() {
       let arr = [];
@@ -226,9 +236,48 @@ export default {
       return {
         animation:300,
       }
+    },
+    qcardClassObject: function() {
+
     }
   },
-  created() {},
+  mounted() {
+    window.addEventListener('scroll', this.watchScroll)
+  },
+  created() {
+    // 点击其他不在的区域触发事件
+    document.addEventListener('click', (e) => {
+      // 如果当前处于有高亮状态
+      if (this.isClick == true) {
+        let isContains = false;
+        for (let i in this.$refs.qCard) {
+          // console.log("this.$refs.qCard[i].$el")
+          // console.log(this.$refs.qCard[i].$el);
+          // console.log("e.target")
+          // console.log(e.target);
+          // console.log("this.$refs.qSetting")
+          // console.log(this.$refs.qSetting);      
+          // console.log("this.$refs.qSetting.$el")
+          // console.log(this.$refs.qSetting.$el);
+          // console.log("this.$refs.qCard[i].$el.contains target")
+          // console.log(this.$refs.qCard[i].$el.contains(e.target));
+          // console.log("this.$refs.qSetting.$el contains etarget")
+          // console.log(this.$refs.qSetting.$el.contains(e.target));
+          if(this.$refs.qCard[i].$el.contains(e.target)
+          || this.$refs.qSetting.$el.contains(e.target)) {
+            isContains = true;
+          }
+        }
+        if (!isContains) {
+          this.set_isClick(false);
+          this.activeClass = -1;
+        } else {
+          this.set_isClick(true);
+        }
+      }
+
+    })
+  },
   methods: {
     ...mapMutations({
       add_qList_obj: "add_questionList_object",
@@ -237,7 +286,8 @@ export default {
       set_totalPage: "set_totalPage",
       set_isPagination: "set_isPagination",
       set_totalQNum: "set_totalQuestionNum",
-      set_state: "set_state"
+      set_state: "set_state",
+      set_isClick: "set_isClick",
     }),
     ...mapActions("survey", {
       "setQuestionirePreview": "setQuestionire"
@@ -285,8 +335,17 @@ export default {
 
       this.add_qList_obj(qListObj);
     },
-    changeStyle(qIndex) {
-      console.log("click qCard!")
+    changeClass(qIndex) {
+      if (qIndex>=0) {
+        // console.log("click qCard!");
+        // console.log(qIndex);
+        this.activeClass = qIndex;
+        this.set_isClick(true);
+      } else {
+        this.activeClass = -1;
+        this.set_isClick(false);
+      }
+
     },
     // 添加分页组件
     addPagination() {
@@ -304,6 +363,15 @@ export default {
       }
       this.set_totalPage(page);
       this.add_qList_obj(qListObj);
+    },
+    watchScroll () {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        //  当滚动超过 50 时，实现吸顶效果
+        if (scrollTop > 49) {
+          this.navBarFixed = true
+        } else {
+          this.navBarFixed = false
+        }
     },
     // 添加备注说明组件
     addDescription() {
@@ -465,6 +533,11 @@ body {
 }
 .active {
   border-color:royalblue;
-  border-width: 5px;
+  border-width:2px;
 }
+.navBarWrap {
+    position:fixed;
+    top:0;
+    z-index:999;
+  }
 </style>

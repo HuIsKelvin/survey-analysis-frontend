@@ -51,7 +51,7 @@ export default {
   },
   mutations: {
     [types.SET_ISCLICK]: (state, boolean) => {
-      state.pageManage.isCLICK = boolean;
+      state.pageManage.isClick = boolean;
     },
     [types.SET_USERID]: (state, userID) => {
       state.userQuestionList.userID = userID;

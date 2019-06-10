@@ -16,9 +16,7 @@
 * @version
 -->
 <template>
-  <!-- <el-card :class="this.activeClass == 0 ? 'active':''"> -->
-  <el-card @click="changeStyle(qIndex)"
-    :class="qIndex == this.activeClass ? 'active': ''">
+  <el-card class="question-card">
     <!--如果是分页则显示调用分页组件-->
     <div v-if="question.type == 'pagination'">
       <pagination :question="question" :qIndex="qIndex"></pagination>
@@ -285,10 +283,10 @@ export default {
       // console.log("change class");
       // this.activeClass = 0;
     },
-    changeStyle(qIndex) {
-      console.log("click qCard!")
-      this.activeClass = qIndex;
-    },
+    // changeStyle(qIndex) {
+    //   console.log("click qCard!")
+    //   this.activeClass = qIndex;
+    // },
     changeCheckedValue(newValue) {
       let qIndex = this.qIndex;
       this.set_isRequired({"isRequired": newValue, "qIndex": qIndex});
@@ -377,8 +375,5 @@ export default {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
-.active {
-  border-color:royalblue;
-  border-width: 5px;
-}
+
 </style>
