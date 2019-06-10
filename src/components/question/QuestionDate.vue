@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="input-date">
     <el-date-picker
       v-model="dateValue"
       type="datetimerange"
@@ -8,6 +8,7 @@
       start-placeholder="开始日期"
       end-placeholder="结束日期"
       align="right"
+      size="mini"
       @change="changeDate">
     </el-date-picker>
 </div>
@@ -64,5 +65,17 @@ export default {
   }
 };
 </script>
-<style>
+<style lang="scss" scoped>
+
+// .input-date .el-date-editor--datetimerange.el-input, 
+// .el-date-editor--datetimerange.el-input__inner {
+//   width: 320px;
+// }
+.input-date {
+  .el-date-editor--datetimerange.el-input,
+  .el-date-editor--datetimerange.el-input__inner {
+    width: 320px;
+  }
+
+}
 </style>

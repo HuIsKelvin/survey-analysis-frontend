@@ -20,95 +20,94 @@
 <template>
   <el-container class="question-edit-container">
     <el-header class="question-edit-header">
-      <!-- <el-button>预览</el-button>
-      <el-button plain>保存编辑</el-button> -->
       <bread-header></bread-header>
     </el-header>
-    
+    <el-container>
+      <el-aside width="200px">
+        <el-menu class="question-edit-nav" 
+          :default-openeds="['1', '2', '3', '4', '5']"
+          >
+          <el-submenu index="1">
+            <template slot="title">
+              <span>分页说明</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addDescription()">备注说明</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addPagination()">设置分页</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              <span>选择题</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'radio', title:'单选题'})">单选题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'checkbox', title:'多选题'})">多选题</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">
+              <span>填空题</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'textarea', title:'填空题'})">填空题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'numInput', title:'数字输入题'})">数字输入题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'textInput', title:'短文本输入题'})">短文本输入题</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="4">
+            <template slot="title">
+              <span>打分排序</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'rate', title:'请给本项打分'})">评分题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'scale', title:'您向朋友或同事推荐我们的可能性有多大？'})">量表题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'sort', title:'请给以下选项排序'})">排序题</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="5">
+            <template slot="title">
+              <span>快速创建个人信息</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type:'textInput', title: '姓名'})">姓名</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'radio', title: '性别'})">性别</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'numInput', title: '年龄'})">年龄</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'textInput', title: '地址'})">地址</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
     <el-main>
       <el-row>
-        <el-col :span="4" class>
-          <el-menu class="question-edit-nav" :default-openeds="['1', '2', '3', '4', '5']">
-            <el-submenu index="1">
-              <template slot="title">
-                <span>分页说明</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addDescription()">备注说明</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addPagination()">设置分页</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <span>选择题</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'radio', title:'单选题'})">单选题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'checkbox', title:'多选题'})">多选题</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="3">
-              <template slot="title">
-                <span>填空题</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'textarea', title:'填空题'})">填空题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'numInput', title:'数字输入题'})">数字输入题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'textInput', title:'短文本输入题'})">短文本输入题</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="4">
-              <template slot="title">
-                <span>打分排序</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'rate', title:'请给本项打分'})">评分题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'scale', title:'您向朋友或同事推荐我们的可能性有多大？'})">量表题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'sort', title:'请给以下选项排序'})">排序题</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="5">
-              <template slot="title">
-                <span>快速创建个人信息</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type:'textInput', title: '姓名'})">姓名</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'radio', title: '性别'})">性别</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'numInput', title: '年龄'})">年龄</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'textInput', title: '地址'})">地址</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-          </el-menu>
-        </el-col>
-
         <el-container class="question-edit-main">
           <el-col :span="16" class>
             <div id="questionaire-wrapper" class>
@@ -148,32 +147,30 @@
               <!--问卷底部-->
               <end class="question-card"></end>
             </div>
-            <el-button type="primary" @click="emptyPage()">清空分页</el-button>
+            <el-button type="primary" @click="emptyPage">清空分页</el-button>
             <el-button type="primary" @click="previewQuestionire">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
             <el-button type="primary" @click="releaseAndShare">发布并分享</el-button>
           </el-col>
 
           <el-col :span="8" class>
+
             <!--问卷题目设置-->
             <transition name="question-setting">
               <question-setting
                 ref="qSetting" 
                 v-if="isClick"
                 :class="navBarFixed == true ? 'navBarWrap' :''"
+                :activeQindex="activeClass"
               ></question-setting> 
             </transition>
-            <qDate :dateValue="dateValue"></qDate>
-            <num-limit :num="num"></num-limit>
-            <el-button @click="changeClass(-1)">隐藏侧栏</el-button>
+
+            <!-- <el-button @click="changeClass(-1)">隐藏侧栏</el-button> -->
           </el-col>
         </el-container>
-
-        
-
-
       </el-row>
     </el-main>
+    </el-container>
   </el-container>
 </template>
 <script>
@@ -204,19 +201,10 @@ export default {
       isPagination: "isPagination",
       totalPage: "totalPage",
       totalQuestionNum: "totalQuestionNum",
-      beginTime: "beginTime",
-      endTime: "endTime",
-      num: "numLimit",
       questionnaireId: "questionnaireId",
       qState: "q_state",
       isClick: "isClick"
     }),
-    dateValue() {
-      let arr = [];
-      arr[0] = this.beginTime;
-      arr[1] = this.endTime;
-      return arr;
-    },
     qList: {
         get() {
           return this.$store.state.questionnaire.userQuestionList.questionList;
@@ -336,11 +324,13 @@ export default {
       this.add_qList_obj(qListObj);
     },
     changeClass(qIndex) {
-      if (qIndex>=0) {
+      if (qIndex>=0
+        && this.qList[qIndex].type !== "pagination"
+        && this.qList[qIndex].type !== "description") {
         // console.log("click qCard!");
         // console.log(qIndex);
         this.activeClass = qIndex;
-        this.set_isClick(true);
+        this.set_isClick(true);   
       } else {
         this.activeClass = -1;
         this.set_isClick(false);
@@ -378,6 +368,15 @@ export default {
       let qListObj = this.get_init();
       qListObj.type = "description";
       qListObj.title = "这是一段段落说明";
+      this.add_qList_obj(qListObj);
+      this.scrollTo(this.qList_length - 1);
+    },
+    // 添加新qCard时实现滚动到对应位置
+    scrollTo(qIndex) {
+      console.log("this.$refs.qCard[qIndex].scrollTop");
+      console.log(this.$refs.qCard[qIndex]);
+      // document.documentElement.scrollTop = this.$refs.qCard[qIndex].scrollTop;
+      // this.$refs.qCard[qIndex].scrollTop;
     },
     // 保存问卷按钮
     saveQuestionnaire() {
@@ -389,10 +388,8 @@ export default {
           type: "success"
         })
       })
-      .then(error => {
-        if (error) {
+      .catch(error => {
           this.$message.error("保存问卷失败，请重试");
-        }
       })
     },
     // 发布并分享按钮
@@ -408,14 +405,12 @@ export default {
         })
         this.$router.push({name:"releaseQuestionnaire", params:{qid:qid}});
       })
-      .then(error => {
-        if (error) {
+      .catch(error => {
           console.log(error)
           this.$message({
             message: "发布问卷失败，请重试",
             type: "error"
           })
-        }
       })
       
 
@@ -489,9 +484,7 @@ export default {
     // checkbox: MultipleAnswers,
     "qCard": () => import("@/components/question/QuestionCard.vue"),
     "pagination": () => import("@/components/question/QuestionPagination.vue"),
-    "qDate": () => import("@/components/question/QuestionDate.vue"),
     "bread-header": () => import("@/components/common/BreadHeader.vue"),
-    "num-limit": () => import("@/components/question/QuestionCounter.vue"),
     "question-setting": () => import("@/components/question/QuestionSetting.vue")
   }
 };
@@ -502,8 +495,12 @@ export default {
 }
 
 .question-edit-header {
-  background-color:#45B39D;
+  background-color:rgb(84,92,100);
   text-align: center;
+}
+.fixed {
+  position: fixed;
+  top:0;
 }
 .question-card {
   margin-left:2em;
@@ -532,7 +529,7 @@ body {
   opacity: 0;
 }
 .active {
-  border-color:royalblue;
+  border-color:rgb(0,128,128);
   border-width:2px;
 }
 .navBarWrap {

@@ -3,7 +3,7 @@
 <div>
   <el-breadcrumb separator-class="el-icon-arrow-right">
     <el-breadcrumb-item :to="{ path: '/' }">个人问卷中心</el-breadcrumb-item>
-    <el-breadcrumb-item>问卷编辑</el-breadcrumb-item>
+    <el-breadcrumb-item :to="{path: ''}">问卷编辑</el-breadcrumb-item>
     <el-breadcrumb-item>发布问卷</el-breadcrumb-item>
     <el-breadcrumb-item>统计报表</el-breadcrumb-item>
   </el-breadcrumb>
