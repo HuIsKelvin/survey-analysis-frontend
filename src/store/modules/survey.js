@@ -7,7 +7,7 @@ export default {
     // 答卷的题型的默认值
     valueType: {
       radio: 0,
-      checkbox: [],
+      checkBox: [],
       textarea: "",
       scale: 0,
       rate: 0,
@@ -85,13 +85,13 @@ export default {
           }
         },
         {
-          type: "textinput",
+          type: "textInput",
           index: 7,
           title: "文字输入题",
           isRequired: false
         },
         {
-          type: "numinput",
+          type: "numInput",
           index: 8,
           title: "数字输入题",
           isRequired: false

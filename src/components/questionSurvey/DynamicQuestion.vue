@@ -23,7 +23,7 @@
           <div v-if="setting.type === 'radio'">
             <single-chioce :setting="setting"></single-chioce>
           </div>
-          <div v-if="setting.type === 'checkbox'">
+          <div v-if="setting.type === 'checkBox'">
             <multible-chioce :setting="setting"></multible-chioce>
           </div>
           <div v-if="setting.type === 'textarea'">
