@@ -147,7 +147,11 @@
               <!--问卷底部-->
               <end class="question-card"></end>
             </div>
+<<<<<<< HEAD
             <el-button type="primary" @click="emptyPage">清空分页</el-button>
+=======
+            <el-button type="primary" @click="emptyPage()">清空分页</el-button>
+>>>>>>> 9d4e90b4079ff49341bceab696b13d95dcc81526
             <el-button type="primary" @click="previewQuestionire">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
             <el-button type="primary" @click="releaseAndShare">发布并分享</el-button>
@@ -276,6 +280,9 @@ export default {
       set_totalQNum: "set_totalQuestionNum",
       set_state: "set_state",
       set_isClick: "set_isClick",
+    }),
+    ...mapActions("survey", {
+      "setQuestionirePreview": "setQuestionire"
     }),
     ...mapActions("survey", {
       "setQuestionirePreview": "setQuestionire"

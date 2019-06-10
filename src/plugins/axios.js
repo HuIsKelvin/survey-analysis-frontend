@@ -14,7 +14,7 @@ import router from "../router";
 
 let config = {
   // baseURL: "http://localhost:8080",
-  baseURL: "http://111.230.29.219:8080",
+  baseURL: "http://47.103.9.83:8080",
   timeout: 5000
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   // timeout: 60 * 1000, // Timeout
