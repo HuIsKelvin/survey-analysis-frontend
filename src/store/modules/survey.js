@@ -107,7 +107,7 @@ export default {
     surveyQuestionList(state) {
       // 显示isShow==true的题
       return state.userQuestionList.questionList.filter(el => {
-        return el.isShow === true;
+        return el.isShow === true && el.type !== "pagination";
       });
     },
     surveyQuestionire(state) {
@@ -143,7 +143,8 @@ export default {
         answer: []
       };
       state.userQuestionList.questionList.forEach(el => {
-        if (el.type === "description") {
+        // 跳过 段落说明 和 分页
+        if (el.type === "description" || el.type === "pagination") {
           return;
         }
         let answer = {
@@ -161,6 +162,20 @@ export default {
         console.log("after update");
         console.log(state.answerSheet.answer[payload.qindex - 1]);
       }
+    },
+    // 跳转逻辑
+    jumpQestion(state, payload) {
+      // let qindex = payload.qindex;
+      // let jumpLogic = payload.jumpLogic;
+      // let opIndex = payload.opIndex;
+      // let endIndex = jumpLogic[opIndex].endValue;
+
+      // let i = qindex;
+      // while (i <= endIndex) {
+      //   if (i > qindex && i < endIndex) {
+      //     // set isShow = false
+      //   }
+      // }
     },
     // 发送已填写的问卷
     submitAnswerSheet(state, payload) {
@@ -228,16 +243,23 @@ export default {
       context.commit("prepareQuestionList");
       context.commit("generateAnswerSheet");
     },
+    // 将问卷对象 set 到 state
     setQuestionire(context, payload) {
       context.commit("setQuestionire", payload);
       // context.commit("generateAnswerSheet");
     },
+    // 生成答卷对象
     generateAnsSheet(context) {
       context.commit("generateAnswerSheet");
+    },
+    // 跳题逻辑
+    jumpQuestion(context, payload) {
+      context.commit("jumpQestion", payload);
     },
     updateValue(context, payload) {
       context.commit("updateValue", payload);
     },
+    // 提交问卷
     submitAnswerSheet(context, payload) {
       context.commit("submitAnswerSheet", payload);
     }
