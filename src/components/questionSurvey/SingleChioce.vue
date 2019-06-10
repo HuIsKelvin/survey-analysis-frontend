@@ -41,6 +41,11 @@ export default {
         this.updateValue({
           qindex: this.setting.index,
           value: val
+        });
+        this.jumpQuestion({
+          startIndex: this.setting.index,
+          jumpLogin: this.setting.jumpLogin,
+          
         })
       }
     },
@@ -59,7 +64,8 @@ export default {
       // })
     },
     ...mapActions("survey", {
-      "updateValue": "updateValue"
+      "updateValue": "updateValue",
+      "jumpQuestion": "jumpQuestion"
     })
   }
 }

@@ -1,3 +1,5 @@
+"use strict";
+
 import Vue from "vue";
 import ElementUI from 'element-ui'
 
@@ -29,10 +31,16 @@ export default {
           content: {
             options: ["ans1", "ans2", "ans3", "ans4"]
           },
-          jumpLogic: {
-            0: 3,
-            1: 5
-          }
+          jumpLogic: [
+            {
+              startValue: 0,
+              endValue: 5
+            },
+            {
+              startValue: 1,
+              endValue: 3
+            }
+          ]
         },
         {
           type: "checkBox",
@@ -125,6 +133,7 @@ export default {
       state.userQuestionList = payload.questionire;
       console.log("after set questionire");
       console.log(state.userQuestionList);
+      this.commit("survey/prepareQuestionList");
       this.commit("survey/generateAnswerSheet");
     },
     // 将接收的 questionList 进行整备，增加相应字段
@@ -165,17 +174,31 @@ export default {
     },
     // 跳转逻辑
     jumpQestion(state, payload) {
-      // let qindex = payload.qindex;
-      // let jumpLogic = payload.jumpLogic;
-      // let opIndex = payload.opIndex;
-      // let endIndex = jumpLogic[opIndex].endValue;
+      // 当前题目 index
+      let startIndex = payload.startIndex;
+      let jumpLogic = payload.jumpLogic;
+      // 当前选中的 选项
+      let option = payload.option;
+      if(!option) return;
+      // 跳转到的题目 index
+      let endIndex = jumpLogic[option].endValue;
+      // 找到这个 jumpLogic 中跳到最远的题
+      let maxEndIndex = 0;
+      jumpLogic.forEach(el => {
+        if(maxEndIndex < el.endValue) maxEndIndex = el.endValue;
+      })
+      // 问卷列表
+      let qList = state.userQuestionList.questionList;
 
-      // let i = qindex;
-      // while (i <= endIndex) {
-      //   if (i > qindex && i < endIndex) {
-      //     // set isShow = false
-      //   }
-      // }
+      let i = startIndex;
+      while (qList[i].index <= maxEndIndex) {
+        if (qList[i].index > startIndex && qList[i].index < endIndex) {
+          state.userQuestionList.questionList[i].isShow = false;
+        } else {
+          state.userQuestionList.questionList[i].isShow = true;
+        }
+        i++;
+      }
     },
     // 发送已填写的问卷
     submitAnswerSheet(state, payload) {
@@ -188,7 +211,14 @@ export default {
         this.commit("survey/prepareAnswerToSubmit");
         console.log(state.answerSheet);
         // 发送答卷
-        // axios.post("url/answersheet/" + qid)
+        axios.post("/answersheet/" + qid, state.userQuestionList)
+          .then(res => {
+            console.log("submit success!!!");
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          })
       } else {
         // 提示未填完
         ElementUI.Message({
