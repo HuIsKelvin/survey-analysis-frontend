@@ -21,7 +21,13 @@ let config = {
   // withCredentials: true, // Check cross-site Access-Control
 };
 
+let configVisual = {
+  baseURL: "http://47.103.9.83:4000",
+  timeout: 5000
+}
+
 const _axios = axios.create(config);
+const _axiosVisual = axios.create(configVisual);
 
 _axios.interceptors.request.use(
   function(config) {
@@ -62,6 +68,8 @@ _axios.interceptors.response.use(
 Plugin.install = function(Vue) {
   Vue.axios = _axios;
   window.axios = _axios;
+  Vue.axiosVisual = _axiosVisual;
+  window.axiosVisual = _axiosVisual;
   Object.defineProperties(Vue.prototype, {
     axios: {
       get() {
@@ -71,6 +79,16 @@ Plugin.install = function(Vue) {
     $axios: {
       get() {
         return _axios;
+      }
+    },
+    axiosVisual: {
+      get() {
+        return _axiosVisual;
+      }
+    },
+    $axiosVisual: {
+      get() {
+        return _axiosVisual;
       }
     }
   });

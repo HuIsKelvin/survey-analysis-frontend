@@ -16,7 +16,6 @@
           <el-menu-item index="2">
             <router-link :to="{name: 'report.answer'}" tag="div">查看答卷</router-link>
           </el-menu-item>
-          <!-- 头像 -->
         </el-menu>
       </el-header>
       <el-main class="main-content">
