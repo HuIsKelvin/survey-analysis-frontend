@@ -42,11 +42,14 @@ export default {
           qindex: this.setting.index,
           value: val
         });
-        this.jumpQuestion({
-          startIndex: this.setting.index,
-          jumpLogin: this.setting.jumpLogin,
-          
-        })
+        if(this.setting.jumpLogic) {
+          this.jumpQuestion({
+            startIndex: this.setting.index,
+            jumpLogic: this.setting.jumpLogic,
+            option: val
+          })
+        }
+        console.log("jump!");
       }
     },
     ...mapGetters("survey", {

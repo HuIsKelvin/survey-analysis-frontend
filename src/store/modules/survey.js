@@ -173,15 +173,19 @@ export default {
       }
     },
     // 跳转逻辑
+    // payload 包含 startIndex, jumpLogic, option
     jumpQestion(state, payload) {
       // 当前题目 index
-      let startIndex = payload.startIndex;
+      let startIndex = parseInt(payload.startIndex);
       let jumpLogic = payload.jumpLogic;
       // 当前选中的 选项
-      let option = payload.option;
+      let option = parseInt(payload.option);
       if(!option) return;
       // 跳转到的题目 index
-      let endIndex = jumpLogic[option].endValue;
+      let endIndex = -1;
+      if(jumpLogic[option - 1]) {
+        endIndex = parseInt(jumpLogic[option - 1].endValue);
+      }
       // 找到这个 jumpLogic 中跳到最远的题
       let maxEndIndex = 0;
       jumpLogic.forEach(el => {
@@ -190,7 +194,7 @@ export default {
       // 问卷列表
       let qList = state.userQuestionList.questionList;
 
-      let i = startIndex;
+      let i = (startIndex - 1) >= 0 ? (startIndex - 1) : 0;
       while (qList[i].index <= maxEndIndex) {
         if (qList[i].index > startIndex && qList[i].index < endIndex) {
           state.userQuestionList.questionList[i].isShow = false;
@@ -199,6 +203,7 @@ export default {
         }
         i++;
       }
+      console.log(state.userQuestionList.questionList);
     },
     // 发送已填写的问卷
     submitAnswerSheet(state, payload) {
@@ -210,8 +215,9 @@ export default {
         console.log("from vuex: submit answer");
         this.commit("survey/prepareAnswerToSubmit");
         console.log(state.answerSheet);
+        // state.answerSheet.quesId = 15626231503;
         // 发送答卷
-        axios.post("/answersheet/" + qid, state.userQuestionList)
+        axios.post("/answerSheet/save?qid=" + qid, state.userQuestionList)
           .then(res => {
             console.log("submit success!!!");
             console.log(res);

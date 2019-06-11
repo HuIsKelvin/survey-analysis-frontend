@@ -6,7 +6,8 @@
         <h1 class="survey-title">{{ questionName }}</h1>
         <!-- 问卷题目 -->
         <div class="survey-questions">
-          <el-form 
+          <el-form
+            class="answerForm"
             label-position="top"
             ref="answerForm"
             @submit.native.prevent>
@@ -14,7 +15,11 @@
               class="question-item"
               v-for="(setting, index) in questionList"
               :key="index">
-              <dynamic-question :setting="setting"></dynamic-question>
+              <dynamic-question
+                class="dynamic-question"
+                v-if="setting.isShow === true"
+                :setting="setting">
+              </dynamic-question>
             </div>
           </el-form>
         </div>
@@ -106,12 +111,16 @@ export default {
 
     .survey-questions{
       .question-item {
-        margin: 0 20px;
-        padding: 20px 0;
-        border-top: 1px solid #e0e0e0;
-
+        .dynamic-question {
+          margin: 0 20px;
+          padding: 20px 0;
+          border-top: 1px solid #e0e0e0;
+        }
+        
         &:last-of-type {
-          border-bottom: 1px solid #e0e0e0;
+          .dynamic-question {
+            border-bottom: 1px solid #e0e0e0;
+          }
         }
       }
     }
