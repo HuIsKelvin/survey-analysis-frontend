@@ -2,9 +2,13 @@
   <div id="survey-questionire">
     <div class="survey-container">
       <el-card shadow="always">
+
         <!-- 问卷标题 -->
         <h1 class="survey-title">{{ questionName }}</h1>
+
+        <!-- 问卷欢迎语 -->
         <p>{{ questionComment }}</p>
+
         <!-- 问卷题目 -->
         <div class="survey-questions">
           <el-form
@@ -24,6 +28,22 @@
             </div>
           </el-form>
         </div>
+
+        <!-- 分页 -->
+        <div
+          v-if="isPagination"
+          class="survey-pagination">
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            prev-text="上一页"
+            next-text="下一页"
+            :page-size="pagination.pageSize"
+            :total="totalPage"
+            @current-change="handlePageChange">
+          </el-pagination>
+        </div>
+
         <!-- 问卷操作 -->
         <div class="survey-operation">
           <el-button 
@@ -32,6 +52,7 @@
             :disabled="isSubmit === false">提交问卷
           </el-button>
         </div>
+
       </el-card>
     </div>
   </div>
@@ -57,14 +78,46 @@ export default {
   },
   data() {
     return {
-      questionList: this.questionire.questionList,
+      // questionList: this.questionire.questionList,
       questionName: this.questionire.name,
       questionComment: this.questionire.comment,
+      pagination: {
+        // 每页显示条目数，不要改
+        pageSize: 1,
+        currentPage: 1
+      },
       validateRules: {},
       // isSubmit: false
     }
   },
+  computed: {
+    // FIXME: 判断没有分页的情况
+    questionList() {
+      return this.questionire.questionList.filter(el => {
+        return (el.isShow === true) && (el.currentPage === this.pagination.currentPage) && (el.type !== "pagination");
+      });
+    },
+    isPagination() {
+      if(this.questionire.pagination.isPagination === 'true') {
+        return true
+      } else {
+        return false
+      }
+    },
+    totalPage() {
+      if(this.questionire.pagination.totalPage) {
+        return parseInt(this.questionire.pagination.totalPage);
+      } else {
+        return 1;
+      }
+    }
+  },
+  mounted() {
+    console.log("is pagi? " + this.pagination.isPagination);
+  },
   methods: {
+
+    // 提交答卷
     submitQuestionire() {
       console.log("from button: click to submit answer");
       this.submitAnswerSheet({
@@ -79,6 +132,14 @@ export default {
       //   }
       // });
     },
+
+    // 页码变化事件
+    handlePageChange(curPage) {
+      console.log("当前页：" + curPage);
+      this.pagination.currentPage = curPage;
+      // this.setCurrentPage({ page: curPage });
+    },
+
     // 生成校验规则
     generateValidateRules() {
       let rule = { required: true, message: "此项为必填", trigger: "change" }
@@ -90,6 +151,7 @@ export default {
         });
     },
     ...mapActions("survey", {
+      // "setCurrentPage": "setCurrentPage",
       "submitAnswerSheet": "submitAnswerSheet"
     })
   }

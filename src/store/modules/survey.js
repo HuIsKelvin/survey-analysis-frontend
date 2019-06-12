@@ -22,9 +22,6 @@ export default {
     // 是否提交答卷
     submitFlag: false,
 
-    // 当前页码
-    curPage: 1,
-
     // 问卷对象
     userQuestionList: {
       name: "my first questionire",
@@ -121,12 +118,14 @@ export default {
     }
   },
   getters: {
-    surveyQuestionList(state) {
-      // 显示isShow==true的题
-      return state.userQuestionList.questionList.filter(el => {
-        return el.isShow === true && el.type !== "pagination";
-      });
-    },
+    // surveyQuestionList(state) {
+    //   // 显示isShow==true的题
+    //   let result = state.userQuestionList.questionList.filter(el => {
+    //     return (el.isShow === true) && (el.currentPage === state.currentPage) && (el.type !== "pagination");
+    //   });
+    //   console.log("show question: " + result);
+    //   return result;
+    // },
     surveyQuestionire(state) {
       return state.userQuestionList;
     },
@@ -178,6 +177,7 @@ export default {
       console.log("generate answerSheet");
       console.log(state.answerSheet);
     },
+
     // 更新答卷的值
     // payload = {qindex:number, value: number|array}
     updateValue(state, payload) {
@@ -187,6 +187,7 @@ export default {
         console.log(state.answerSheet.answer[payload.qindex - 1]);
       }
     },
+
     // 跳转逻辑
     // payload 包含 startIndex, jumpLogic, option
     jumpQestion(state, payload) {
@@ -220,6 +221,7 @@ export default {
       }
       console.log(state.userQuestionList.questionList);
     },
+
     // 发送已填写的问卷
     submitAnswerSheet(state, payload) {
       let qid = payload.qid;
@@ -249,6 +251,7 @@ export default {
         });
       }
     },
+
     // 遍历检查必做题是否已做
     checkRequiredQuestion(state) {
       state.submitFlag = true;
@@ -266,6 +269,7 @@ export default {
         }
       })
     },
+
     // 发送答卷前，预处理
     // 将非必答题，且未答的题目答案，设为null
     prepareAnswerToSubmit(state) {
@@ -289,27 +293,34 @@ export default {
     }
   },
   actions: {
+
     // 用于测试，到时删除此方法
     prepareQuestionList(context) {
       context.commit("prepareQuestionList");
       context.commit("generateAnswerSheet");
     },
+
     // 将问卷对象 set 到 state
     setQuestionire(context, payload) {
       context.commit("setQuestionire", payload);
       // context.commit("generateAnswerSheet");
     },
+
     // 生成答卷对象
     generateAnsSheet(context) {
       context.commit("generateAnswerSheet");
     },
+
     // 跳题逻辑
     jumpQuestion(context, payload) {
       context.commit("jumpQestion", payload);
     },
+
+    // 更新某题目答案
     updateValue(context, payload) {
       context.commit("updateValue", payload);
     },
+
     // 提交问卷
     submitAnswerSheet(context, payload) {
       context.commit("submitAnswerSheet", payload);
