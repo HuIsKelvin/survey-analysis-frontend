@@ -1,12 +1,18 @@
 
 <template>
-    <div class="test">
-        {{ questionnaire }}
+    <div class="analysis-container">
+        <div v-for="(question, index) in questionnaire" :key="index">
+            <div class="question-title">
+               {{ question.title }}
+            </div>
+            <dynamic-report :report="question">
+            </dynamic-report>
+        </div>
     </div>
-
 </template>
 
 <script>
+import DynamicReport from "../../components/report/DynamicReport.vue";
 export default {
     data() {
         return {
@@ -21,6 +27,9 @@ export default {
         .catch(error => {
             console.log(error);
         })
+    },
+    components: {
+        "dynamic-report": DynamicReport,
     }
 
     
