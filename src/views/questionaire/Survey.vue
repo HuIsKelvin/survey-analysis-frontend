@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     ...mapGetters("survey", {
-      "questionList": "surveyQuestionList",
+      // "questionList": "surveyQuestionList",
       "questionire": "surveyQuestionire"
     })
   },
@@ -27,19 +27,25 @@ export default {
     // axios.get()
     console.log("qestion id: " + this.$route.params.qid);
     let qid = this.$route.params.qid;
-    // axios.get("..." + qid)
-    //   .then(res => {
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   })
+    axios.get("/questionnaires/" + qid)
+      .then(res => {
+        console.log("get questionire by qid");
+        console.log(res);
+        this.setQuestionire({
+          questionire: res.data
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      })
     // this.gerAnswerSheet();
     this.prepareQuestionList();
   },
   methods: {
     ...mapActions("survey", {
       // gerAnswerSheet: "generateAnsSheet",
-      prepareQuestionList: "prepareQuestionList"
+      "prepareQuestionList": "prepareQuestionList",
+      "setQuestionire": "setQuestionire"
     })
   }
 }

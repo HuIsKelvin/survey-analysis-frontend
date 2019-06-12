@@ -6,10 +6,11 @@ import ElementUI from 'element-ui'
 export default {
   namespaced: true,
   state: {
+
     // 答卷的题型的默认值
     valueType: {
       radio: 0,
-      checkBox: [],
+      checkbox: [],
       textarea: "",
       scale: 0,
       rate: 0,
@@ -17,8 +18,14 @@ export default {
       textInput: "",
       numInput: 0
     },
+
     // 是否提交答卷
     submitFlag: false,
+
+    // 当前页码
+    curPage: 1,
+
+    // 问卷对象
     userQuestionList: {
       name: "my first questionire",
       id: 123456,
@@ -43,7 +50,7 @@ export default {
           ]
         },
         {
-          type: "checkBox",
+          type: "checkbox",
           index: 2,
           title: "题目2",
           isRequired: false,
@@ -106,6 +113,8 @@ export default {
         }
       ]
     },
+
+    // 答卷对象
     answerSheet: {
       quesId: 0,
       answer: []
@@ -132,19 +141,23 @@ export default {
     setQuestionire(state, payload) {
       state.userQuestionList = payload.questionire;
       console.log("after set questionire");
-      console.log(state.userQuestionList);
+      // console.log(state.userQuestionList);
       this.commit("survey/prepareQuestionList");
       this.commit("survey/generateAnswerSheet");
     },
+
     // 将接收的 questionList 进行整备，增加相应字段
     prepareQuestionList(state) {
       state.userQuestionList.questionList.forEach(element => {
         Vue.set(element, "isShow", true);
+
         // 增加提示字段
         // Vue.set(element, "tipMsg", "");
       });
-      console.log(state.userQuestionList.questionList);
+      console.log("prepare questionList");
+      // console.log(state.userQuestionList.questionList);
     },
+
     // 生成默认答卷
     generateAnswerSheet(state) {
       state.answerSheet = {
@@ -152,16 +165,18 @@ export default {
         answer: []
       };
       state.userQuestionList.questionList.forEach(el => {
+
         // 跳过 段落说明 和 分页
-        if (el.type === "description" || el.type === "pagination") {
-          return;
-        }
+        if (el.type === "description" || el.type === "pagination") { return; }
+
         let answer = {
           type: el.type,
           data: state["valueType"][el.type]
         };
         state.answerSheet.answer.push(answer);
       });
+      console.log("generate answerSheet");
+      console.log(state.answerSheet);
     },
     // 更新答卷的值
     // payload = {qindex:number, value: number|array}
@@ -217,7 +232,7 @@ export default {
         console.log(state.answerSheet);
         // state.answerSheet.quesId = 15626231503;
         // 发送答卷
-        axios.post("/answerSheet/save?qid=" + qid, state.userQuestionList)
+        axios.post("/answerSheet/save?qid=" + qid, state.answerSheet)
           .then(res => {
             console.log("submit success!!!");
             console.log(res);

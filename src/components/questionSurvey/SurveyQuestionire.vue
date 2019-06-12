@@ -4,6 +4,7 @@
       <el-card shadow="always">
         <!-- 问卷标题 -->
         <h1 class="survey-title">{{ questionName }}</h1>
+        <p>{{ questionComment }}</p>
         <!-- 问卷题目 -->
         <div class="survey-questions">
           <el-form
@@ -17,7 +18,7 @@
               :key="index">
               <dynamic-question
                 class="dynamic-question"
-                v-if="setting.isShow === true"
+                v-if="setting.isShow === true && setting.type !== 'pagination'"
                 :setting="setting">
               </dynamic-question>
             </div>
@@ -58,6 +59,7 @@ export default {
     return {
       questionList: this.questionire.questionList,
       questionName: this.questionire.name,
+      questionComment: this.questionire.comment,
       validateRules: {},
       // isSubmit: false
     }
