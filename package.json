@@ -9,9 +9,8 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "echarts": "^4.1.0",
+    "echarts": "^4.2.1",
     "element-ui": "^2.4.5",
-    "v-charts": "^1.19.0",
     "vue": "^2.6.6",
     "vue-axios": "^2.1.4",
     "vue-router": "^3.0.1",
