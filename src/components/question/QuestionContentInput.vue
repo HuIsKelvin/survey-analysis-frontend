@@ -14,6 +14,13 @@
     contenteditable>
     {{this.qContent}}
     </p>
+    <!-- <el-input 
+      class="question-content-input"
+      type="textarea"
+      autosize
+      resize="none">
+    {{this.qContent}}
+    </el-input> -->
   </div>
 </template>
 <script>
@@ -61,7 +68,7 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 .question-content-input {
     line-height: 2.4rem;
     border: 1px solid transparent;
@@ -78,5 +85,8 @@ export default {
     /* background-color: #e5e9f2; */
 }
 
+.question-content-input .el-textarea__inner{ 
+  /* resize: none; */
+}
 
 </style>
