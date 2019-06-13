@@ -5,6 +5,7 @@
 </template>
 
 <script>
+require('echarts-wordcloud');
 import echarts from "echarts"
 
 export default {
@@ -14,7 +15,7 @@ export default {
     mounted: function() {
         let charts = echarts.init(this.$refs.chart)
         charts.setOption(this.options)
-        console.log(this.options)
+        //console.log(this.options)
     },
     methods: {
     }

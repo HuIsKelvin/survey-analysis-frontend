@@ -14,7 +14,7 @@
             <router-link :to="{name: 'report.analysis'}" tag="div">统计分析</router-link>
           </el-menu-item>
           <el-menu-item index="2">
-            <router-link :to="{name: 'report.answer'}" tag="div">查看答卷</router-link>
+            <el-button type="primary" @click="download_excel">下载答卷</a></el-button>
           </el-menu-item>
         </el-menu>
       </el-header>
@@ -33,6 +33,30 @@ export default {
         return {
             activeIndex: "1",
         }
+    },
+    methods: {
+      download_excel: function() {
+        let options = {
+          responseType: 'blob'
+        }
+        axiosVisual.get("excel/"+this.$route.params.qid, options)
+        .then(response => {
+          const content = response.data;
+          const blob = new Blob([content])
+          const filename = `${this.$route.params.qid}.xlsx`
+          const elink = document.createElement("a");
+          elink.download = filename;
+          //elink.style.display = "none";
+          elink.href =  URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          URL.revokeObjectURL(elink);
+          document.body.removeChild(elink);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
     }
     
 }

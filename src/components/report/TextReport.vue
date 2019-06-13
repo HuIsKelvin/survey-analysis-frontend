@@ -4,6 +4,9 @@
 <div>
     <charts :options="JSON.parse(report.data.bar)"></charts>
     <charts :options="JSON.parse(report.data.word_cloud)"></charts>
+    <!--
+    <img :src="'data:image/png;base64,'+report.data.word_cloud_python">
+    -->
 </div>
 </template>
 

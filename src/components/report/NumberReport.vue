@@ -25,7 +25,6 @@ export default {
         report: null,
     },
     mounted: function() {
-        console.log(this.report.data.description)
     },
     computed: {
         "desc_table": function() {
