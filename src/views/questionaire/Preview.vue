@@ -27,7 +27,9 @@ export default {
     },
     methods: {
         backToEdit() {
-            this.$router.push({name: "questionEdit"})
+            // FIXME: 需判断 url 历史
+            // this.$router.push({name: "questionEdit"});
+            this.$router.back(-1);
         }
     }
 

@@ -141,7 +141,8 @@ export default {
     setQuestionnaire(state, payload) {
       state.userQuestionList = payload.questionnaire;
       console.log("after set questionnaire");
-      // console.log(state.userQuestionList);
+      console.log(state.userQuestionList);
+      console.log("----------------------");
       this.commit("survey/prepareQuestionList");
       this.commit("survey/generateAnswerSheet");
     },

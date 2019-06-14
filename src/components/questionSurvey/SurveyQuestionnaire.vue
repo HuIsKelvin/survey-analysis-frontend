@@ -107,12 +107,12 @@ export default {
       });
     },
     isPagination() {
-      // if(this.questionnaire.pagination.isPagination === 'true') {
-      //   return true
-      // } else {
-      //   return false
-      // }
-      return this.questionnaire.pagination.isPagination === 'true' ? true : false;
+      if(this.questionnaire.pagination.isPagination === 'true') {
+        return true
+      } else {
+        return false
+      }
+      // return this.questionnaire.pagination.isPagination === 'true' ? true : false;
     },
     totalPage() {
       if(this.questionnaire.pagination.totalPage) {
@@ -123,7 +123,7 @@ export default {
     }
   },
   mounted() {
-    console.log("is pagi? " + this.pagination.isPagination);
+    console.log("is pagi? " + this.isPagination);
   },
   methods: {
     ...mapActions("survey", {
