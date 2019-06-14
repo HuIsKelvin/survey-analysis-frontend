@@ -12,15 +12,18 @@
       </el-checkbox-group>
     </div>
     <div class="sort-result">
-      <p>已选：</p>
-      <ol class="result-list">
-        <li
-          class="result-item"
-          v-for="(checkedIndex, index) in checkBox"
-          :key="index">
-          {{ options[checkedIndex - 1] }}
-        </li>
-      </ol>
+      <p>排序结果：</p>
+      <ul class="result-list">
+        <transition-group name="list-item" tag="div">
+          <li
+            class="result-item"
+            v-for="(checkedIndex, index) in checkBox"
+            :key="index">
+            <span class="result-item-index">{{ index }}</span> 
+            <span class="result-item-option">{{ options[checkedIndex - 1] }}</span>
+          </li>
+        </transition-group>
+      </ul>
     </div>
   </div>
 </template>
@@ -63,7 +66,26 @@ export default {
 #sort-question {
   .sort-result {
     ol {
-      list-style-position: outside
+      list-style-position: outside;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-inline-start: 10px;
+    }
+
+    .result-list {
+      .result-item {
+        .result-item-index {
+          font-weight: bold;
+          background-color: #339999;
+          color: #fff;
+          min-width: 10px;
+          border-radius: 5px;
+          padding: 5px;
+          margin-right: 15px;
+        }
+      }
     }
   }
 }

@@ -32,7 +32,7 @@ export default {
               this.$message.error("问卷名称不能为空");
           } else {
               axios.post("/questionnaires/empty", {
-                  userId: this.$store.state.userId,
+                  userId: this.$store.state.user.userId,
                   name: this.questionnaireName
               })
               .then(response => {
@@ -40,7 +40,7 @@ export default {
                   let qid = response.data;
 
                   let uQL = {
-                    userId: this.$store.state.userId,
+                    userId: this.$store.state.user.userId,
                     name: this.questionnaireName,
                     questionnaireId: qid,
                     comment: "",
@@ -55,6 +55,7 @@ export default {
                     totalQuestionNum: 0,
                     questionList: []
                   }
+                  console.log("user id" + this.$store.state.user.userId);
                   this.set_uQL(uQL); // 初始化问卷
                   this.$message.success("创建问卷成功,跳转到编辑页面");
                   this.$router.push({name:"questionEdit", params:{qid:qid}});

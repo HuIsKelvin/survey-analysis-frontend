@@ -12,15 +12,12 @@ import CreateQuestionnaire from "./views/questionaire/CreateQuestionnaire.vue";
 // import store from "./store/store";
 import QuestionEdit from "./views/questionaire/QuestionEdit.vue";
 import Release from "./views/questionaire/Release.vue";
-<<<<<<< HEAD
 import testFix from "@/components/question/testFix.vue";
-=======
 
 import Report from  './views/questionaire/Report.vue';
 import Analysis from './views/report/Analysis.vue';
 import AdvancedAnalysis from './views/report/AdvancedAnalysis.vue';
 
->>>>>>> ac21fb8e00603524349baa020d4777ebf9504c85
 Vue.use(Router);
 
 export default new Router({
@@ -83,6 +80,11 @@ export default new Router({
       component: Survey
     },
     {
+      path: "/answerSuccess",
+      name: "AnswerSuccess",
+      component: () => import("./views/questionaire/AnswerSuccess.vue") 
+    },
+    {
       path: "/findPwd",
       name: "findPwd",
       component: FindPwd
@@ -97,13 +99,11 @@ export default new Router({
       name: "releaseQuestionnaire",
       component: Release
     },
-<<<<<<< HEAD
     { 
       path: "/testFix",
       name: "testFix",
       component: testFix
-    }
-=======
+    },
     {
       path: "/report/:qid",
       component: Report,
@@ -126,7 +126,11 @@ export default new Router({
         },
       ]
     },
->>>>>>> ac21fb8e00603524349baa020d4777ebf9504c85
+    {
+      path: "/error",
+      name: "error",
+      component: () => import("./views/Error")
+    }
   ]
   /*
   beforeEach: (to, from, next) => {

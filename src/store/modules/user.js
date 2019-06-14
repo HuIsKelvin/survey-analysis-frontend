@@ -8,6 +8,7 @@ export default {
   },
   mutations: {
     [types.SIGNIN]: (state, data) => {
+      console.log(data);
       state.token = data.token;
       state.userId = data.userId;
       state.name = data.name;
