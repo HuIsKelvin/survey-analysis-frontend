@@ -1,61 +1,54 @@
 <template>
-<el-form class="question-edit-box">
-    <p
-    @keyup="changeQuestionEnd($event)"
-    class="input title" contenteditable>{{this.endContents}}</p>
-</el-form>
+<el-card>
+    <div class="end-input">
+        <p
+        @keyup="changeQuestionEnd($event)"
+        contenteditable>{{endContents}}</p>
+    </div>
+</el-card>
 </template>
 <script>
-import {mapMutations} from "vuex"
+import {mapMutations , mapGetters} from "vuex"
 
 export default {
     name:"end",
     data() {
         return{
-            endContents:"您已完成本次问卷，感谢您的帮助与支持!"
         }
+    },
+    computed: {
+        ...mapGetters({
+            endContents: "endContents"
+        })
     },
     methods:{
         changeQuestionEnd($event){
             this.set_end($event.target.textContent);
         },
         ...mapMutations({
-            set_end: "set_questionnaire_end",
+            set_end: "set_end_contents",
         })
+
     },
 }
 </script>
 <style>
-.input {
+.end-input {
     line-height: 2.4rem;
     border: 1px solid transparent;
-    background-color: transparent;
     margin: 0;
     outline: none;
     padding: 0 .2rem;
     border-radius: .3rem;
-    color: #777;
-    text-align: left;
+    text-align: center;
 }
-.title {
-    font-size: font-size-default;
-    line-height: 1.5;
-    width: 100%;
-    max-width: 100%;
-    border-radius: .3rem;
-    line-height: 2.4rem;
-
+.end-input:hover{
+    border-width: 1px solid transparent;
+    border-style: dashed;
+    border-color:#777;
+    /* background-color: #e5e9f2; */
 }
-.intro {
-    /* font-size: font-size-default; */
-    line-height: 1;
-    width: 100%;
-    max-width: 100%;
-    border-radius: .3rem;
-    line-height: 2.4rem;
-}
-.input:hover{
-    border-color: black;
-    background-color: #e5e9f2;
+.end-input p{
+    outline: none;
 }
 </style>

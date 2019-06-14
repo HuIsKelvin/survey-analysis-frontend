@@ -12,7 +12,7 @@ import CreateQuestionnaire from "./views/questionaire/CreateQuestionnaire.vue";
 // import store from "./store/store";
 import QuestionEdit from "./views/questionaire/QuestionEdit.vue";
 import Release from "./views/questionaire/Release.vue";
-
+import testFix from "@/components/question/testFix.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -88,6 +88,11 @@ export default new Router({
       path: "/releaseQuestionnaire/:qid",
       name: "releaseQuestionnaire",
       component: Release
+    },
+    { 
+      path: "/testFix",
+      name: "testFix",
+      component: testFix
     }
   ]
   /*

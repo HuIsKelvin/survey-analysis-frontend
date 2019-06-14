@@ -1,6 +1,6 @@
 /**
  * 在main.js导入本文件并注册
- * 用于组装getters.jsquestionnaire.js,
+ * 用于组装getters.js questionnaire.js,
  */
 import Vue from "vue";
 import Vuex from "vuex";

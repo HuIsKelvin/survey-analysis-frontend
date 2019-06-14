@@ -16,78 +16,110 @@
 * @version
 -->
 <template>
-  <el-card class="question-card">
-    <!--如果是分页则显示调用分页组件-->
-    <div v-if="question.type == 'pagination'">
-      <pagination :question="question" :qIndex="qIndex"></pagination>
-    </div>
+  <el-card class="question-card" shadow="hover">
+    <el-row>
+      <!--如果是分页则显示调用分页组件-->
+      <div v-if="question.type == 'pagination'">
+        <el-col :span="22">
+          <pagination :question="question" :qIndex="qIndex" style="line-heigth:18px"></pagination>
+        </el-col>
+        <el-col :span="2" class="tool-col">
+            <el-tooltip class="item" effect="dark" content="删除分页" placement="top">
+              <el-button type="text" style="font-size:18px;" size="mini" @click="deleteCard"><i class="el-icon-close"></i></el-button>
+            </el-tooltip>
+        </el-col>
+      </div>
     
-    <!--如果不是分页，则显示以下内容-->
-    <div v-if="question.type !== 'pagination'">
-      <div>{{this.question.index}}</div>
-      <!--题目内容组件-->
-      <div>
-        <!--题目内容输入组件-->
-        <q-content
-        :qContent="question.title"
-        :qType="question.type"
-        :qIndex="qIndex">
-        </q-content>
-        <!-- <el-button style="float: right; padding: 3px 0" type="text"><i class="el-icon-delete"></i></el-button> -->
+      <!--如果不是分页，则显示以下内容-->
+      <div v-if="question.type !== 'pagination'">
+
+        <!--题目序号or备注符号-->
+        <el-col :span="1">
+          <div v-if="question.type !== 'description'" style="line-height:2.4rem">{{this.question.index}}.</div>
+          <div v-if="question.type == 'description'" style="line-height:2.4rem"><i class="el-icon-info"></i></div>
+        </el-col>
+
+        <!--题目主体部分-->
+        <el-col :span="17">
+          <!--题目内容组件-->
+          <div>
+            <!--题目内容输入组件-->
+            <q-content
+            :qContent="question.title"
+            :qType="question.type"
+            :qIndex="qIndex">
+            </q-content>
+            <!-- <el-button style="float: right; padding: 3px 0" type="text"><i class="el-icon-delete"></i></el-button> -->
+          </div>
+
+          <!--单选、多选、排序组件-->
+          <div v-if="question.type == 'radio' || question.type == 'checkbox' || question.type == 'sort'">
+            <!--调用选项组件-->
+            <choiceList
+            :choiceType="question.type"
+            :listContent="question.content"
+            :qIndex="qIndex">
+            </choiceList>
+          </div>
+
+          <!--文字输入组件-->
+          <div v-if="question.type == 'textarea'">
+            <el-input
+              type="textarea"
+              :rows="2"
+              placeholder="请输入内容"
+              disabled>
+            </el-input>
+          </div>
+
+          <!--短文字输入textInput || 数字输入numInput-->
+          <div v-if="question.type == 'textInput' || question.type == 'numInput'">
+            <el-input type="text"
+              :placeholder="question.type == 'textInput' ? '请输入一段文字' : '请输入一个数字（只能输入数字的输入框）'"
+              disabled>
+            </el-input>
+          </div>
+
+          <!--评分星星组件-->
+          <div v-if="question.type == 'rate'">
+            <!-- <el-rate>
+            </el-rate> -->
+            <q-rate
+            :qIndex="qIndex"
+            :question="question">
+            </q-rate>
+          </div>
+
+          <!--量尺组件-->
+          <div v-if="question.type == 'scale'">
+            <el-slider
+            :step="1" 
+            :max="question.content.max"
+            show-stops>
+            </el-slider>
+          </div>
+        </el-col>
+
+        <!--工具栏-->
+        <el-col :span="6" class="tool-col">
+          <div style="line-height:2.4rem">
+            <el-tooltip class="item" effect="dark" content="删除" placement="top">
+              <el-button type="text" style="font-size:18px;" @click="deleteCard">
+                <font-awesome-icon class="far-icon" :icon="['far', 'trash-alt']"/>
+              </el-button>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" content="复制" placement="top">
+              <el-button type="text" style="font-size:18px;" @click="copyCard">
+                <font-awesome-icon class="far-icon" :icon="['far', 'copy']"/>
+              </el-button>
+            </el-tooltip>
+          </div>
+        </el-col>
       </div>
+    </el-row>
 
-      <!--单选、多选、排序组件-->
-      <div v-if="question.type == 'radio' || question.type == 'checkbox' || question.type == 'sort'">
-        <!--调用选项组件-->
-        <choiceList
-        :choiceType="question.type"
-        :listContent="question.content"
-        :qIndex="qIndex">
-        </choiceList>
-      </div>
-
-      <!--文字输入组件-->
-      <div v-if="question.type == 'textarea'">
-        <el-input
-          type="textarea"
-          :rows="2"
-          placeholder="请输入内容"
-          disabled>
-        </el-input>
-      </div>
-
-      <!--短文字输入textInput || 数字输入numInput-->
-      <div v-if="question.type == 'textInput' || question.type == 'numInput'">
-        <el-input type="text"
-          :placeholder="question.type == 'textInput' ? '请输入一段文字' : '请输入一个数字（只能输入数字的输入框）'"
-          disabled>
-        </el-input>
-      </div>
-
-      <!--评分星星组件-->
-      <div v-if="question.type == 'rate'">
-        <!-- <el-rate>
-        </el-rate> -->
-        <q-rate
-        :qIndex="qIndex"
-        :question="question">
-        </q-rate>
-      </div>
-
-      <!--量尺组件-->
-      <div v-if="question.type == 'scale'">
-        <el-slider
-        :step="1" 
-        :max="question.content.max"
-        show-stops>
-        </el-slider>
-      </div>
-
-    </div>
-
-    <!--工具栏-->
-    <el-button @click="deleteCard">删除本题</el-button>
-
+    <el-row>
+    </el-row>
   </el-card>
 </template>
 <script>
@@ -133,7 +165,8 @@ export default {
       set_totalPage: "set_totalPage",
       set_isRequired: "set_isRequired",
       set_totalQNum: "set_totalQuestionNum",
-      set_qList: "set_questionList"
+      set_qList: "set_questionList",
+      add_question: "add_questionList_object"
       
     }),
     deleteCard() {
@@ -157,6 +190,28 @@ export default {
         // 更新题号和currentPage
         let update_qList = this.update_index_currentPage(qList);
         this.set_qList(update_qList);
+    },
+    copyCard() {
+      // 不能直接copyQuestion = this.question
+      let copyQuestion = {
+        type: this.question.type,
+        index: 0,
+        currentPage: 0,
+        title:this.question.title,
+        isRequired: this.question.isRequired,
+        isDraggable: true,
+        content:this.question.content,
+        // 添加时默认没有逻辑跳转
+        jumpLogic: []
+      };
+      if (copyQuestion.type == 'description') {
+        // nothing 
+      } else {
+        let tQN = this.totalQuestionNum;
+        copyQuestion.index = tQN + 1;
+        this.set_totalQNum(tQN+1);
+      }
+      this.add_question(copyQuestion);
     },
     update_index_currentPage(questionList) {
       let qList = questionList;
@@ -192,5 +247,13 @@ export default {
   margin-top: 1.5em;
   margin-bottom: 1.5em;
 }
-
+.question-card:hover .tool-col {
+  display:block;
+}
+.tool-col {
+  display:none
+}
+.far-icon {
+  color:rgb(0,128,128);
+}
 </style>
