@@ -148,7 +148,7 @@
               <end class="question-card"></end>
             </div>
             <el-button type="primary" @click="emptyPage">清空分页</el-button>
-            <el-button type="primary" @click="previewQuestionire">预览问卷</el-button>
+            <el-button type="primary" @click="previewQuestionnaire">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
             <el-button type="primary" @click="releaseAndShare">发布并分享</el-button>
           </el-col>
@@ -278,10 +278,10 @@ export default {
       set_isClick: "set_isClick",
     }),
     ...mapActions("survey", {
-      "setQuestionirePreview": "setQuestionire"
+      "setQuestionnairePreview": "setQuestionnaire"
     }),
     ...mapActions("survey", {
-      "setQuestionirePreview": "setQuestionire"
+      "setQuestionnairePreview": "setQuestionnaire"
     }),
     get_init() {
       let initialType = {
@@ -423,9 +423,9 @@ export default {
         this.set_totalPage(0);
     },
     // 预览问卷
-    previewQuestionire() {
-      this.setQuestionirePreview({
-        questionire: this.userQuestionList
+    previewQuestionnaire() {
+      this.setQuestionnairePreview({
+        questionnaire: this.userQuestionList
       });
       this.$router.push({
         name: "preview"

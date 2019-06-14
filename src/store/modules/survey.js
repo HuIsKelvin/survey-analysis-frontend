@@ -25,7 +25,7 @@ export default {
 
     // 问卷对象
     userQuestionList: {
-      name: "my first questionire",
+      name: "my first questionnaire",
       id: 123456,
       questionList: [
         {
@@ -127,7 +127,7 @@ export default {
     //   console.log("show question: " + result);
     //   return result;
     // },
-    surveyQuestionire(state) {
+    surveyQuestionnaire(state) {
       return state.userQuestionList;
     },
     answerSheet(state) {
@@ -138,9 +138,9 @@ export default {
     }
   },
   mutations: {
-    setQuestionire(state, payload) {
-      state.userQuestionList = payload.questionire;
-      console.log("after set questionire");
+    setQuestionnaire(state, payload) {
+      state.userQuestionList = payload.questionnaire;
+      console.log("after set questionnaire");
       // console.log(state.userQuestionList);
       this.commit("survey/prepareQuestionList");
       this.commit("survey/generateAnswerSheet");
@@ -297,8 +297,8 @@ export default {
     },
 
     // 将问卷对象 set 到 state
-    setQuestionire(context, payload) {
-      context.commit("setQuestionire", payload);
+    setQuestionnaire(context, payload) {
+      context.commit("setQuestionnaire", payload);
       // context.commit("generateAnswerSheet");
     },
 

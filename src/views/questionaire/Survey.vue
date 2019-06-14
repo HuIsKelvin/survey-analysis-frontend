@@ -1,25 +1,25 @@
 <template>
   <div id="survey">
-    <survey-questionire 
-      :questionire="questionire"
+    <survey-questionnaire 
+      :questionnaire="questionnaire"
       :isSubmit="true">
-    </survey-questionire>
+    </survey-questionnaire>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import SurveyQuestionire from "@/components/questionSurvey/SurveyQuestionire";
+import SurveyQuestionnaire from "@/components/questionSurvey/SurveyQuestionnaire";
 
 export default {
   name: "Survey",
   components: {
-    "survey-questionire": SurveyQuestionire
+    "survey-questionnaire": SurveyQuestionnaire
   },
   computed: {
     ...mapGetters("survey", {
       // "questionList": "surveyQuestionList",
-      "questionire": "surveyQuestionire"
+      "questionnaire": "surveyQuestionnaire"
     })
   },
   created() {
@@ -28,12 +28,12 @@ export default {
     let qid = this.$route.params.qid;
     axios.get("/questionnaires/" + qid)
       .then(res => {
-        console.log("get questionire by qid!");
+        console.log("get questionnaire by qid!");
         // console.log(res);
         const statusCode = res.status;
         const questionnaire = res.data;
 
-        // 判断状态码
+        // 判断网络状态码
         switch(statusCode) {
           case 404:
             this.$router.push({
@@ -42,8 +42,8 @@ export default {
             break;
 
           case 200:
-            this.setQuestionire({
-              questionire: questionnaire
+            this.setQuestionnaire({
+              questionnaire: questionnaire
             });
             break;
         }
@@ -58,7 +58,7 @@ export default {
   methods: {
     ...mapActions("survey", {
       "prepareQuestionList": "prepareQuestionList",
-      "setQuestionire": "setQuestionire"
+      "setQuestionnaire": "setQuestionnaire"
     })
   }
 }

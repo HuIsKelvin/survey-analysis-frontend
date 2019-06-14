@@ -16,15 +16,18 @@
             label-position="top"
             ref="answerForm"
             @submit.native.prevent>
-            <transition-group name="list-item" tag="div">
+            <transition-group name="list-item" tag="div"
+          >
               <div
                 class="question-item"
                 v-for="(setting, index) in questionList"
-                :key="index + setting.title">
+                :key="index + setting.title"
+              >
                   <dynamic-question
                     class="dynamic-question"
                     v-if="setting.isShow === true && setting.type !== 'pagination'"
-                    :setting="setting">
+                    :setting="setting"
+                  >
                   </dynamic-question>
               </div>
             </transition-group>
@@ -34,7 +37,8 @@
         <!-- 分页 -->
         <div
           v-if="isPagination"
-          class="survey-pagination">
+          class="survey-pagination"
+        >
           <el-pagination
             background
             layout="prev, pager, next"
@@ -42,7 +46,8 @@
             next-text="下一页"
             :page-size="pagination.pageSize"
             :total="totalPage"
-            @current-change="handlePageChange">
+            @current-change="handlePageChange"
+          >
           </el-pagination>
         </div>
 
@@ -50,7 +55,7 @@
         <div class="survey-operation">
           <el-button 
             type="primary"
-            @click="submitQuestionire"
+            @click="submitQuestionnaire"
             :disabled="isSubmit === false">提交问卷
           </el-button>
         </div>
@@ -65,12 +70,12 @@ import { mapGetters, mapActions } from "vuex";
 import DynamicQueation from "@/components/questionSurvey/DynamicQuestion";
 
 export default {
-  name: "SurveyQuestionire",
+  name: "SurveyQuestionnaire",
   components: {
     "dynamic-question": DynamicQueation
   },
   props: {
-    questionire: {
+    questionnaire: {
       type: Object
     },
     isSubmit: {
@@ -80,9 +85,9 @@ export default {
   },
   data() {
     return {
-      // questionList: this.questionire.questionList,
-      questionName: this.questionire.name,
-      questionComment: this.questionire.comment,
+      // questionList: this.questionnaire.questionList,
+      questionName: this.questionnaire.name,
+      questionComment: this.questionnaire.comment,
       pagination: {
         // 每页显示条目数，不要改
         pageSize: 1,
@@ -93,7 +98,7 @@ export default {
   computed: {
     // FIXME: 判断没有分页的情况
     questionList() {
-      return this.questionire.questionList.filter(el => {
+      return this.questionnaire.questionList.filter(el => {
         if(this.isPagination) {
           return (el.isShow === true) && (el.currentPage === this.pagination.currentPage) && (el.type !== "pagination");
         } else {
@@ -102,16 +107,16 @@ export default {
       });
     },
     isPagination() {
-      // if(this.questionire.pagination.isPagination === 'true') {
+      // if(this.questionnaire.pagination.isPagination === 'true') {
       //   return true
       // } else {
       //   return false
       // }
-      return this.questionire.pagination.isPagination === 'true' ? true : false;
+      return this.questionnaire.pagination.isPagination === 'true' ? true : false;
     },
     totalPage() {
-      if(this.questionire.pagination.totalPage) {
-        return parseInt(this.questionire.pagination.totalPage);
+      if(this.questionnaire.pagination.totalPage) {
+        return parseInt(this.questionnaire.pagination.totalPage);
       } else {
         return 1;
       }
@@ -126,9 +131,9 @@ export default {
     }),
     
     // 提交答卷
-    submitQuestionire() {
+    submitQuestionnaire() {
       this.submitAnswerSheet({
-        qid: this.questionire.id
+        qid: this.questionnaire.id
       });
     },
 
