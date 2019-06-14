@@ -30,8 +30,7 @@
                 <span class="status">运行状态: {{qitem.state}}</span>
               </span>
               <span class="title q-info">
-                答卷:
-                <span class="status">130</span>
+                答卷数量:
                 <span class="status">{{ qitem.peopleNum }}</span>
               </span>
               <span class="title q-info">
