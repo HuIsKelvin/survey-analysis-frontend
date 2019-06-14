@@ -12,10 +12,11 @@ import CreateQuestionnaire from "./views/questionaire/CreateQuestionnaire.vue";
 // import store from "./store/store";
 import QuestionEdit from "./views/questionaire/QuestionEdit.vue";
 import Release from "./views/questionaire/Release.vue";
+import testFix from "@/components/question/testFix.vue";
 
 import Report from  './views/questionaire/Report.vue';
 import Analysis from './views/report/Analysis.vue';
-import Answer from './views/report/Answer.vue';
+import AdvancedAnalysis from './views/report/AdvancedAnalysis.vue';
 
 Vue.use(Router);
 
@@ -98,6 +99,11 @@ export default new Router({
       name: "releaseQuestionnaire",
       component: Release
     },
+    { 
+      path: "/testFix",
+      name: "testFix",
+      component: testFix
+    },
     {
       path: "/report/:qid",
       component: Report,
@@ -114,9 +120,9 @@ export default new Router({
           component: Analysis
         },
         {
-          path: "answer",
-          name: "report.answer",
-          component: Answer 
+          path: "adv-analysis",
+          name: "report.adv-analysis",
+          component: AdvancedAnalysis
         },
       ]
     },

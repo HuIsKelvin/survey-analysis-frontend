@@ -1,6 +1,8 @@
 <template>
   <div class="question-rate">
-    <el-rate>
+    <el-rate 
+      :max="question.content.max"
+      >
     </el-rate>
     <!-- <span>设置最大值</span><el-input v-model="max"></el-input> -->
   </div>
@@ -9,6 +11,9 @@
 export default {
   name:"question-choice-input",
   props: {
+    question: {
+      type: Object
+    },
     qIndex:{
       type:Number
     }
@@ -17,7 +22,11 @@ export default {
     return {
       QIndex: this.qIndex,
       max:10,
+
     }
+  },
+  computed: {
+
   },
   methods:{
     send_choiceItems: function() {

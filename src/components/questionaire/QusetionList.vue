@@ -11,9 +11,12 @@
           <el-col :span="12">
             <div class="q-main-info">
               <span class="q-info">
+                {{ index + 1 }}
+              </span>
+              <!-- <span class="q-info">
                 ID:
                 <span>{{qitem.id}}</span>
-              </span>
+              </span> -->
               <span class="q-info">
                 问卷名:
                 <span>{{qitem.name}}</span>
@@ -29,6 +32,7 @@
               <span class="title q-info">
                 答卷:
                 <span class="status">130</span>
+                <span class="status">{{ qitem.peopleNum }}</span>
               </span>
               <span class="title q-info">
                 发布日期:
@@ -119,11 +123,11 @@ export default {
     }
   },
   created: function() {
-    // axios.get("/questionnaires/search/userId?userId="+this.$store.state.userId)
-    axios.get("/questionnaires/search/userId?userId=" + "5ca1d85c5239c7260876465c")
+    axios.get("/questionnaires/search/userId?userId="+this.$store.state.user.userId)
     .then(response => {
       // TODO: 对数据进行处理已获得更好的展示效果
       this.questionnaires = response.data._embedded.questionnaires;
+      console.log(this.questionnaires);
     })
   }
 

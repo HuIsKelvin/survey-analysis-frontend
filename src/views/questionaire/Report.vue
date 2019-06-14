@@ -3,18 +3,21 @@
     <el-container>
       <el-header class="header">
         <el-menu
-          :default-active="activeIndex"
+          :default-active="$route.name"
           class="header-nav"
           mode="horizontal"
           background-color="#545c64"
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <el-menu-item index="1">
+          <el-menu-item index="report.analysis">
             <router-link :to="{name: 'report.analysis'}" tag="div">统计分析</router-link>
           </el-menu-item>
-          <el-menu-item index="2">
-            <el-button type="primary" @click="download_excel">下载答卷</a></el-button>
+          <el-menu-item index="report.adv-analysis">
+            <router-link :to="{name: 'report.adv-analysis'}" tag="div">高级分析</router-link>
+          </el-menu-item>
+          <el-menu-item index="download">
+            <el-button type="primary" @click="download_excel">下载答卷</el-button>
           </el-menu-item>
         </el-menu>
       </el-header>
@@ -31,7 +34,7 @@ export default {
     name: "Report",
     data() {
         return {
-            activeIndex: "1",
+            activeIndex: null,
         }
     },
     methods: {
@@ -57,8 +60,7 @@ export default {
           console.log(error)
         })
       }
-    }
-    
+    },
 }
 </script>
 
