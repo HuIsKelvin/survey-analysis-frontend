@@ -79,6 +79,11 @@ export default new Router({
       component: Survey
     },
     {
+      path: "/answerSuccess",
+      name: "AnswerSuccess",
+      component: () => import("./views/questionaire/AnswerSuccess.vue") 
+    },
+    {
       path: "/findPwd",
       name: "findPwd",
       component: FindPwd
@@ -115,6 +120,11 @@ export default new Router({
         },
       ]
     },
+    {
+      path: "/error",
+      name: "error",
+      component: () => import("./views/Error")
+    }
   ]
   /*
   beforeEach: (to, from, next) => {

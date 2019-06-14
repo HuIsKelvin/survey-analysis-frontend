@@ -25,25 +25,38 @@ export default {
   created() {
     // 获取问卷数据
     // axios.get()
-    console.log("qestion id: " + this.$route.params.qid);
     let qid = this.$route.params.qid;
     axios.get("/questionnaires/" + qid)
       .then(res => {
-        console.log("get questionire by qid");
-        console.log(res);
-        this.setQuestionire({
-          questionire: res.data
-        })
+        console.log("get questionire by qid!");
+        // console.log(res);
+        const statusCode = res.status;
+        const questionnaire = res.data;
+
+        // 判断状态码
+        switch(statusCode) {
+          case 404:
+            this.$router.push({
+              path: "/error"
+            });
+            break;
+
+          case 200:
+            this.setQuestionire({
+              questionire: questionnaire
+            });
+            break;
+        }
+
       })
       .catch(err => {
         console.log(err);
+        // this.$router.push({ path: "/error" });
       })
-    // this.gerAnswerSheet();
     this.prepareQuestionList();
   },
   methods: {
     ...mapActions("survey", {
-      // gerAnswerSheet: "generateAnsSheet",
       "prepareQuestionList": "prepareQuestionList",
       "setQuestionire": "setQuestionire"
     })

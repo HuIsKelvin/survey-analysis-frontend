@@ -94,7 +94,11 @@ export default {
     // FIXME: 判断没有分页的情况
     questionList() {
       return this.questionire.questionList.filter(el => {
-        return (el.isShow === true) && (el.currentPage === this.pagination.currentPage) && (el.type !== "pagination");
+        if(this.isPagination) {
+          return (el.isShow === true) && (el.currentPage === this.pagination.currentPage) && (el.type !== "pagination");
+        } else {
+          return (el.isShow === true) && (el.type !== "pagination");
+        }
       });
     },
     isPagination() {
@@ -119,7 +123,6 @@ export default {
 
     // 提交答卷
     submitQuestionire() {
-      console.log("from button: click to submit answer");
       this.submitAnswerSheet({
         qid: this.questionire.id
       });

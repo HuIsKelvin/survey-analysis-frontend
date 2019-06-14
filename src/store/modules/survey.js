@@ -2,6 +2,7 @@
 
 import Vue from "vue";
 import ElementUI from 'element-ui'
+import router from "../../router";
 
 export default {
   namespaced: true,
@@ -153,8 +154,6 @@ export default {
         // 增加提示字段
         // Vue.set(element, "tipMsg", "");
       });
-      console.log("prepare questionList");
-      // console.log(state.userQuestionList.questionList);
     },
 
     // 生成默认答卷
@@ -174,8 +173,6 @@ export default {
         };
         state.answerSheet.answer.push(answer);
       });
-      console.log("generate answerSheet");
-      console.log(state.answerSheet);
     },
 
     // 更新答卷的值
@@ -183,8 +180,8 @@ export default {
     updateValue(state, payload) {
       if (payload.value && state.answerSheet.answer[payload.qindex - 1]) {
         state.answerSheet.answer[payload.qindex - 1]["data"] = payload.value;
-        console.log("after update");
-        console.log(state.answerSheet.answer[payload.qindex - 1]);
+        // console.log("after update");
+        // console.log(state.answerSheet.answer[payload.qindex - 1]);
       }
     },
 
@@ -229,15 +226,14 @@ export default {
       
       // 若可以发送
       if(state.submitFlag) {
-        console.log("from vuex: submit answer");
         this.commit("survey/prepareAnswerToSubmit");
-        console.log(state.answerSheet);
         // state.answerSheet.quesId = 15626231503;
         // 发送答卷
         axios.post("/answerSheet/save?qid=" + qid, state.answerSheet)
           .then(res => {
             console.log("submit success!!!");
             console.log(res);
+            router.push({name: "AnswerSuccess"});
           })
           .catch(err => {
             console.log(err);
