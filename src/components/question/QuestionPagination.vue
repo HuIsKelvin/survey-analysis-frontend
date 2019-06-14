@@ -1,11 +1,10 @@
 <!--
 * 作用于哪些页面：
-    1.由QuestionEdit.vue调用本组件
-    2.本组件调用题型小组件,包括: 
+    1.由QuestionCard.vue调用本组件
+    2.本组件不调用其他组件。
         (1) 题目内容输入框：QuestionContentInput.vue,
         (2) 单选、多选和排序题的选项列表组件：QuestionChoiceList.vue,
         (3) 打分题的星星组件：QuestionRate.vue
-        (4)       
 * 功能说明: 
     1.
 * @liushi
@@ -35,19 +34,6 @@ export default {
     }
   }, 
   watch: {
-    // "qIndex": {
-    //   handler(newVal,oldVal) {
-    //     console.log(newVal);
-    //     console.log(oldVal);
-    //     // let indexArray = this.index
-    //     // this.removeByValue(indexArray, oldVal.toString());
-    //     // indexArray.push(newVal.toString());
-    //     // indexArray.sort(this.sortNumber);// 升序排列
-    //     // this.set_index(indexArray);
-    //   },
-    //   immediate: true,
-    //   deep: true
-    // }
   },
   computed: {
     ...mapGetters({
@@ -58,7 +44,7 @@ export default {
       if (this.question.isDraggable==false) {
         return 1
       } else {
-        return this.question.index;
+        return this.question.currentPage;
       }
     },
     QIndex: function() {
@@ -69,20 +55,6 @@ export default {
 
   },
   methods: {
-    ...mapMutations({
-      set_index: "set_pagination_index"
-    }),
-    removeByValue(arr, value) {
-      for (let i in arr) {
-        if (arr[i] = value) {
-          arr.slice(i,1);
-        }
-      }
-    },
-    sortNumber(a,b) {
-      return a - b;
-    }
-
   }
 }
 </script>

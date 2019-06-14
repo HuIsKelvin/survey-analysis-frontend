@@ -5,8 +5,6 @@ import router from "./router";
 import store from "./store/index.js";// 用index.js替换了原来的store.js
 import "./plugins/element.js";
 import axios from "./plugins/axios.js";
-import axiosVisual from "./plugins/axiosVisual.js";
-import "./plugins/vcharts";
 import "@/assets/css/override-element-ui.css";
 import "@/assets/font/font_4.15/iconfont.css";
 
@@ -28,6 +26,5 @@ new Vue({
   router,
   store,
   axios,
-  axiosVisual,
   render: h => h(App)
 }).$mount("#app");

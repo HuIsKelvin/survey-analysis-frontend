@@ -20,95 +20,94 @@
 <template>
   <el-container class="question-edit-container">
     <el-header class="question-edit-header">
-      <!-- <el-button>预览</el-button>
-      <el-button plain>保存编辑</el-button> -->
       <bread-header></bread-header>
     </el-header>
-    
+    <el-container>
+      <el-aside width="200px">
+        <el-menu class="question-edit-nav" 
+          :default-openeds="['1', '2', '3', '4', '5']"
+          >
+          <el-submenu index="1">
+            <template slot="title">
+              <span>分页说明</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addDescription()">备注说明</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addPagination()">设置分页</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              <span>选择题</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'radio', title:'单选题'})">单选题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'checkbox', title:'多选题'})">多选题</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">
+              <span>填空题</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'textarea', title:'填空题'})">填空题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'numInput', title:'数字输入题'})">数字输入题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'textInput', title:'短文本输入题'})">短文本输入题</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="4">
+            <template slot="title">
+              <span>打分排序</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'rate', title:'请给本项打分'})">评分题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'scale', title:'您向朋友或同事推荐我们的可能性有多大？'})">量表题</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'sort', title:'请给以下选项排序'})">排序题</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          <el-submenu index="5">
+            <template slot="title">
+              <span>快速创建个人信息</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type:'textInput', title: '姓名'})">姓名</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'radio', title: '性别'})">性别</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'numInput', title: '年龄'})">年龄</el-button>
+              </el-menu-item>
+              <el-menu-item>
+                <el-button type="text" @click="addQuestion({type: 'textInput', title: '地址'})">地址</el-button>
+              </el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
     <el-main>
       <el-row>
-        <el-col :span="4" class>
-          <el-menu class="question-edit-nav" :default-openeds="['1', '2', '3', '4', '5']">
-            <el-submenu index="1">
-              <template slot="title">
-                <span>分页说明</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addDescription()">备注说明</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addPagination()">设置分页</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-              <template slot="title">
-                <span>选择题</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'radio', title:'单选题'})">单选题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'checkbox', title:'多选题'})">多选题</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="3">
-              <template slot="title">
-                <span>填空题</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'textarea', title:'填空题'})">填空题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'numInput', title:'数字输入题'})">数字输入题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'textInput', title:'短文本输入题'})">短文本输入题</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="4">
-              <template slot="title">
-                <span>打分排序</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'rate', title:'请给本项打分'})">评分题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'scale', title:'您向朋友或同事推荐我们的可能性有多大？'})">量表题</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'sort', title:'请给以下选项排序'})">排序题</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="5">
-              <template slot="title">
-                <span>快速创建个人信息</span>
-              </template>
-              <el-menu-item-group>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type:'textInput', title: '姓名'})">姓名</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'radio', title: '性别'})">性别</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'numInput', title: '年龄'})">年龄</el-button>
-                </el-menu-item>
-                <el-menu-item>
-                  <el-button type="text" @click="addQuestion({type: 'textInput', title: '地址'})">地址</el-button>
-                </el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-          </el-menu>
-        </el-col>
-
         <el-container class="question-edit-main">
           <el-col :span="16" class>
             <div id="questionaire-wrapper" class>
@@ -123,81 +122,59 @@
                 :list="this.qList"
                 :options="dragOption"
                 @start="isDragging = true"
-                @end="isDragging =false"
+                @end="dragEnd"
                 @change="dragChange"
+                @update="dragUpdate"
                 :move="dragMove">
                   <transition-group type="transition">
                     <qCard
+                      ref="qCard"
                       v-for="(q, qIndex) in this.qList"
                       track-by="$index"
                       :qIndex="qIndex"
                       :question="q"
                       :key="qIndex"
-                      class="question-card"
+                      :class="activeClass == qIndex ? 'active': ''"
+                      @click.native="changeClass(qIndex)"
                     >
                     </qCard>
                   </transition-group>
                 </draggable>
               </div>
               <!--测试查看qList-->
-              {{this.qList}}
+              <!-- {{this.qList}} -->
               <br/>
               <!--问卷底部-->
               <end class="question-card"></end>
             </div>
+<<<<<<< HEAD
+            <el-button type="primary" @click="emptyPage">清空分页</el-button>
+=======
             <el-button type="primary" @click="emptyPage()">清空分页</el-button>
+>>>>>>> 9d4e90b4079ff49341bceab696b13d95dcc81526
             <el-button type="primary" @click="previewQuestionire">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
             <el-button type="primary" @click="releaseAndShare">发布并分享</el-button>
           </el-col>
 
           <el-col :span="8" class>
-            <qDate :dateValue="dateValue"></qDate>
-            <num-limit :num="num"></num-limit>
-          <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-            <el-radio-button :label="false">展开</el-radio-button>
-            <el-radio-button :label="true">收起</el-radio-button>
-          </el-radio-group>
-<el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-  <el-submenu index="1">
-    <template slot="title">
-      <i class="el-icon-location"></i>
-      <span slot="title">导航一</span>
-    </template>
-    <el-menu-item-group>
-      <span slot="title">分组一</span>
-      <el-menu-item index="1-1">选项1</el-menu-item>
-      <el-menu-item index="1-2">选项2</el-menu-item>
-    </el-menu-item-group>
-    <el-menu-item-group title="分组2">
-      <el-menu-item index="1-3">选项3</el-menu-item>
-    </el-menu-item-group>
-    <el-submenu index="1-4">
-      <span slot="title">选项4</span>
-      <el-menu-item index="1-4-1">选项1</el-menu-item>
-    </el-submenu>
-  </el-submenu>
-  <el-menu-item index="2">
-    <i class="el-icon-menu"></i>
-    <span slot="title">导航二</span>
-  </el-menu-item>
-  <el-menu-item index="3" disabled>
-    <i class="el-icon-document"></i>
-    <span slot="title">导航三</span>
-  </el-menu-item>
-  <el-menu-item index="4">
-    <i class="el-icon-setting"></i>
-    <span slot="title">导航四</span>
-  </el-menu-item>
-</el-menu>
+
+            <!--问卷题目设置-->
+            <transition name="question-setting">
+              <question-setting
+                ref="qSetting" 
+                v-if="isClick"
+                :class="navBarFixed == true ? 'navBarWrap' :''"
+                :activeQindex="activeClass"
+              ></question-setting> 
+            </transition>
+
+            <!-- <el-button @click="changeClass(-1)">隐藏侧栏</el-button> -->
           </el-col>
         </el-container>
-
-        
-
-
       </el-row>
     </el-main>
+    </el-container>
   </el-container>
 </template>
 <script>
@@ -216,6 +193,8 @@ export default {
       userId: "1234", // 根据userId来确定questionList的存储字段
       isDragging:false,
       isCollapse: true,
+      activeClass:-1,
+      navBarFixed: false,
     };
   },
   computed: {
@@ -226,18 +205,10 @@ export default {
       isPagination: "isPagination",
       totalPage: "totalPage",
       totalQuestionNum: "totalQuestionNum",
-      beginTime: "beginTime",
-      endTime: "endTime",
-      num: "numLimit",
       questionnaireId: "questionnaireId",
       qState: "q_state",
+      isClick: "isClick"
     }),
-    dateValue() {
-      let arr = [];
-      arr[0] = this.beginTime;
-      arr[1] = this.endTime;
-      return arr;
-    },
     qList: {
         get() {
           return this.$store.state.questionnaire.userQuestionList.questionList;
@@ -257,18 +228,61 @@ export default {
       return {
         animation:300,
       }
+    },
+    qcardClassObject: function() {
+
     }
   },
-  created() {},
+  mounted() {
+    window.addEventListener('scroll', this.watchScroll)
+  },
+  created() {
+    // 点击其他不在的区域触发事件
+    document.addEventListener('click', (e) => {
+      // 如果当前处于有高亮状态
+      if (this.isClick == true) {
+        let isContains = false;
+        for (let i in this.$refs.qCard) {
+          // console.log("this.$refs.qCard[i].$el")
+          // console.log(this.$refs.qCard[i].$el);
+          // console.log("e.target")
+          // console.log(e.target);
+          // console.log("this.$refs.qSetting")
+          // console.log(this.$refs.qSetting);      
+          // console.log("this.$refs.qSetting.$el")
+          // console.log(this.$refs.qSetting.$el);
+          // console.log("this.$refs.qCard[i].$el.contains target")
+          // console.log(this.$refs.qCard[i].$el.contains(e.target));
+          // console.log("this.$refs.qSetting.$el contains etarget")
+          // console.log(this.$refs.qSetting.$el.contains(e.target));
+          if(this.$refs.qCard[i].$el.contains(e.target)
+          || this.$refs.qSetting.$el.contains(e.target)) {
+            isContains = true;
+          }
+        }
+        if (!isContains) {
+          this.set_isClick(false);
+          this.activeClass = -1;
+        } else {
+          this.set_isClick(true);
+        }
+      }
+
+    })
+  },
   methods: {
     ...mapMutations({
       add_qList_obj: "add_questionList_object",
-      update_qList: "update_questionList",
+      set_qList: "set_questionList",
       set_pagination: "set_pagination",
       set_totalPage: "set_totalPage",
       set_isPagination: "set_isPagination",
       set_totalQNum: "set_totalQuestionNum",
-      set_state: "set_state"
+      set_state: "set_state",
+      set_isClick: "set_isClick",
+    }),
+    ...mapActions("survey", {
+      "setQuestionirePreview": "setQuestionire"
     }),
     ...mapActions("survey", {
       "setQuestionirePreview": "setQuestionire"
@@ -276,8 +290,9 @@ export default {
     get_init() {
       let initialType = {
         type: "",
-        title:"",
         index: 0,
+        currentPage: 0,
+        title:"",
         isRequired: true,
         isDraggable: true,
         content:{
@@ -296,6 +311,7 @@ export default {
       };
       return initialType;
     },
+    // 添加问题
     addQuestion(obj) {
       let newNum = this.totalQuestionNum + 1;
       this.set_totalQNum(newNum);
@@ -314,6 +330,21 @@ export default {
 
       this.add_qList_obj(qListObj);
     },
+    changeClass(qIndex) {
+      if (qIndex>=0
+        && this.qList[qIndex].type !== "pagination"
+        && this.qList[qIndex].type !== "description") {
+        // console.log("click qCard!");
+        // console.log(qIndex);
+        this.activeClass = qIndex;
+        this.set_isClick(true);   
+      } else {
+        this.activeClass = -1;
+        this.set_isClick(false);
+      }
+
+    },
+    // 添加分页组件
     addPagination() {
       let page = 0;
       let qListObj = this.get_init();
@@ -321,19 +352,38 @@ export default {
       if (this.totalPage == 0) {
         page = 2;
         this.set_isPagination(true);
-        qListObj.index = 2;
+        qListObj.currentPage = 2;
       } else {
         page = this.totalPage
         page += 1;
-        qListObj.index = page;
+        qListObj.currentPage = page;
       }
       this.set_totalPage(page);
       this.add_qList_obj(qListObj);
     },
+    watchScroll () {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        //  当滚动超过 50 时，实现吸顶效果
+        if (scrollTop > 49) {
+          this.navBarFixed = true
+        } else {
+          this.navBarFixed = false
+        }
+    },
+    // 添加备注说明组件
     addDescription() {
       let qListObj = this.get_init();
       qListObj.type = "description";
       qListObj.title = "这是一段段落说明";
+      this.add_qList_obj(qListObj);
+      this.scrollTo(this.qList_length - 1);
+    },
+    // 添加新qCard时实现滚动到对应位置
+    scrollTo(qIndex) {
+      console.log("this.$refs.qCard[qIndex].scrollTop");
+      console.log(this.$refs.qCard[qIndex]);
+      // document.documentElement.scrollTop = this.$refs.qCard[qIndex].scrollTop;
+      // this.$refs.qCard[qIndex].scrollTop;
     },
     // 保存问卷按钮
     saveQuestionnaire() {
@@ -345,10 +395,8 @@ export default {
           type: "success"
         })
       })
-      .then(error => {
-        if (error) {
+      .catch(error => {
           this.$message.error("保存问卷失败，请重试");
-        }
       })
     },
     // 发布并分享按钮
@@ -364,14 +412,12 @@ export default {
         })
         this.$router.push({name:"releaseQuestionnaire", params:{qid:qid}});
       })
-      .then(error => {
-        if (error) {
+      .catch(error => {
           console.log(error)
           this.$message({
             message: "发布问卷失败，请重试",
             type: "error"
           })
-        }
       })
       
 
@@ -394,24 +440,48 @@ export default {
       // console.log(evt);
     },
     dragEnd(evt) {
-      // console.log("drag end!");
+      console.log("drag end!");
       // console.log(evt);
+      let qList = this.userQuestionList.questionList;
+      let update_qList = this.update_index_currentPage(qList);
+      // console.log(update_qList);
+      this.set_qList(update_qList);
     },
     dragChange(evt) {
-      console.log("drag move!");
-      console.log(evt)
+      // console.log("drag change!");
+      // console.log(evt)
     },
     dragMove(evt,originalEvent) {
       // console.log("drag move!");
       // console.log(evt);
       // console.log(originalEvent);
     },
+    dragUpdate(evt) {
+      // console.log(evt);
+    },
     handleOpen(key, keyPath) {
         console.log(key, keyPath);
-      },
+    },
     handleClose(key, keyPath) {
         console.log(key, keyPath);
+    },
+    update_index_currentPage(questionList) {
+      let qList = questionList;
+      let pCount = 2;
+      let qCount = 1;
+      for (let i in qList) {
+        if (qList[i].type === "pagination") {
+          qList[i].currentPage = pCount;
+          pCount++;
+        } else if (qList[i].type === "description"){
+            
+        } else {
+          qList[i].index = qCount;
+          qCount++;
+        }
       }
+      return qList
+    }
   },
   components: {
     draggable,
@@ -421,9 +491,8 @@ export default {
     // checkbox: MultipleAnswers,
     "qCard": () => import("@/components/question/QuestionCard.vue"),
     "pagination": () => import("@/components/question/QuestionPagination.vue"),
-    "qDate": () => import("@/components/question/QuestionDate.vue"),
     "bread-header": () => import("@/components/common/BreadHeader.vue"),
-    "num-limit": () => import("@/components/question/QuestionCounter.vue")
+    "question-setting": () => import("@/components/question/QuestionSetting.vue")
   }
 };
 </script>
@@ -433,8 +502,12 @@ export default {
 }
 
 .question-edit-header {
-  background-color:#45B39D;
+  background-color:rgb(84,92,100);
   text-align: center;
+}
+.fixed {
+  position: fixed;
+  top:0;
 }
 .question-card {
   margin-left:2em;
@@ -445,8 +518,30 @@ export default {
 body {
   margin: 0px;
 }
-  .el-menu-vertical-demo:not(.el-menu--collapse) {
-    width: 200px;
-    min-height: 400px;
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
+/* 可以设置不同的进入和离开动画 */
+/* 设置持续时间和动画函数 */
+.question-setting-enter-active {
+  transition: all .3s ease;
+}
+.question-setting-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.question-setting-enter, .question-setting-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+.active {
+  border-color:rgb(0,128,128);
+  border-width:2px;
+}
+.navBarWrap {
+    position:fixed;
+    top:0;
+    z-index:999;
   }
 </style>

@@ -12,18 +12,19 @@
     2.所有的题型都会需要一个"题目内容输入组件",其余根据question对象中的type字段来判刑需要显示哪一个题型小组件。
     3.通过v-if控制题型小组件的显示
 * @liushi
-* @2019/6/5
+* @2019/6/6
 * @version
 -->
 <template>
-  <el-card :class="this.activeClass == 0 ? 'active':''">
+  <el-card class="question-card">
     <!--如果是分页则显示调用分页组件-->
     <div v-if="question.type == 'pagination'">
       <pagination :question="question" :qIndex="qIndex"></pagination>
     </div>
-    <div>{{this.question.index}}</div>
+    
     <!--如果不是分页，则显示以下内容-->
     <div v-on:click="changeClass" v-if="question.type !== 'pagination'">
+      <div>{{this.question.index}}</div>
       <!--题目内容组件-->
       <div>
         <!--题目内容输入组件-->
@@ -245,34 +246,24 @@ export default {
     deleteCard() {
       if (this.question.type == "pagination") {
         // 如果当前只有两页
-        if (this.question.index == 2) {
+        if (this.totalPage == 2) {
           this.set_isPagination(false); // 取消置顶分页卡
           this.set_totalPage(0); // 归零总页数
         } else {
           this.set_totalPage(this.totalPage - 1);// 总页数-1
         }
-        this.del_obj(this.qIndex);
-
       } else if (this.question.type == "description") {
-        this.del_obj(this.qIndex);
+        // 也许这里将来会需要做点什么
       } else {
-        // 删除qList里面的题目对象
+        // 如果是删除题目则总题数-1
+        this.set_totalQNum(this.totalQuestionNum - 1);
+      }
+        // 删除qList里面的obj对象
         this.del_obj(this.qIndex);
         let qList = this.questionList;
-        let count = 1;
-        // 更新题号
-        for (let i in this.questionList) {
-          if (qList[i].type !== "pagination" && qList[i].type !== "description") {
-            qList[i].index = count;
-            count++;
-          }
-        }
-        // 删除分页不改变题号
-        this.set_totalQNum(this.totalQuestionNum - 1);
-        this.set_qList(qList);
-      }
-      
-
+        // 更新题号和currentPage
+        let update_qList = this.update_index_currentPage(qList);
+        this.set_qList(update_qList);
     },
     // 删除跳转逻辑
     deleteJump(jIndex) {
@@ -292,6 +283,10 @@ export default {
       // console.log("change class");
       // this.activeClass = 0;
     },
+    // changeStyle(qIndex) {
+    //   console.log("click qCard!")
+    //   this.activeClass = qIndex;
+    // },
     changeCheckedValue(newValue) {
       let qIndex = this.qIndex;
       this.set_isRequired({"isRequired": newValue, "qIndex": qIndex});
@@ -346,30 +341,22 @@ export default {
         }
       }
     },
-    // 用于将组件需要的跳转逻辑格式转换成vuex需要的格式
-    // 和QuesstionEdit.vue的函数changeQList()功能相反
-    // 但是传入值只是一个问题的obj数据，而不是整个问卷列表数据
-    // simplifyJumpLogic(question) {
-    //   let jumpLogic_simple = {};
-    //   for (let i in q.jumpLogic) {
-    //     let startValue = i.startValue;
-    //     let endValue = i.endValue;
-    //     if (startValue != "") {
-    //       jumpLogic_simple["add"+endValue] = endValue;
-    //     } else {
-    //       jumpLogic_simple[startValue.substring(0,1)] = parseInt(endValue.substring(1,2));
-    //     }
-        
-    //   }
-    //   question.jumpLogic = jumpLogic_simple;
-    //   return question; // 只返回一个问题的obj
-    // },
-    removeByValue(arr, value) {
-      for (let i in arr) {
-        if (arr[i] == value) {
-          arr.splice(i, 1);
+    update_index_currentPage(questionList) {
+      let qList = questionList;
+      let pCount = 2;
+      let qCount = 1;
+      for (let i in qList) {
+        if (qList[i].type === "pagination") {
+          qList[i].currentPage = pCount;
+          pCount++;
+        } else if (qList[i].type === "description"){
+            
+        } else {
+          qList[i].index = qCount;
+          qCount++;
         }
       }
+      return qList
     }
   },
   components: {
@@ -381,10 +368,12 @@ export default {
 }
 </script>
 <style scoped>
-.active {
-  border-color:royalblue;
-  border-width: 5px;
-}
 
+.question-card {
+  margin-left:2em;
+  margin-right: 2em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
 
 </style>

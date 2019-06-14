@@ -13,6 +13,10 @@ import CreateQuestionnaire from "./views/questionaire/CreateQuestionnaire.vue";
 import QuestionEdit from "./views/questionaire/QuestionEdit.vue";
 import Release from "./views/questionaire/Release.vue";
 
+import Report from  './views/questionaire/Report.vue';
+import Analysis from './views/report/Analysis.vue';
+import Answer from './views/report/Answer.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -88,7 +92,29 @@ export default new Router({
       path: "/releaseQuestionnaire/:qid",
       name: "releaseQuestionnaire",
       component: Release
-    }
+    },
+    {
+      path: "/report/:qid",
+      component: Report,
+      children: [
+        {
+          path: "/",
+          name: "report",
+          component: Report,
+          redirect: {name: "report.analysis"}
+        },
+        {
+          path: "analysis",
+          name: "report.analysis",
+          component: Analysis
+        },
+        {
+          path: "answer",
+          name: "report.answer",
+          component: Answer 
+        },
+      ]
+    },
   ]
   /*
   beforeEach: (to, from, next) => {
