@@ -16,16 +16,18 @@
             label-position="top"
             ref="answerForm"
             @submit.native.prevent>
-            <div
-              class="question-item"
-              v-for="(setting, index) in questionList"
-              :key="index">
-              <dynamic-question
-                class="dynamic-question"
-                v-if="setting.isShow === true && setting.type !== 'pagination'"
-                :setting="setting">
-              </dynamic-question>
-            </div>
+            <transition-group name="list-item" tag="div">
+              <div
+                class="question-item"
+                v-for="(setting, index) in questionList"
+                :key="index + setting.title">
+                  <dynamic-question
+                    class="dynamic-question"
+                    v-if="setting.isShow === true && setting.type !== 'pagination'"
+                    :setting="setting">
+                  </dynamic-question>
+              </div>
+            </transition-group>
           </el-form>
         </div>
 
@@ -177,6 +179,8 @@ export default {
     }
 
     .survey-questions{
+      margin: 30px 0;
+
       .question-item {
         .dynamic-question {
           margin: 0 20px;
@@ -197,4 +201,21 @@ export default {
     }
   }
 }
+
+// // 列表的过渡动画
+// .list-item-enter-active {
+//   transition: all 1s;
+// }
+// .list-item-leave-active {
+//   transition: all .5s;
+//   position: absolute;
+// }
+// .list-item-move {
+//   transition: transform .3s;
+// }
+// .list-item-enter, .list-item-leave-to
+// /* .list-leave-active for below version 2.1.8 */ {
+//   opacity: 0;
+//   transform: translateY(30px);
+// }
 </style>

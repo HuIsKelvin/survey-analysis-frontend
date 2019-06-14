@@ -7,6 +7,8 @@ import "./plugins/element.js";
 import axios from "./plugins/axios.js";
 import "@/assets/css/override-element-ui.css";
 import "@/assets/font/font_4.15/iconfont.css";
+// 过渡动画css
+import "@/assets/css/v-animate.css";
 
 //Vue.prototype.$http = axios;
 
