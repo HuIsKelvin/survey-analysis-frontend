@@ -15,7 +15,7 @@ import Release from "./views/questionaire/Release.vue";
 
 import Report from  './views/questionaire/Report.vue';
 import Analysis from './views/report/Analysis.vue';
-import Answer from './views/report/Answer.vue';
+import AdvancedAnalysis from './views/report/AdvancedAnalysis.vue';
 
 Vue.use(Router);
 
@@ -109,9 +109,9 @@ export default new Router({
           component: Analysis
         },
         {
-          path: "answer",
-          name: "report.answer",
-          component: Answer 
+          path: "adv-analysis",
+          name: "report.adv-analysis",
+          component: AdvancedAnalysis
         },
       ]
     },
