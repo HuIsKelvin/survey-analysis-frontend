@@ -147,7 +147,11 @@
               <!--问卷底部-->
               <end class="question-card"></end>
             </div>
+<<<<<<< HEAD
             <!-- <el-button type="primary" @click="emptyPage">清空分页</el-button> -->
+=======
+            <el-button type="primary" @click="emptyPage">清空分页</el-button>
+>>>>>>> ac21fb8e00603524349baa020d4777ebf9504c85
             <el-button type="primary" @click="previewQuestionire">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
             <el-button type="primary" @click="releaseAndShare">发布并分享</el-button>

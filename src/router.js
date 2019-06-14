@@ -12,7 +12,15 @@ import CreateQuestionnaire from "./views/questionaire/CreateQuestionnaire.vue";
 // import store from "./store/store";
 import QuestionEdit from "./views/questionaire/QuestionEdit.vue";
 import Release from "./views/questionaire/Release.vue";
+<<<<<<< HEAD
 import testFix from "@/components/question/testFix.vue";
+=======
+
+import Report from  './views/questionaire/Report.vue';
+import Analysis from './views/report/Analysis.vue';
+import AdvancedAnalysis from './views/report/AdvancedAnalysis.vue';
+
+>>>>>>> ac21fb8e00603524349baa020d4777ebf9504c85
 Vue.use(Router);
 
 export default new Router({
@@ -89,11 +97,36 @@ export default new Router({
       name: "releaseQuestionnaire",
       component: Release
     },
+<<<<<<< HEAD
     { 
       path: "/testFix",
       name: "testFix",
       component: testFix
     }
+=======
+    {
+      path: "/report/:qid",
+      component: Report,
+      children: [
+        {
+          path: "/",
+          name: "report",
+          component: Report,
+          redirect: {name: "report.analysis"}
+        },
+        {
+          path: "analysis",
+          name: "report.analysis",
+          component: Analysis
+        },
+        {
+          path: "adv-analysis",
+          name: "report.adv-analysis",
+          component: AdvancedAnalysis
+        },
+      ]
+    },
+>>>>>>> ac21fb8e00603524349baa020d4777ebf9504c85
   ]
   /*
   beforeEach: (to, from, next) => {
