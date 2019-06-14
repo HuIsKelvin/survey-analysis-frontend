@@ -1,5 +1,5 @@
 <template>
-  <div id="survey-questionire">
+  <div id="survey-questionnaire">
     <div class="survey-container">
       <el-card shadow="always">
 
@@ -87,9 +87,7 @@ export default {
         // 每页显示条目数，不要改
         pageSize: 1,
         currentPage: 1
-      },
-      validateRules: {},
-      // isSubmit: false
+      }
     }
   },
   computed: {
@@ -104,11 +102,12 @@ export default {
       });
     },
     isPagination() {
-      if(this.questionire.pagination.isPagination === 'true') {
-        return true
-      } else {
-        return false
-      }
+      // if(this.questionire.pagination.isPagination === 'true') {
+      //   return true
+      // } else {
+      //   return false
+      // }
+      return this.questionire.pagination.isPagination === 'true' ? true : false;
     },
     totalPage() {
       if(this.questionire.pagination.totalPage) {
@@ -122,20 +121,15 @@ export default {
     console.log("is pagi? " + this.pagination.isPagination);
   },
   methods: {
-
+    ...mapActions("survey", {
+      "submitAnswerSheet": "submitAnswerSheet"
+    }),
+    
     // 提交答卷
     submitQuestionire() {
       this.submitAnswerSheet({
         qid: this.questionire.id
       });
-      // this.$refs["answerForm"].validate((valid) => {
-      //   if (valid) {
-      //     alert('submit!');
-      //   } else {
-      //     console.log('error submit!!');
-      //     return false;
-      //   }
-      // });
     },
 
     // 页码变化事件
@@ -145,26 +139,12 @@ export default {
       // this.setCurrentPage({ page: curPage });
     },
 
-    // 生成校验规则
-    generateValidateRules() {
-      let rule = { required: true, message: "此项为必填", trigger: "change" }
-      this.questionList
-        .filter(el=> el.isRequired == true)
-        .forEach(el => {
-          // this.Vue.set(this.validateRules, el.title, rule)
-          this.validateRules[el.title] = [rule];
-        });
-    },
-    ...mapActions("survey", {
-      // "setCurrentPage": "setCurrentPage",
-      "submitAnswerSheet": "submitAnswerSheet"
-    })
   }
 }
 </script>
 
 <style lang="scss" scoped>
-#survey-questionire {
+#survey-questionnaire {
   width: 100%;
 
   .survey-container {
@@ -196,26 +176,18 @@ export default {
       }
     }
 
+    .survey-pagination {
+      .el-pagination {
+        button > span {
+          padding: 10px;
+        }
+      }
+    }
+
     .survey-operation {
       margin: 20px auto;
     }
   }
 }
 
-// // 列表的过渡动画
-// .list-item-enter-active {
-//   transition: all 1s;
-// }
-// .list-item-leave-active {
-//   transition: all .5s;
-//   position: absolute;
-// }
-// .list-item-move {
-//   transition: transform .3s;
-// }
-// .list-item-enter, .list-item-leave-to
-// /* .list-leave-active for below version 2.1.8 */ {
-//   opacity: 0;
-//   transform: translateY(30px);
-// }
 </style>
