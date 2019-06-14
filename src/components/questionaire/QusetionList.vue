@@ -46,15 +46,29 @@
         justify="end"
         class="q-control"
       >
-        <el-button class="control-button" type="primary" plain size="small" @click="editQuestionnaire(qitem.id)">
+        <el-button 
+          class="control-button"
+          type="primary"
+          plain
+          size="small"
+          @click="editQuestionnaire(qitem.id)"
+        >
           <i class="el-icon-edit"></i>
           编辑
         </el-button>
-        <el-button class="control-button" type="primary" plain size="small">
+        <el-button
+          class="control-button"
+          type="primary" plain size="small"
+          @click="changeQuestionnaireState(qitem.id, true)"
+        >
           <i class="el-icon-check"></i>
           发布
         </el-button>
-        <el-button class="control-button" type="primary" plain size="small">
+        <el-button
+          class="control-button"
+          type="primary" plain size="small"
+          @click="changeQuestionnaireState(qitem.id, false)"
+        >
           <i class="el-icon-close"></i>
           停止
         </el-button>
@@ -84,9 +98,8 @@
           <!-- popover trigger -->
           <el-button 
             class="control-button button-share"
-            type="primary"
-            plain
-            size="small"
+            type="primary" plain size="small"
+            :disabled="qitem.state === true"
             slot="reference"
           >
             <i class="el-icon-share"></i>
@@ -117,17 +130,51 @@ export default {
     }
   },
   methods : {
+
+    // 获得当前 user 所拥有的问卷
+    getQuestionnaires() {
+      axios.get("/questionnaires/search/userId?userId="+this.$store.state.user.userId)
+        .then(response => {
+          // TODO: 对数据进行处理已获得更好的展示效果
+          this.questionnaires = response.data._embedded.questionnaires;
+          console.log(this.questionnaires);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
+
+    // 编辑问卷
     editQuestionnaire(qid) {
       this.$router.push({name: "questionEdit", params:{qid:qid}});
+    },
+
+    // 发布问卷
+    releaseQuestionnaire(qid) {
+      axios.patch("/questionnaires/" + qid, { state: true })
+    },
+
+    // 修改问卷状态
+    // qid：问卷id；
+    // qstate：发布状态；true为发布中，false为暂停中
+    changeQuestionnaireState(qid, qState) {
+      axios.patch("/questionnaires/" + qid, { state: qState })
+        .then(res => {
+          console.log("change questionnaire state! " + qState);
+          console.log(res);
+          this.getQuestionnaires();
+        })
+        .catch( err => console.log(err) );
     }
   },
   created: function() {
-    axios.get("/questionnaires/search/userId?userId="+this.$store.state.user.userId)
-    .then(response => {
-      // TODO: 对数据进行处理已获得更好的展示效果
-      this.questionnaires = response.data._embedded.questionnaires;
-      console.log(this.questionnaires);
-    })
+    // axios.get("/questionnaires/search/userId?userId="+this.$store.state.user.userId)
+    // .then(response => {
+    //   // TODO: 对数据进行处理已获得更好的展示效果
+    //   this.questionnaires = response.data._embedded.questionnaires;
+    //   console.log(this.questionnaires);
+    // })
+    this.getQuestionnaires();
   }
 
 };
