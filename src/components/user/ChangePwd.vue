@@ -1,10 +1,6 @@
 <template>
   <div id="change-pwd">
     <p>修改密码</p>
-    <el-form ref="changePwd">
-      <el-input v-model="newPwd"></el-input>
-      <el-button type="primary" @click="onSubmit">提交</el-button>
-    </el-form>
     <el-form status-icon :model="password" :rules="rules" ref="changePwdForm" class="change-pwd-form">
       <el-form-item label="新密码" prop="newPwd">
         <el-input v-model="password.newPwd"></el-input>
@@ -20,6 +16,8 @@
 </template>
 
 <script>
+import * as types from "@/store/types.js";
+
 export default {
   name: "ChangePwd",
   data() {
@@ -31,7 +29,7 @@ export default {
         if (!re.test(value)) {
           callback(new Error("密码不能为纯数学或纯字母"));
         } else {
-          if (this.changePwdForm.checkPwd !== "") {
+          if (this.password.checkPwd !== "") {
             this.$refs.changePwdForm.validateField("checkPwd");
           }
         }
@@ -41,7 +39,7 @@ export default {
     var validCheckPwd = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再输入密码"));
-      } else if (value !== this.changePwdForm.newPwd) {
+      } else if (value !== this.password.newPwd) {
         callback(new Error("两次输入密码不一致"));
       } else {
         callback();
@@ -73,9 +71,10 @@ export default {
     onSubmit() {
       console.log("new pwd: " + this.newPwd);
       axios.post("/auth/update/password?uid=" + this.$store.state.user.userId,
-      {
-        password: this.newPwd
-      })
+        {
+          password: this.newPwd
+        }
+      )
         .then(res => {
           console.log("change success!");
         })
@@ -84,8 +83,23 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // axios
-          console.log("submit pwd");
+
+          // 修改密码
+          axios.post("/auth/update/password?uid=" + this.$store.state.user.userId, {
+              password: this.password.newPwd
+          })
+            .then(res => {
+              console.log("change success!");
+              // FIXME: 未退出登录
+              this.$store.commit(types.SIGNOUT);
+              this.$message({
+                showClose: true,
+                message: "密码修改成功！请重新登录！",
+                type: "success"
+              });
+            })
+            .catch(err => { console.log(err); })
+
         } else {
           console.log("error submit!");
           return false;
