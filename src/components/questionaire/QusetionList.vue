@@ -1,8 +1,8 @@
 <template>
   <div id="question-list">
     <el-card
-      v-for="(qitem, index) in questionnaires"
-      :key="index"
+      v-for="(qitem, qindex) in questionnaires"
+      :key="qindex"
       class="box-card list-item"
       shadow="hover"
     >
@@ -11,14 +11,14 @@
           <el-col :span="12">
             <div class="q-main-info">
               <span class="q-info">
-                {{ index + 1 }}
+                {{ qindex + 1 }}
               </span>
               <!-- <span class="q-info">
                 ID:
                 <span>{{qitem.id}}</span>
               </span> -->
               <span class="q-info">
-                问卷名:
+                <!-- 问卷名: -->
                 <span>{{qitem.name}}</span>
               </span>
             </div>
@@ -27,11 +27,14 @@
             <div class="q-sub-info">
               <span class="title q-info">
                 ·
-                <span class="status">运行状态: {{qitem.state}}</span>
+                <!-- 运行状态:  -->
+                <span v-if="qitem.state === true" class="status">运行中</span>
+                <span v-else class="status">暂停中</span>
               </span>
               <span class="title q-info">
                 答卷数量:
-                <span class="status">{{ qitem.peopleNum }}</span>
+                <span v-if="qitem.peopleNum === null" class="status">0</span>
+                <span v-else class="status">{{ qitem.peopleNum }}</span>
               </span>
               <span class="title q-info">
                 发布日期:
@@ -46,6 +49,8 @@
         justify="end"
         class="q-control"
       >
+
+        <!-- 编辑-按钮 -->
         <el-button 
           class="control-button"
           type="primary"
@@ -56,6 +61,8 @@
           <i class="el-icon-edit"></i>
           编辑
         </el-button>
+
+        <!-- 发布 或 停止-按钮 -->
         <el-button
           class="control-button"
           type="primary" plain size="small"
@@ -72,14 +79,20 @@
           <i class="el-icon-close"></i>
           停止
         </el-button>
+
+        <!-- 分析-按钮 -->
         <el-button class="control-button" type="primary" plain size="small">
           <i class="el-icon-document"></i>
           分析
         </el-button>
+
+        <!-- 下载-按钮 -->
         <el-button class="control-button" type="primary" plain size="small">
           <i class="el-icon-download"></i>
           查看下载
         </el-button>
+
+        <!-- 分享-按钮 -->
         <el-popover
           placement="bottom"
           width="250"
@@ -99,14 +112,19 @@
           <el-button 
             class="control-button button-share"
             type="primary" plain size="small"
-            :disabled="qitem.state === true"
             slot="reference"
           >
             <i class="el-icon-share"></i>
             分享
           </el-button>
         </el-popover>
-        <el-button class="control-button" type="danger" plain size="small">
+
+        <!-- 删除-按钮 -->
+        <el-button
+          class="control-button"
+          type="danger" plain size="small"
+          @click="deleteQuestionnaire(qitem.id)"
+        >
           <i class="el-icon-delete"></i>
           删除
         </el-button>
@@ -146,7 +164,12 @@ export default {
 
     // 编辑问卷
     editQuestionnaire(qid) {
-      this.$router.push({name: "questionEdit", params:{qid:qid}});
+      // this.$router.push({ name: "questionEdit", params:{ qid: qid } });
+      this.$confirm("已发布的问卷，再次编辑后会丢失以前的答卷数据。是否确认编辑？", "提示", { type: "warning" })
+        .then(res => {
+          this.$router.push({ name: "questionEdit", params:{ qid: qid } });
+        })
+        .catch(err => {});
     },
 
     // 发布问卷
@@ -161,10 +184,32 @@ export default {
       axios.patch("/questionnaires/" + qid, { state: qState })
         .then(res => {
           console.log("change questionnaire state! " + qState);
-          console.log(res);
           this.getQuestionnaires();
         })
         .catch( err => console.log(err) );
+    },
+
+    // 删除问卷
+    deleteQuestionnaire(qid) {
+      this.$confirm("此操作将永久删除该问卷, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        axios.delete("/questionnaires/" + qid)
+          .then(res => {
+            console.log("delete: " + qid);
+            // 更新页面问卷列表
+            this.getQuestionnaires();
+            this.$message({ type: "success", message: "删除成功!" });
+          })
+          .catch(err => {
+            console.log(err);
+            this.$message({ type: "error", message: "删除出现错误！" });
+          })
+      }).catch(() => {
+        this.$message({ type: "info", message: "已取消删除" });          
+      });
     }
   },
   created: function() {
