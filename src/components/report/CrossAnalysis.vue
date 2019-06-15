@@ -22,8 +22,9 @@
         <div>
           <p>卡方检验结果</p>
           <el-table :data="[result.chi2_contingency]">
-            <el-table-column prop="statistic" label="检验值"></el-table-column>
-            <el-table-column prop="pvalue" label="P值"></el-table-column>
+            <el-table-column prop="chi2" label="测试统计值"></el-table-column>
+            <el-table-column prop="p" label="P值"></el-table-column>
+            <el-table-column prop="dof" label="自由度"></el-table-column>
           </el-table>
         </div>
         </div>
@@ -116,7 +117,7 @@ export default {
             })
           })
           .catch(error => {
-              console.log(error);
+              this.$message.error(error.response.data.error);
           });
       }
     }

@@ -23,6 +23,7 @@
           <el-table-column prop="statistic" label="检验值"></el-table-column>
           <el-table-column prop="pvalue" label="P值"></el-table-column>
         </el-table>
+        <p>注: 返回-1, -1说明没有通过Levene检验</p>
       </div>
     </div>
   </div>
@@ -74,7 +75,7 @@ export default {
             this.result = response.data;
           })
           .catch(error => {
-            console.log(error);
+            this.$message.error(error.response.data.error);
           });
       }
   }

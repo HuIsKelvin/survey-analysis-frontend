@@ -58,7 +58,7 @@ export default {
         this.meta = response.data.meta;
       })
       .catch(error => {
-        console.log(error);
+        this.$message.error(error.response.data.error);
       });
   },
   components: {
