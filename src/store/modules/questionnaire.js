@@ -9,11 +9,11 @@ export default {
     },
     userQuestionList: {
       userId: "5ca1d85c5239c7260876465c",
-      questionnaireId: "",
-      state: false,
+      questionnaireId: "5cfd22309a9f101ca60a5686",
+      state: false, // false未发布 || true已发布
       name: "问卷标题",
       comment: "问卷头部说明",
-      endComment: "问卷结束语",
+      endComment: "您已完成本次问卷，感谢您的帮助与支持！",
       numLimit: 0,
       beginTime: "Sun May 05 2019 23:52:45 GMT+0800 (中国标准时间)",
       endTime: "Tue Jun 04 2019 23:52:45 GMT+0800 (中国标准时间)",
@@ -101,23 +101,13 @@ export default {
     },
     // 拽拖更新questionList数组排序
     [types.UPDATE_QUESTIONLIST]: (state, value) => {
-      // let count = 1; // 题目计数
-      // let pageCount = 2; // 分页计数
-      // for (let q in value) {
-      //   if (q.type == "pagination") {
-      //     q.index = pageCount;
-      //     pageCount++;
-      //   } else if (q.type == "description") {
-      //     q.index = -1;
-      //   } else {
-      //     q.index = count;
-      //     count++;
-      //   }
-      // }
       state.userQuestionList.questionList = value;
     },
     [types.ADD_QUESTION_OPTION_ITEM]: (state, index) => {
       state.userQuestionList.questionList[index].content.options.push("选项");
+    },
+    [types.DELETE_QUESTION_OPTION_ITEM]: (state, obj) => {
+      state.userQuestionList.questionList[obj.qIndex].content.options.splice(obj.iIndex, 1);
     },
     [types.CHANGE_QUESTIONLIST_VALUE]: (state, obj) => {
       let qList = state.userQuestionList.questionList;
@@ -126,6 +116,9 @@ export default {
       }
       if (obj.type == "options") {
         qList[obj.QIndex].content[obj.type][obj.iIndex] = obj.iString;
+      }
+      if (obj.type == "max") {
+        qList[obj.QIndex].content[obj.type] = obj.maxScore;
       }
       state.userQuestionList.questionList = qList;
     },

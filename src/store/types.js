@@ -42,6 +42,7 @@ export const DELETE_QUESTIONLIST_OBJECT = "delete_questionList_object";
 export const CHANGE_QUESTIONLIST_VALUE = "change_questionList_value";
 // 添加选项
 export const ADD_QUESTION_OPTION_ITEM = "add_question_option_item";
+export const DELETE_QUESTION_OPTION_ITEM = "delete_question_option_item";
 // 设置此题是否必答
 export const SET_ISREQUEIRED = "set_isRequired";
 

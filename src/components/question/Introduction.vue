@@ -1,11 +1,15 @@
 <template>
 <el-card @click="testclick" class="question-edit-box" >
+    <div class="intro-content-input title">
         <p
         @keyup="changeQuestionTitle($event)"
-        class="input title" contenteditable>{{this.get_title}}</p>
+        contenteditable>{{ questionnaireTitle }}</p>
+    </div>
+    <div class="intro-content-input intro">
         <p
         @keyup="changeQuestionIntro($event)"
-        class="input intro" contenteditable>{{ this.introduction }}</p>
+        contenteditable>{{ intro }}</p>
+    </div>
 </el-card>
 </template>
 <script>
@@ -24,7 +28,8 @@ export default {
     },
     computed: {
         ...mapGetters({
-            get_title: "questionnaireTitle"
+            questionnaireTitle: "questionnaireTitle",
+            intro: "introContents"
         })
     },
     methods:{
@@ -39,30 +44,14 @@ export default {
             set_title: "set_questionnaire_title"
 
         }),
-        testclick() {
-            console.log("intro点击");
-        }
 
     }
 }
 </script>
-<style>
-/* .question-edit-box .el-input__inner {
-    border:0px;
-} */
-.input {
-    line-height: 2.4rem;
-    border: 1px solid transparent;
-    background-color: transparent;
-    margin: 0;
-    outline: none;
-    padding: 0 .2rem;
-    border-radius: .3rem;
-    color: #777;
-    text-align: left;
-}
+<style lang="scss" scoped>
 .title {
-    font-size: font-size-default;
+    font-size: 22px;
+    font-weight: bold;
     line-height: 1.5;
     width: 100%;
     max-width: 100%;
@@ -71,15 +60,30 @@ export default {
 
 }
 .intro {
-    /* font-size: font-size-default; */
+    font-size: 14px;
     line-height: 1;
     width: 100%;
     max-width: 100%;
     border-radius: .3rem;
     line-height: 2.4rem;
 }
-.input:hover{
-    border-color: black;
-    background-color: #e5e9f2;
+
+.intro-content-input {
+    line-height: 2.4rem;
+    border: 1px solid transparent;
+    margin: 0;
+    outline: none;
+    padding: 0 .2rem;
+    border-radius: .3rem;
+    text-align: left;
+}
+.intro-content-input:hover{
+    border-width: 1px solid transparent;
+    border-style: dashed;
+    border-color:#777;
+    /* background-color: #e5e9f2; */
+}
+.intro-content-input p{
+    outline: none;
 }
 </style>

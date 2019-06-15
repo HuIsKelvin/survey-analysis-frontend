@@ -13,7 +13,7 @@
 -->
 <template>
   <div>
-    <span class="">页码：{{currentPage}}/{{totalPage}}</span>
+    <div class="pagination-bar">页码：{{currentPage}}/{{totalPage}}</div>
   </div>
 </template>
 <script>
@@ -60,19 +60,7 @@ export default {
 </script>
 <style>
 .pagination-bar {
-
-}
-.pagination-bar::before {
-  content: "";
-  position: absolute;
-  top:0;
-  right:0;
-  height:0;
-  width:0;
-  border-top-left-radius: 4px;
-  border-top: solid 5px #2672ff;
-  border-right: solid 5px transparent;
-  border-bottom: solid 5px transparent;
-  border-left: solid 5px #2672ff;
+  line-height:2.4rem;
+  color: rgb(0,128,128);
 }
 </style>

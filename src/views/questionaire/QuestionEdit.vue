@@ -19,11 +19,11 @@
 -->
 <template>
   <el-container class="question-edit-container">
-    <el-header class="question-edit-header">
+    <el-header>
       <bread-header></bread-header>
     </el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="210px">
         <el-menu class="question-edit-nav" 
           :default-openeds="['1', '2', '3', '4', '5']"
           >
@@ -148,9 +148,10 @@
               <end class="question-card"></end>
             </div>
             <el-button type="primary" @click="emptyPage">清空分页</el-button>
-            <el-button type="primary" @click="previewQuestionire">预览问卷</el-button>
+            <el-button type="primary" @click="previewQuestionnaire">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
             <el-button type="primary" @click="releaseAndShare">发布并分享</el-button>
+            <el-button type="primary" @click="update_questionList">重置问卷</el-button>
           </el-col>
 
           <el-col :span="8" class>
@@ -161,7 +162,7 @@
                 ref="qSetting" 
                 v-if="isClick"
                 :class="navBarFixed == true ? 'navBarWrap' :''"
-                :activeQindex="activeClass"
+                :qSettingJson="qSettingJson"
               ></question-setting> 
             </transition>
 
@@ -225,11 +226,33 @@ export default {
         animation:300,
       }
     },
-    qcardClassObject: function() {
-
+    activeQindex() {
+      if (this.activeClass !== -1) {
+        return this.qList[this.activeClass].index
+      } else {
+        return -1;
+      }
+    },
+    isRequired() {
+      if (this.activeClass !== -1) {
+        console.log(this.qList[this.activeClass].isRequired);
+        return this.qList[this.activeClass].isRequired;
+      } else {
+        return true; // 给个默认值true
+      }
+    },
+    qSettingJson() {
+      let qSettingJson = {};
+      qSettingJson["activeClass"] = this.activeClass;
+      if (this.activeClass !== -1) {
+        qSettingJson["isRequired"] = this.qList[this.activeClass].isRequired;
+        qSettingJson["rateMax"] = this.qList[this.activeClass].content.max;
+      }
+      return qSettingJson;
     }
   },
   mounted() {
+    this.set_isClick(false);
     window.addEventListener('scroll', this.watchScroll)
   },
   created() {
@@ -278,10 +301,7 @@ export default {
       set_isClick: "set_isClick",
     }),
     ...mapActions("survey", {
-      "setQuestionirePreview": "setQuestionire"
-    }),
-    ...mapActions("survey", {
-      "setQuestionirePreview": "setQuestionire"
+      "setQuestionnairePreview": "setQuestionnaire"
     }),
     get_init() {
       let initialType = {
@@ -354,6 +374,7 @@ export default {
         page += 1;
         qListObj.currentPage = page;
       }
+      console.log(qListObj);
       this.set_totalPage(page);
       this.add_qList_obj(qListObj);
     },
@@ -383,8 +404,26 @@ export default {
     },
     // 保存问卷按钮
     saveQuestionnaire() {
+      let counter = 1;
+      let questionList = this.qList;
+      let userQuestionList = this.userQuestionList;
+      if (this.isPagination) {
+        for (let i in questionList) {
+          if (questionList[i].type == "pagination") {
+            counter++;
+          } else {
+            questionList[i].currentPage = counter;
+          }
+        }
+
+      } else {
+        // do nothing
+      }
+      userQuestionList.questionList = questionList;
       // patch是直接更新当前的数据
-      axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
+      console.log(this.questionnaireId);
+      console.log(userQuestionList);
+      axios.patch("/questionnaires/" + this.questionnaireId, userQuestionList)
       .then(response => {
         this.$message({
           message:'问卷已保存',
@@ -421,11 +460,12 @@ export default {
     emptyPage() {
         this.set_isPagination(false);
         this.set_totalPage(0);
+
     },
     // 预览问卷
-    previewQuestionire() {
-      this.setQuestionirePreview({
-        questionire: this.userQuestionList
+    previewQuestionnaire() {
+      this.setQuestionnairePreview({
+        questionnaire: this.userQuestionList
       });
       this.$router.push({
         name: "preview"
@@ -461,6 +501,16 @@ export default {
     handleClose(key, keyPath) {
         console.log(key, keyPath);
     },
+    update_questionList() {
+      let qList = this.qList;
+      let update_qList = this.update_index_currentPage(qList);
+      this.set_qList(update_qList);
+      let length = update_qList.length;
+      let totalNum = update_qList[length -1].index;
+      console.log("update_questionList");
+      console.log(totalNum);
+      this.set_totalQNum(totalNum);
+    },
     update_index_currentPage(questionList) {
       let qList = questionList;
       let pCount = 2;
@@ -492,19 +542,11 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .question-edit-main {
   background-color: #e5e9f2;
 }
 
-.question-edit-header {
-  background-color:rgb(84,92,100);
-  text-align: center;
-}
-.fixed {
-  position: fixed;
-  top:0;
-}
 .question-card {
   margin-left:2em;
   margin-right: 2em;
@@ -537,7 +579,41 @@ body {
 }
 .navBarWrap {
     position:fixed;
-    top:0;
+    top:60px;
     z-index:999;
   }
+  .el-header{
+    background-color: #D3DCE6;
+    color: #333;
+    text-align: center;
+    border-bottom: 1px solid ;
+    border-bottom:rgb(216, 232, 252);
+    line-height: 60px;
+    position: sticky;
+    top:0;
+    z-index:1002;
+  }
+  
+  .el-aside {
+    background-color: #D3DCE6;
+    // background-color: white;
+    color: #333;
+    text-align: center;
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    top: 60px;
+    height: 550px;
+    overflow-x: auto;
+    overflow-y: auto;
+
+  }
+  .el-aside::-webkit-scrollbar {
+    width: 3px; //滚动条的宽度
+  }
+  .el-aside::-webkit-scrollbar-thumb {
+      background-color: #8899A7;//滚动条的颜色
+      border-radius: 3px;//滚动条的边框倒角
+  }
+
 </style>

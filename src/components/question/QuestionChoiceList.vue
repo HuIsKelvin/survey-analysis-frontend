@@ -9,30 +9,37 @@
 -->
 <template>
   <div>
-    <ul>
-        <li v-for="(item, index) in listContent.options">
-          <p 
-            @keyup="changeOptionValue($event, index)"
+    <div v-for="(item,iIndex) in listContent.options">
+      <el-row class="question-item-row">
+        <el-col :span="1">
+          <div class="line-height">
+            <font-awesome-icon v-if="choiceType == 'checkbox' || choiceType == 'sort'" class="far-icon" :icon="['far', 'square']"/>
+          </div>
+          <div class="line-height">
+            <font-awesome-icon v-if="choiceType == 'radio'" class="far-icon" :icon="['far', 'circle']"/>
+          </div>
+        </el-col>
+        <!--选项主体栏-->
+        <el-col :span="19">
+          <p
+            @keyup="changeOptioinValue($event, index)"
             class="question-choice-input"
             contenteditable>
-            {{item}}  
-            </p>
-        </li>
-      </ul>
-    <!-- <draggable :list="this.listContent.options">
-      <item-input
-      v-for="(item, index) in this.listContent.options"
-      :optionItem="item"
-      :iIndex="index">
+            {{item}}
+          </p>
+        </el-col>
 
-      </item-input>
-    </draggable> -->
-    <!-- <draggable :list="this.listdata">
-      <li v-for="(item, index) in this.listdata">
-      {{item}}
-      </li>
-    </draggable> -->
-    <el-button icon="el-icon-plus" @click="addItem()" circle></el-button>
+        <!--删除增加选项按钮栏-->
+        <el-col :span="4" class="item-tool-col">
+          <el-tooltip class="item" effect="dark" content="增加选项" placement="top">
+            <el-button type="text" style="font-size:18px;" @click="addItem()"><i class="el-icon-circle-plus"></i></el-button>
+          </el-tooltip>
+          <el-tooltip v-if="listContent.options.length > 1" class="item" effect="dark" content="删除选项" placement="top">
+            <el-button type="text"  style="font-size:18px;" @click="deleteItem(iIndex)"><i class="el-icon-remove"></i></el-button>
+          </el-tooltip>
+        </el-col>
+      </el-row>
+    </div>
     
     <!-- <p contenteditable><p> -->
   </div>
@@ -57,37 +64,20 @@ export default {
   data(){
     return {
       option: this.listContent.options,
-      listdata:[
-        {
-          id: 1,
-          name: '叶落森1'
-        },
-        {
-          id: 2,
-          name: '叶落森2'
-        },
-        {
-          id: 3,
-          name: '叶落森3'
-        },
-        {
-          id: 4,
-          name: '叶落森4'
-        },
-        {
-          id: 5,
-          name: '叶落森5'
-        }
-      ]
     }
   },
   methods:{
     ...mapMutations({
       add_item: "add_question_option_item",
+      delete_item: "delete_question_option_item",
       change_value: "change_questionList_value"
     }),
     addItem: function() {
       this.add_item(this.qIndex);
+    },
+    deleteItem: function(iIndex) {
+      let qIndex = this.qIndex;
+      this.delete_item({qIndex: qIndex, iIndex: iIndex});
     },
     changeOptionValue: function($event,index) {
       // console.log($event);
@@ -107,10 +97,13 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 li {
   text-align:left;
 }
+// .el-row {
+//   padding-left: 2rem;
+// }
 .question-choice-input {
     line-height: 2.4rem;
     border: 1px solid transparent;
@@ -125,5 +118,17 @@ li {
     border-style: dashed;
     border-color:#777;
     /* background-color: #e5e9f2; */
+}
+.question-item-row:hover .item-tool-col{
+  display: block;
+}
+.item-tool-col {
+  display: none;
+}
+.far-icon {
+  color: #777;
+}
+.line-height {
+  line-height: 2.4rem;
 }
 </style>

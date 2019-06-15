@@ -1,0 +1,18 @@
+/* 
+ * 列表的过渡动画 
+ */
+.list-item-enter-active {
+  transition: all 1s;
+}
+.list-item-leave-active {
+  transition: all .5s;
+  position: absolute;
+}
+.list-item-move {
+  transition: transform .3s;
+}
+.list-item-enter, .list-item-leave-to
+/* .list-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
