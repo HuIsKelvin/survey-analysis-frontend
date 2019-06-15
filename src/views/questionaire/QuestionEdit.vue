@@ -303,7 +303,7 @@ export default {
       set_isClick: "set_isClick",
     }),
     ...mapActions("survey", {
-      "setQuestionirePreview": "setQuestionire"
+      "setQuestionnairePreview": "setQuestionnaire"
     }),
     get_init() {
       let initialType = {
@@ -466,8 +466,8 @@ export default {
     },
     // 预览问卷
     previewQuestionnaire() {
-      this.setQuestionirePreview({
-        questionire: this.userQuestionList
+      this.setQuestionnairePreview({
+        questionnaire: this.userQuestionList
       });
       this.$router.push({
         name: "preview"

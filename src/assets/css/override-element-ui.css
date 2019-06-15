@@ -11,9 +11,24 @@
     padding:0px;
 }
 
+/* 
+ * 问卷填写组件样式
+ */
 #dynamic-question .el-form-item__label {
-    /* font-size: 1rem;
-    font-weight: bold; */
+    font-size: 1rem;
+    font-weight: bold;
 }
 
-
+/* 
+ * 问卷填写分页按钮 
+ */
+#survey-questionnaire .survey-pagination .el-pagination.el-pagination button {
+    height: auto;
+}
+#survey-questionnaire .survey-pagination .el-pagination span:not([class*=suffix]),
+#survey-questionnaire .survey-pagination .el-pagination .el-pager li {
+    height: auto;
+    line-height: 1;
+    padding: 12px 12px;
+    border-radius: 4px;
+}

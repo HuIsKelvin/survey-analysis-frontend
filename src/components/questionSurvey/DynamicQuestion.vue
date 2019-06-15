@@ -1,10 +1,10 @@
 <template>
   <div id="dynamic-question">
-    <div 
+    <!-- <div 
       class="queston-tip"
       v-if="setting.tipMsg">
       {{ setting.tipMsg }}
-    </div>
+    </div> -->
     <el-row :gutter="20">
       <el-col :span="2">
         <div 
@@ -13,7 +13,8 @@
           <span class="question-index">{{setting.index}}</span>
           <span 
             class="question-alarm"
-            v-if="isRequired === true">*
+            v-if="isRequired === true">
+            *
           </span>
         </div>
       </el-col>

@@ -2,15 +2,15 @@
     <div id="preview">
         <h3>预览页面</h3>
         <el-button type="primary" @click="backToEdit">返回编辑</el-button>
-        <survey-questionire 
-            :questionire="questionire">
-        </survey-questionire>
+        <survey-questionnaire 
+            :questionnaire="questionnaire">
+        </survey-questionnaire>
     </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import SurveyQuestionire from "@/components/questionSurvey/SurveyQuestionire";
+import SurveyQuestionnaire from "@/components/questionSurvey/SurveyQuestionnaire";
 
 export default {
     name: "Preview",
@@ -18,16 +18,18 @@ export default {
         return {};
     },
     components: {
-        "survey-questionire": SurveyQuestionire
+        "survey-questionnaire": SurveyQuestionnaire
     },
     computed: {
         ...mapGetters("survey", {
-            "questionire": "surveyQuestionire"
+            "questionnaire": "surveyQuestionnaire"
         })
     },
     methods: {
         backToEdit() {
-            this.$router.push({name: "questionEdit"})
+            // FIXME: 需判断 url 历史
+            // this.$router.push({name: "questionEdit"});
+            this.$router.back(-1);
         }
     }
 
