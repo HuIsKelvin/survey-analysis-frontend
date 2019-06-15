@@ -21,12 +21,13 @@
         </el-col>
         <!--选项主体栏-->
         <el-col :span="19">
-          <p
-            @keyup="changeOptioinValue($event, index)"
-            class="question-choice-input"
-            contenteditable>
-            {{item}}
-          </p>
+          <div contenteditable="true" class="question-choice-input">
+            <p
+              @keyup="changeOptioinValue($event, index)"
+              >
+              {{item}}
+            </p>
+          </div>
         </el-col>
 
         <!--删除增加选项按钮栏-->
@@ -112,6 +113,7 @@ li {
     padding: 0 .2rem;
     border-radius: .3rem;
     text-align: left;
+    outline:none;
 }
 .question-choice-input:hover{
     border-width: 1px solid transparent;

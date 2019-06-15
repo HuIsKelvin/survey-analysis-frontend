@@ -8,7 +8,7 @@ export default {
       isClick: false
     },
     userQuestionList: {
-      userId: "5ca1d85c5239c7260876465c",
+      userId: "5d03933f0c34420825f479ed",
       questionnaireId: "5cfd22309a9f101ca60a5686",
       state: false, // false未发布 || true已发布
       name: "问卷标题",

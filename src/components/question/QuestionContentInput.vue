@@ -6,13 +6,11 @@
 * @version
 -->
 <template>
-  <div class="question-content-input">
+  <div>
     <i class="el-icon-s-comment" v-if="description"></i>
-    <p 
-    @keyup="changeOptionValue($event)"
-    contenteditable>
-    {{this.qContent}}
-    </p>
+    <div contenteditable="true" class="question-content-input">
+      <p @keyup="changeOptionValue($event)">{{this.qContent}}</p>
+    </div>
     <!-- <el-input 
       class="question-content-input"
       type="textarea"
@@ -76,6 +74,7 @@ export default {
     padding: 0 .2rem;
     border-radius: .3rem;
     text-align: left;
+    outline:none;
 }
 .question-content-input:hover{
     border-width: 1px solid transparent;

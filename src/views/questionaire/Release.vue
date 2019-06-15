@@ -1,7 +1,7 @@
 <!--发布问卷界面-->
 <template>
 <div>
-  <bread-header></bread-header>
+  <bread-header :view="{viewType: 'release'}"></bread-header>
 </div>
 </template>
 <script>
