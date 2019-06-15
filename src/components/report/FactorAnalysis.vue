@@ -80,7 +80,7 @@ export default {
       if (column_list.length > 0) {
         let params = {};
         column_list.forEach((element, index) => {
-          params["columnx" + index + 1] = element;
+          params["columnx" + (index + 1)] = element;
         });
         params["n_factor"] = n_factor
         axiosVisual
@@ -112,7 +112,7 @@ export default {
             };
           })
           .catch(error => {
-            console.log(error);
+            this.$message.error(error.response.data.error);
           });
       }
     }

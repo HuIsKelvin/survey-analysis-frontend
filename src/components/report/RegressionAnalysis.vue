@@ -102,7 +102,7 @@ export default {
         } else {
           let params = {};
           columnx_list.forEach((element, index) => {
-            params["columnx" + index + 1] = element;
+            params["columnx" + (index + 1)] = element;
           });
           params["columny"] = columny;
           axiosVisual
@@ -130,7 +130,7 @@ export default {
               console.log(this.result);
             })
             .catch(error => {
-              console.log(error);
+              this.$message.error(error.response.data.error)
             });
         }
       }

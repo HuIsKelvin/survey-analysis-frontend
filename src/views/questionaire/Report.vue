@@ -57,7 +57,7 @@ export default {
           document.body.removeChild(elink);
         })
         .catch(error => {
-          console.log(error)
+          this.$message.error(error.response.data.error)
         })
       }
     },

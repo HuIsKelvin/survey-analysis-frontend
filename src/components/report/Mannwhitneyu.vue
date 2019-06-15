@@ -74,7 +74,7 @@ export default {
             this.result = response.data;
           })
           .catch(error => {
-            console.log(error);
+            this.$message.error(error.response.data.error);
           });
       }
     }
