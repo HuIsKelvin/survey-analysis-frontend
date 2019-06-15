@@ -159,8 +159,8 @@
             <!--问卷题目设置-->
             <transition name="question-setting">
               <question-setting
-                ref="qSetting" 
-                v-if="true"
+                ref="qSetting"
+                v-if="isClick"
                 :class="navBarFixed == true ? 'navBarWrap' :''"
                 :qSettingJson="qSettingJson"
               ></question-setting> 
@@ -255,41 +255,54 @@ export default {
   },
   mounted() {
     this.set_isClick(false);
-    window.addEventListener('scroll', this.watchScroll)
+    window.addEventListener('scroll', this.watchScroll);
+    
   },
   created() {
-    // 点击其他不在的区域触发事件
-    // document.addEventListener('click', (e) => {
-    //   // 如果当前处于有高亮状态
-    //   if (this.isClick == true) {
-    //     let isContains = false;
-    //     for (let i in this.$refs.qCard) {
-    //       // console.log("this.$refs.qCard[i].$el")
-    //       // console.log(this.$refs.qCard[i].$el);
-    //       // console.log("e.target")
-    //       // console.log(e.target);
-    //       // console.log("this.$refs.qSetting")
-    //       // console.log(this.$refs.qSetting);      
-    //       // console.log("this.$refs.qSetting.$el")
-    //       // console.log(this.$refs.qSetting.$el);
-    //       // console.log("this.$refs.qCard[i].$el.contains target")
-    //       // console.log(this.$refs.qCard[i].$el.contains(e.target));
-    //       // console.log("this.$refs.qSetting.$el contains etarget")
-    //       // console.log(this.$refs.qSetting.$el.contains(e.target));
-    //       if(this.$refs.qCard[i].$el.contains(e.target)){
-    //         // || this.$refs.qSetting.$el.contains(e.target)) {
-    //         isContains = true;
-    //       }
-    //     }
-    //     if (!isContains) {
-    //       this.set_isClick(false);
-    //       this.activeClass = -1;
-    //     } else {
-    //       this.set_isClick(true);
-    //     }
-    //   }
+    //点击其他不在的区域触发事件
+    document.addEventListener('click', (e) => {
+      // // 如果当前处于有高亮状态
+      // console.log("click!");
+      // console.log("isClick == " + this.isClick);
+      // console.log("this.$refs.qSetting.$el contains etarget")
+      // console.log(this.$refs.qSetting.$el.contains(e.target));
+      // console.log("e.target")
+      // console.log(e.target);
+      // console.log("this.$refs.qSetting.$el")
+      //console.log(this.$refs.qSetting.$el);
+      // console.log(e.target.contains(<i class="el-icon-minus"></i>));
+      // console.log(e.target.contains(<span>新增跳转逻辑</span>))
+      if (this.isClick == true) {
+        let isContains = false;
+        if(this.$refs.qSetting.$el.contains(e.target)
+          || e.target.contains(<i class="el-icon-minus"></i>) 
+          || e.target.contains(<span>新增跳转逻辑</span>)) {
+          isContains = true;
+        }
+        for (let i in this.$refs.qCard) {
+          // console.log("this.$refs.qCard[i].$el")
+          // console.log(this.$refs.qCard[i].$el);
+          // console.log("e.target")
+          // console.log(e.target);
+          // console.log("this.$refs.qSetting")
+          // console.log(this.$refs.qSetting);      
+          // console.log("this.$refs.qCard[i].$el.contains target")
+          // console.log(this.$refs.qCard[i].$el.contains(e.target));
 
-    // })
+          if(this.$refs.qCard[i].$el.contains(e.target)) {
+            isContains = true;
+          }
+        }
+
+        if (!isContains) {
+          this.set_isClick(false);
+          this.activeClass = -1;
+        } else {
+          this.set_isClick(true);
+        }
+      }
+
+    })
   },
   methods: {
     ...mapMutations({
@@ -317,7 +330,6 @@ export default {
           options:[],
           max:5,
           min:1,
-          input: ""
         },
         // 添加时默认没有逻辑跳转
         jumpLogic: [
@@ -585,11 +597,12 @@ body {
     z-index:999;
   }
   .el-header{
-    background-color: #D3DCE6;
-    color: #333;
+    // background-color: #D3DCE6;
+    background-color: rgb(84, 92, 100);
+    // color: #333;
     text-align: center;
     border-bottom: 1px solid ;
-    border-bottom:rgb(216, 232, 252);
+    // border-bottom:rgb(216, 232, 252);
     line-height: 60px;
     position: sticky;
     top:0;

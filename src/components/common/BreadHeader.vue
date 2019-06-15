@@ -1,13 +1,13 @@
 <!--  <- 返回我问卷个人中心     问卷编辑 > 发布问卷 > 统计报表       保存 预览 发布     账号-->
 <template>
-    <div>
+    <div class="bread-header">
       <el-col :span="2">
       <div>
-        <el-button type="text" @click="backToManage"><i class="el-icon-back"></i><span>返回个人问卷中心</span></el-button>   
+        <el-button type="text" @click="backToManage" style="color='#A3E4D7'"><i class="el-icon-back"></i><span>返回个人问卷中心</span></el-button>   
       </div>
       </el-col>
       <el-col :span="16">
-      <div>
+      <div id="prograss-bar">
         <el-button type="text" class="high-light-button" :disabled="view.viewType === 'question-edit'? false : true">问卷编辑</el-button>
         <i class="el-icon-arrow-right"></i>
         <el-button type="text" :disabled="view.viewType === 'release'? false : true">发布问卷</el-button>
@@ -41,7 +41,7 @@
       >
       <span>检测到未保存的内容，是否在离开页面前保存修改？</span>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveAndBackToManage">保存</el-button>
+        <el-button type="primary" @click="saveAndJumpToManage">保存</el-button>
         <el-button @click="jumpToManage">放弃修改</el-button>
         <el-button @click="dialogVisible = false">取消</el-button>
       </span>
@@ -75,7 +75,7 @@ export default {
         set_state: "set_state",
     }),
     ...mapActions("survey", {
-      "setQuestionirePreview": "setQuestionire"
+      "setQuestionnairePreview": "setQuestionnaire"
     }),
     saveAndJumpToManage() {
       this.saveQuestionnaire();
@@ -151,8 +151,8 @@ export default {
     },
     // 预览问卷
     previewQuestionnaire() {
-      this.setQuestionirePreview({
-        questionire: this.userQuestionList
+      this.setQuestionnairePreview({
+        questionnaire: this.userQuestionList
       });
       this.$router.push({
         name: "preview"
@@ -175,5 +175,18 @@ export default {
   }
   .user-id {
     font-size: 14px;
+  }
+  .bread-header .el-button--text:hover{
+    color: rgb(163, 228, 215)
+  }
+  .bread-header .el-button--text {
+    color: rgb(118, 215, 196);
+  }
+
+  .bread-header .el-button.is-disabled, .el-button.is-disabled:hover, .el-button.is-disabled:focus {
+    color: #C0C4CC;
+  }
+  #prograss-bar i{
+    color: white;;
   }
 </style>

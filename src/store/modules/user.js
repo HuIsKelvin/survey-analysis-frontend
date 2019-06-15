@@ -2,6 +2,7 @@ import * as types from "../types";
 
 export default {
   state: {
+    // userId: "5d04ffea0c34424e5660a13b", // xnuiui的userId
     userId: null,
     token: null,
     name: ""

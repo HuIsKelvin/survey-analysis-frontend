@@ -139,7 +139,7 @@ export default {
   },
   data() {
     return {
-      dialogFormVisible: true,
+      dialogFormVisible: false,
       rateMaxScoreOptions: [2,3,4,5,6,7,8,9,10],
       // rateMaxScoreOptions: ["2","3","4","5","6","7","8","9","10"]
       rateMaxScore: ''
