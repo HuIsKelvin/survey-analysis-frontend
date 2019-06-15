@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { error } from "util";
 export default {
   props: {
     meta: Array
