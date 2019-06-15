@@ -15,11 +15,17 @@
         </el-col>
       </el-row>
     </div>
+    <change-pwd></change-pwd>
   </div>
 </template>
 
 <script>
+import ChangePwd from "@/components/user/ChangePwd"
+
 export default {
+  components: {
+    "change-pwd": ChangePwd
+  },
   data : function() {
     return {
       name: "",
@@ -29,14 +35,14 @@ export default {
     }
   },
   created: function() {
-    axios.get("/users/"+this.$store.state.userId)
-    .then(response => {
-      let data = response.data;
-      this.name = data.name;
-      this.username = data.username;
-      this.email = data.email;
-      this.userId = data.id;
-    })
+    axios.get("/users/"+this.$store.state.user.userId)
+      .then(response => {
+        let data = response.data;
+        this.name = data.name;
+        this.username = data.username;
+        this.email = data.email;
+        this.userId = data.id;
+      })
   }
 }
 </script>
