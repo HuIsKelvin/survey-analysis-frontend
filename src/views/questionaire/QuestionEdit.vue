@@ -272,11 +272,16 @@ export default {
       //console.log(this.$refs.qSetting.$el);
       // console.log(e.target.contains(<i class="el-icon-minus"></i>));
       // console.log(e.target.contains(<span>新增跳转逻辑</span>))
+      let minusIcon = document.createElement('i'); 
+      minusIcon.setAttribute('class', "el-icon-minus");
+      let addJumpLogic = document.createElement('span'); 
+      addJumpLogic.innerHTML = '新增跳转逻辑';
+
       if (this.isClick == true) {
         let isContains = false;
         if(this.$refs.qSetting.$el.contains(e.target)
-          || e.target.contains(<i class="el-icon-minus"></i>) 
-          || e.target.contains(<span>新增跳转逻辑</span>)) {
+          || e.target.contains(minusIcon) 
+          || e.target.contains(addJumpLogic)) {
           isContains = true;
         }
         for (let i in this.$refs.qCard) {
@@ -468,7 +473,6 @@ export default {
             type: "error"
           })
       })
-      
 
     },
     emptyPage() {
@@ -490,16 +494,24 @@ export default {
       // console.log(evt);
     },
     dragEnd(evt) {
-      console.log("drag end!");
+      // console.log("drag end!");
       // console.log(evt);
       let qList = this.userQuestionList.questionList;
-      let update_qList = this.update_index_currentPage(qList);
+      // 每次拖动结束之后，更新所有的题号和分页的页码（普通题目、备注说明页码不更新）
+      let update_qList = this.update_index_currentPage(qList); 
       // console.log(update_qList);
       this.set_qList(update_qList);
     },
     dragChange(evt) {
       // console.log("drag change!");
       // console.log(evt)
+      let newIndex = evt.moved.newIndex;
+      let oldIndex = evt.moved.oldIndex;
+      if (oldIndex == this.activeClass) {
+        this.activeClass = newIndex; // 拖动之后高亮card的index改变，activeClass改变
+      } else {
+        // do nothing so far
+      }
     },
     dragMove(evt,originalEvent) {
       // console.log("drag move!");
@@ -508,12 +520,6 @@ export default {
     },
     dragUpdate(evt) {
       // console.log(evt);
-    },
-    handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-        console.log(key, keyPath);
     },
     update_questionList() {
       let qList = this.qList;
