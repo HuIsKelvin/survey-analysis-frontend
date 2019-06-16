@@ -10,6 +10,9 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('changePwdForm')">修改</el-button>
+        <router-link :to="{name: 'user.info'}" tag="span">
+          <el-button type="primary">取消</el-button>
+        </router-link>
       </el-form-item>
     </el-form>
   </div>
@@ -111,5 +114,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+#change-pwd {
+  .change-pwd-form{
+    max-width: 400px;
+    margin:0 auto;
+  }
+}
 </style>

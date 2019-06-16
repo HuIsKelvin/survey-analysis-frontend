@@ -1,14 +1,14 @@
 <template>
 <el-card @click="testclick" class="question-edit-box" >
-    <div class="intro-content-input title">
+    <div class="intro-content-input title" contenteditable="true">
         <p
         @keyup="changeQuestionTitle($event)"
-        contenteditable>{{ questionnaireTitle }}</p>
+        >{{ questionnaireTitle }}</p>
     </div>
-    <div class="intro-content-input intro">
+    <div class="intro-content-input intro" contenteditable="true">
         <p
         @keyup="changeQuestionIntro($event)"
-        contenteditable>{{ intro }}</p>
+        >{{ intro }}</p>
     </div>
 </el-card>
 </template>
@@ -76,6 +76,7 @@ export default {
     padding: 0 .2rem;
     border-radius: .3rem;
     text-align: left;
+    outline:none;
 }
 .intro-content-input:hover{
     border-width: 1px solid transparent;

@@ -2,7 +2,9 @@
 <template>
   <div>
     <el-tabs tab-position="left">
-      <el-tab-pane label="交叉分析"></el-tab-pane>
+      <el-tab-pane label="交叉分析">
+        <cross-analysis :meta="meta"></cross-analysis>
+      </el-tab-pane>
       <el-tab-pane label="单样本T检验">
         <ttest1samp :meta="meta"></ttest1samp>
       </el-tab-pane>
@@ -21,8 +23,13 @@
       <el-tab-pane label="单因素方差分析">
         <foneway :meta="meta"></foneway>
       </el-tab-pane>
-      <el-tab-pane label="回归分析">回归分析</el-tab-pane>
-      <el-tab-pane label="因子分析">因子分析</el-tab-pane>
+      <el-tab-pane label="回归分析">
+        <regression-analysis :meta="meta"></regression-analysis>
+      </el-tab-pane>
+      <el-tab-pane label="因子分析">
+        <factor-analysis :meta="meta"></factor-analysis>
+
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -34,6 +41,9 @@ import Mannwhitneyu from "../../components/report/Mannwhitneyu";
 import Ttestrel from "../../components/report/Ttestrel";
 import Normaltest from "../../components/report/Normaltest";
 import Foneway from "../../components/report/Foneway.vue";
+import CrossAaalysis from "../../components/report/CrossAnalysis";
+import RegressionAnalysis from '../../components/report/RegressionAnalysis.vue';
+import FactorAnalysis from '../../components/report/FactorAnalysis.vue';
 
 export default {
   data() {
@@ -48,7 +58,7 @@ export default {
         this.meta = response.data.meta;
       })
       .catch(error => {
-        console.log(error);
+        this.$message.error(error.response.data.error);
       });
   },
   components: {
@@ -57,7 +67,10 @@ export default {
     mannwhitneyu: Mannwhitneyu,
     ttestrel: Ttestrel,
     normaltest: Normaltest,
-    foneway: Foneway
+    foneway: Foneway,
+    'cross-analysis': CrossAaalysis,
+    'regression-analysis': RegressionAnalysis,
+    'factor-analysis': FactorAnalysis,
   }
 };
 </script>

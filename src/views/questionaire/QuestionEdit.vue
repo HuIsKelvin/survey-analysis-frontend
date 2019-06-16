@@ -20,7 +20,7 @@
 <template>
   <el-container class="question-edit-container">
     <el-header>
-      <bread-header></bread-header>
+      <bread-header :view="{viewType: 'question-edit'}"></bread-header>
     </el-header>
     <el-container>
       <el-aside width="210px">
@@ -32,11 +32,11 @@
               <span>分页说明</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item>
-                <el-button type="text" @click="addDescription()">备注说明</el-button>
+              <el-menu-item @click="addDescription()">
+                <el-button type="text">备注说明</el-button>
               </el-menu-item>
-              <el-menu-item>
-                <el-button type="text" @click="addPagination()">设置分页</el-button>
+              <el-menu-item  @click="addPagination()">
+                <el-button type="text">设置分页</el-button>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -45,11 +45,11 @@
               <span>选择题</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'radio', title:'单选题'})">单选题</el-button>
+              <el-menu-item  @click="addQuestion({type: 'radio', title:'单选题'})">
+                <el-button type="text">单选题</el-button>
               </el-menu-item>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'checkbox', title:'多选题'})">多选题</el-button>
+              <el-menu-item  @click="addQuestion({type: 'checkbox', title:'多选题'})">
+                <el-button type="text">多选题</el-button>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -58,14 +58,14 @@
               <span>填空题</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'textarea', title:'填空题'})">填空题</el-button>
+              <el-menu-item  @click="addQuestion({type: 'textarea', title:'填空题'})">
+                <el-button type="text">填空题</el-button>
               </el-menu-item>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'numInput', title:'数字输入题'})">数字输入题</el-button>
+              <el-menu-item  @click="addQuestion({type: 'numInput', title:'数字输入题'})">
+                <el-button type="text">数字输入题</el-button>
               </el-menu-item>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'textInput', title:'短文本输入题'})">短文本输入题</el-button>
+              <el-menu-item  @click="addQuestion({type: 'textInput', title:'短文本输入题'})">
+                <el-button type="text">短文本输入题</el-button>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -74,14 +74,14 @@
               <span>打分排序</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'rate', title:'请给本项打分'})">评分题</el-button>
+              <el-menu-item  @click="addQuestion({type: 'rate', title:'请给本项打分'})">
+                <el-button type="text">评分题</el-button>
               </el-menu-item>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'scale', title:'您向朋友或同事推荐我们的可能性有多大？'})">量表题</el-button>
+              <el-menu-item  @click="addQuestion({type: 'scale', title:'您向朋友或同事推荐我们的可能性有多大？'})">
+                <el-button type="text">量表题</el-button>
               </el-menu-item>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'sort', title:'请给以下选项排序'})">排序题</el-button>
+              <el-menu-item  @click="addQuestion({type: 'sort', title:'请给以下选项排序'})">
+                <el-button type="text">排序题</el-button>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -90,17 +90,17 @@
               <span>快速创建个人信息</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type:'textInput', title: '姓名'})">姓名</el-button>
+              <el-menu-item  @click="addQuestion({type:'textInput', title: '姓名'})">
+                <el-button type="text">姓名</el-button>
               </el-menu-item>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'radio', title: '性别'})">性别</el-button>
+              <el-menu-item  @click="addQuestion({type: 'radio', title: '性别'})">
+                <el-button type="text">性别</el-button>
               </el-menu-item>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'numInput', title: '年龄'})">年龄</el-button>
+              <el-menu-item  @click="addQuestion({type: 'numInput', title: '年龄'})">
+                <el-button type="text">年龄</el-button>
               </el-menu-item>
-              <el-menu-item>
-                <el-button type="text" @click="addQuestion({type: 'textInput', title: '地址'})">地址</el-button>
+              <el-menu-item  @click="addQuestion({type: 'textInput', title: '地址'})">
+                <el-button type="text">地址</el-button>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
@@ -147,11 +147,11 @@
               <!--问卷底部-->
               <end class="question-card"></end>
             </div>
-            <el-button type="primary" @click="emptyPage">清空分页</el-button>
-            <el-button type="primary" @click="previewQuestionnaire">预览问卷</el-button>
+            <!-- <el-button type="primary" @click="emptyPage">清空分页</el-button> -->
+            <!-- <el-button type="primary" @click="previewQuestionnaire">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
-            <el-button type="primary" @click="releaseAndShare">发布并分享</el-button>
-            <el-button type="primary" @click="update_questionList">重置问卷</el-button>
+            <el-button type="primary" @click="releaseAndShare">发布并分享</el-button> -->
+            <!-- <el-button type="primary" @click="update_questionList">重置问卷</el-button> -->
           </el-col>
 
           <el-col :span="8" class>
@@ -159,7 +159,7 @@
             <!--问卷题目设置-->
             <transition name="question-setting">
               <question-setting
-                ref="qSetting" 
+                ref="qSetting"
                 v-if="isClick"
                 :class="navBarFixed == true ? 'navBarWrap' :''"
                 :qSettingJson="qSettingJson"
@@ -204,7 +204,8 @@ export default {
       totalQuestionNum: "totalQuestionNum",
       questionnaireId: "questionnaireId",
       qState: "q_state",
-      isClick: "isClick"
+      isClick: "isClick",
+      numLimit: "numLimit",
     }),
     qList: {
         get() {
@@ -247,20 +248,42 @@ export default {
       if (this.activeClass !== -1) {
         qSettingJson["isRequired"] = this.qList[this.activeClass].isRequired;
         qSettingJson["rateMax"] = this.qList[this.activeClass].content.max;
+        qSettingJson["numLimit"] = this.numLimit;
       }
       return qSettingJson;
     }
   },
   mounted() {
     this.set_isClick(false);
-    window.addEventListener('scroll', this.watchScroll)
+    window.addEventListener('scroll', this.watchScroll);
+    
   },
   created() {
-    // 点击其他不在的区域触发事件
+    //点击其他不在的区域触发事件
     document.addEventListener('click', (e) => {
-      // 如果当前处于有高亮状态
+      // // 如果当前处于有高亮状态
+      // console.log("click!");
+      // console.log("isClick == " + this.isClick);
+      // console.log("this.$refs.qSetting.$el contains etarget")
+      // console.log(this.$refs.qSetting.$el.contains(e.target));
+      // console.log("e.target")
+      // console.log(e.target);
+      // console.log("this.$refs.qSetting.$el")
+      //console.log(this.$refs.qSetting.$el);
+      // console.log(e.target.contains(<i class="el-icon-minus"></i>));
+      // console.log(e.target.contains(<span>新增跳转逻辑</span>))
+      let minusIcon = document.createElement('i'); 
+      minusIcon.setAttribute('class', "el-icon-minus");
+      let addJumpLogic = document.createElement('span'); 
+      addJumpLogic.innerHTML = '新增跳转逻辑';
+
       if (this.isClick == true) {
         let isContains = false;
+        if(this.$refs.qSetting.$el.contains(e.target)
+          || e.target.contains(minusIcon) 
+          || e.target.contains(addJumpLogic)) {
+          isContains = true;
+        }
         for (let i in this.$refs.qCard) {
           // console.log("this.$refs.qCard[i].$el")
           // console.log(this.$refs.qCard[i].$el);
@@ -268,17 +291,14 @@ export default {
           // console.log(e.target);
           // console.log("this.$refs.qSetting")
           // console.log(this.$refs.qSetting);      
-          // console.log("this.$refs.qSetting.$el")
-          // console.log(this.$refs.qSetting.$el);
           // console.log("this.$refs.qCard[i].$el.contains target")
           // console.log(this.$refs.qCard[i].$el.contains(e.target));
-          // console.log("this.$refs.qSetting.$el contains etarget")
-          // console.log(this.$refs.qSetting.$el.contains(e.target));
-          if(this.$refs.qCard[i].$el.contains(e.target)
-          || this.$refs.qSetting.$el.contains(e.target)) {
+
+          if(this.$refs.qCard[i].$el.contains(e.target)) {
             isContains = true;
           }
         }
+
         if (!isContains) {
           this.set_isClick(false);
           this.activeClass = -1;
@@ -315,7 +335,6 @@ export default {
           options:[],
           max:5,
           min:1,
-          input: ""
         },
         // 添加时默认没有逻辑跳转
         jumpLogic: [
@@ -454,7 +473,6 @@ export default {
             type: "error"
           })
       })
-      
 
     },
     emptyPage() {
@@ -476,16 +494,24 @@ export default {
       // console.log(evt);
     },
     dragEnd(evt) {
-      console.log("drag end!");
+      // console.log("drag end!");
       // console.log(evt);
       let qList = this.userQuestionList.questionList;
-      let update_qList = this.update_index_currentPage(qList);
+      // 每次拖动结束之后，更新所有的题号和分页的页码（普通题目、备注说明页码不更新）
+      let update_qList = this.update_index_currentPage(qList); 
       // console.log(update_qList);
       this.set_qList(update_qList);
     },
     dragChange(evt) {
       // console.log("drag change!");
       // console.log(evt)
+      let newIndex = evt.moved.newIndex;
+      let oldIndex = evt.moved.oldIndex;
+      if (oldIndex == this.activeClass) {
+        this.activeClass = newIndex; // 拖动之后高亮card的index改变，activeClass改变
+      } else {
+        // do nothing so far
+      }
     },
     dragMove(evt,originalEvent) {
       // console.log("drag move!");
@@ -494,12 +520,6 @@ export default {
     },
     dragUpdate(evt) {
       // console.log(evt);
-    },
-    handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-        console.log(key, keyPath);
     },
     update_questionList() {
       let qList = this.qList;
@@ -583,11 +603,12 @@ body {
     z-index:999;
   }
   .el-header{
-    background-color: #D3DCE6;
-    color: #333;
+    // background-color: #D3DCE6;
+    background-color: rgb(84, 92, 100);
+    // color: #333;
     text-align: center;
     border-bottom: 1px solid ;
-    border-bottom:rgb(216, 232, 252);
+    // border-bottom:rgb(216, 232, 252);
     line-height: 60px;
     position: sticky;
     top:0;

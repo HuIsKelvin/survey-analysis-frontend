@@ -44,6 +44,11 @@ export default new Router({
           component: UserInfo
         },
         {
+          path: "changePwd",
+          name: "user.changePwd",
+          component: () => import("@/views/user/ChangePwd.vue")
+        },
+        {
           path: "manage",
           name: "user.manage",
           component: Manage

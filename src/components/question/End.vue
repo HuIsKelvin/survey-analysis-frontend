@@ -1,9 +1,9 @@
 <template>
 <el-card>
-    <div class="end-input">
+    <div class="end-input" contenteditable="true">
         <p
         @keyup="changeQuestionEnd($event)"
-        contenteditable>{{endContents}}</p>
+        >{{endContents}}</p>
     </div>
 </el-card>
 </template>
@@ -41,6 +41,7 @@ export default {
     padding: 0 .2rem;
     border-radius: .3rem;
     text-align: center;
+    outline:none;
 }
 .end-input:hover{
     border-width: 1px solid transparent;

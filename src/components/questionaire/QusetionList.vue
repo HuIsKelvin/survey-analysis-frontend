@@ -165,7 +165,7 @@ export default {
     // 编辑问卷
     editQuestionnaire(qid) {
       // this.$router.push({ name: "questionEdit", params:{ qid: qid } });
-      this.$confirm("已发布的问卷，再次编辑后会丢失以前的答卷数据。是否确认编辑？", "提示", { type: "warning" })
+      this.$confirm("已发布的问卷再次编辑后，会丢失以前的答卷数据。是否确认编辑？", "提示", { type: "warning" })
         .then(res => {
           this.$router.push({ name: "questionEdit", params:{ qid: qid } });
         })

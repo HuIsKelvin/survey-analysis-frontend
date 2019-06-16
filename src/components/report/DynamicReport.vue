@@ -1,5 +1,7 @@
 <template>
     <div class="question_report">
+        <div v-if="report.data">
+        <h4>{{ report.title }}</h4>
         <div v-if="report.type == 'category'">
             <category-report :report="report"></category-report>
         </div>
@@ -8,6 +10,7 @@
         </div>
         <div v-if="report.type == 'number'">
             <number-report :report="report"></number-report>
+        </div>
         </div>
     </div>
     

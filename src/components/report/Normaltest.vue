@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import { error } from "util";
 export default {
   props: {
     meta: Array
@@ -61,7 +60,7 @@ export default {
           this.result = response.data;
         })
         .catch(error => {
-          console.log(error);
+          this.$message.error(error.response.data.error);
         });
     }
   }
