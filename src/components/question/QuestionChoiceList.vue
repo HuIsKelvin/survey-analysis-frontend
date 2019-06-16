@@ -9,7 +9,7 @@
 -->
 <template>
   <div>
-    <div v-for="(item,iIndex) in listContent.options">
+    <div v-for="(item,iIndex) in listContent.options" :key="iIndex">
       <el-row class="question-item-row">
         <el-col :span="1">
           <div class="line-height">

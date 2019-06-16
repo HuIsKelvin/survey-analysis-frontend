@@ -102,8 +102,9 @@ $box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 2em;
     right: 2em;
-    bottom: 1em;
+    margin-bottom: 1em;
     left: 2em;
+    min-height: calc(90vh - 150px);
     box-shadow: $box-shadow;
     padding: 3em 2em;
   }

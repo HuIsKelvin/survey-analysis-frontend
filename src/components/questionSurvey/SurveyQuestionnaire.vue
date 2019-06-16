@@ -16,7 +16,7 @@
             label-position="top"
             ref="answerForm"
             @submit.native.prevent>
-            <transition-group name="list-item" tag="div"
+            <transition-group name="list-item" tag="div">
           >
               <div
                 class="question-item"

@@ -6,18 +6,15 @@
       {{ setting.tipMsg }}
     </div> -->
     <el-row :gutter="20">
+
       <el-col :span="2">
-        <div 
-          class="question-prefix"
-          v-if="setting.index">
-          <span class="question-index">{{setting.index}}</span>
-          <span 
-            class="question-alarm"
-            v-if="isRequired === true">
-            *
-          </span>
+        <div class="question-prefix" v-if="setting.index">
+          <span class="question-index">{{ setting.index }}</span>
+          <span class="question-alarm" v-if="isRequired === true"> * </span>
+          <span v-if="setting.type === 'description'">info <i class="el-icon-info"></i> </span>
         </div>
       </el-col>
+
       <el-col :span="22">
         <el-form-item 
           :label="setting.title">

@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       nameList: {
-        Frontend: ["胡瑞坤", "刘诗", "林键宇"],
+        Frontend: ["胡锐坤", "刘诗", "林键宇"],
         Backend: ["陈硕", "廖健斌", "黄子希", "林键宇"],
         Design: ["李佳纯", "林凯欣", "何钰怡", "魏依璐"]
       }
