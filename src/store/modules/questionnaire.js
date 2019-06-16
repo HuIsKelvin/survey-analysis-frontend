@@ -144,7 +144,7 @@ export default {
     isClick: state => state.pageManage.isClick,
     q_userID: state => state.userQuestionList.userID,
     q_state: state => state.userQuestionList.state,
-    questionnaireId: state => state.userQuestionList.questionnaireId,
+    questionnaireId: state => state.userQuestionList.id,
     questionnaireTitle: state => state.userQuestionList.name,
     introContents: state => state.userQuestionList.comment,
     endContents: state => state.userQuestionList.endComment,

@@ -19,7 +19,7 @@
             class="result-item"
             v-for="(checkedIndex, index) in checkBox"
             :key="index">
-            <span class="result-item-index">{{ index }}</span> 
+            <span class="result-item-index">{{ index + 1 }}</span> 
             <span class="result-item-option">{{ options[checkedIndex - 1] }}</span>
           </li>
         </transition-group>

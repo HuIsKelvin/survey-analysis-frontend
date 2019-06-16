@@ -28,8 +28,12 @@
               <span class="title q-info">
                 ·
                 <!-- 运行状态:  -->
-                <span v-if="qitem.state === true" class="status">运行中</span>
-                <span v-else class="status">暂停中</span>
+                <span v-if="qitem.state === true" class="status">
+                  运行中
+                </span>
+                <span v-else class="status">
+                  暂停中
+                </span>
               </span>
               <span class="title q-info">
                 答卷数量:
@@ -56,7 +60,7 @@
           type="primary"
           plain
           size="small"
-          @click="editQuestionnaire(qitem.id)"
+          @click="editQuestionnaire(qitem.id, qindex)"
         >
           <i class="el-icon-edit"></i>
           编辑
@@ -134,12 +138,17 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   name: "QuestionList",
   data() {
     return {
       questionnaires: []
     };
+  },
+  created: function() {
+    this.getQuestionnaires();
   },
   computed: {
     shareBaseUrl() {
@@ -148,6 +157,9 @@ export default {
     }
   },
   methods : {
+    ...mapMutations({
+      set_uQL: "set_userQuestionList"
+    }),
 
     // 获得当前 user 所拥有的问卷
     getQuestionnaires() {
@@ -163,11 +175,14 @@ export default {
     },
 
     // 编辑问卷
-    editQuestionnaire(qid) {
+    editQuestionnaire(qid, qindex) {
       // this.$router.push({ name: "questionEdit", params:{ qid: qid } });
       this.$confirm("已发布的问卷再次编辑后，会丢失以前的答卷数据。是否确认编辑？", "提示", { type: "warning" })
         .then(res => {
+          this.set_uQL(this.questionnaires[qindex]);
+          console.log(this.questionnaires[qindex]);
           this.$router.push({ name: "questionEdit", params:{ qid: qid } });
+          console.log(qid);
         })
         .catch(err => {});
     },
@@ -211,15 +226,6 @@ export default {
         this.$message({ type: "info", message: "已取消删除" });          
       });
     }
-  },
-  created: function() {
-    // axios.get("/questionnaires/search/userId?userId="+this.$store.state.user.userId)
-    // .then(response => {
-    //   // TODO: 对数据进行处理已获得更好的展示效果
-    //   this.questionnaires = response.data._embedded.questionnaires;
-    //   console.log(this.questionnaires);
-    // })
-    this.getQuestionnaires();
   }
 
 };
