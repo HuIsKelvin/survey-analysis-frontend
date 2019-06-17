@@ -266,17 +266,19 @@ export default {
       // console.log("isClick == " + this.isClick);
       // console.log("this.$refs.qSetting.$el contains etarget")
       // console.log(this.$refs.qSetting.$el.contains(e.target));
-      // console.log("e.target")
-      // console.log(e.target);
+      console.log("e.target")
+      console.log(e.target);
       // console.log("this.$refs.qSetting.$el")
       //console.log(this.$refs.qSetting.$el);
-      // console.log(e.target.contains(<i class="el-icon-minus"></i>));
-      // console.log(e.target.contains(<span>新增跳转逻辑</span>))
+
       let minusIcon = document.createElement('i'); 
       minusIcon.setAttribute('class', "el-icon-minus");
       let addJumpLogic = document.createElement('span'); 
       addJumpLogic.innerHTML = '新增跳转逻辑';
-
+      console.log(e.target.contains(minusIcon));
+      console.log(minusIcon);
+      console.log(e.target.contains(addJumpLogic))
+      console.log(addJumpLogic)
       if (this.isClick == true) {
         let isContains = false;
         if(this.$refs.qSetting.$el.contains(e.target)
