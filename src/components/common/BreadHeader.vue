@@ -99,12 +99,12 @@ export default {
         let counter = 1;
         let questionList = this.userQuestionList.questionList;
         let userQuestionList = this.userQuestionList;
-        if (userQuestionList.pagination.isPagintion == "false") {
-        userQuestionList.pagination.isPagintion = false
-        } else {
-          userQuestionList.pagination.isPagination = true
-        }
-        userQuestionList.pagination.totalPage = parseInt(userQuestionList.pagination.totalPage);
+        // if (userQuestionList.pagination.isPagintion == "false") {
+        // userQuestionList.pagination.isPagintion = false
+        // } else {
+        //   userQuestionList.pagination.isPagination = true
+        // }
+        // userQuestionList.pagination.totalPage = parseInt(userQuestionList.pagination.totalPage);
         
         if (this.isPagination) {
           for (let i in questionList) {
@@ -116,7 +116,7 @@ export default {
           }
 
         } else {
-          // do nothing
+          // do nothing so far
         }
         userQuestionList.questionList = questionList;
         // patch是直接更新当前的数据
