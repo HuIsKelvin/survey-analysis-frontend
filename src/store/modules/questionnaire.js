@@ -5,11 +5,13 @@ export default {
   // plugins: [createPersistedState()],
   state: {
     pageManage: {
-      isClick: false
+      isClick: false,
+      addJumpLogicIsClick: false,
+      iconMinusIsClick: false
     },
     userQuestionList: {
       userId: "5d03933f0c34420825f479ed",
-      questionnaireId: "5cfd22309a9f101ca60a5686",
+      id: "5cfd22309a9f101ca60a5686",
       state: false, // false未发布 || true已发布
       name: "问卷标题",
       comment: "问卷头部说明",
@@ -50,8 +52,12 @@ export default {
     }
   },
   mutations: {
-    [types.SET_ISCLICK]: (state, boolean) => {
-      state.pageManage.isClick = boolean;
+    [types.SET_PAGEMANAGE]: (state, obj) => {
+      if (obj.type == "all") {
+        state.pageManage = obj.pageManage;
+      } else {
+        state.pageManage[obj.type] = obj.boolean;
+      }
     },
     [types.SET_USERID]: (state, userID) => {
       state.userQuestionList.userID = userID;
@@ -60,7 +66,7 @@ export default {
       state.userQuestionList.state = boolean;
     },
     [types.SET_QUESTIONNAIREID]: (state, questionnaireId) => {
-      state.userQuestionList.questionnaireId = questionnaireId;
+      state.userQuestionList.id = questionnaireId;
     },
     [types.SET_QUESTIONNAIRE_TITLE]: (state, questionnaireTitle) => {
       state.userQuestionList.name = questionnaireTitle;
@@ -72,9 +78,6 @@ export default {
       state.userQuestionList.endComment = endContents;
     },
     [types.SET_TOTALQUESTIONNUM]: (state, num) => {
-      state.userQuestionList.totalQuestionNum = num;
-    },
-    [types.SET_USERQUESTIONLIST]: (state, num) => {
       state.userQuestionList.totalQuestionNum = num;
     },
     [types.SET_USERQUESTIONLIST]: (state, userQuestionList) => {
@@ -141,7 +144,8 @@ export default {
   },
   getters: {
     userQuestionList: state => state.userQuestionList,
-    isClick: state => state.pageManage.isClick,
+    // isClick: state => state.pageManage.isClick,
+    pageManage: state => state.pageManage,
     q_userID: state => state.userQuestionList.userID,
     q_state: state => state.userQuestionList.state,
     questionnaireId: state => state.userQuestionList.id,

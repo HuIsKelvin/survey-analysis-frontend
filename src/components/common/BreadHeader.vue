@@ -82,10 +82,10 @@ export default {
       this.jumpToManage();
     },
     backToManage() {
-      console.log(this.view.viewType)
+      // console.log(this.view.viewType)
       if (this.view.viewType == 'question-edit') {
         this.dialogVisible = true;
-        console.log(this.dialogVisible)
+        // console.log(this.dialogVisible)
       } else if (this.view.viewType === 'release') {
         this.jumpToManage()
       }
@@ -99,6 +99,13 @@ export default {
         let counter = 1;
         let questionList = this.userQuestionList.questionList;
         let userQuestionList = this.userQuestionList;
+        if (userQuestionList.pagination.isPagintion == "false") {
+        userQuestionList.pagination.isPagintion = false
+        } else {
+          userQuestionList.pagination.isPagination = true
+        }
+        userQuestionList.pagination.totalPage = parseInt(userQuestionList.pagination.totalPage);
+        
         if (this.isPagination) {
           for (let i in questionList) {
             if (questionList[i].type == "pagination") {
