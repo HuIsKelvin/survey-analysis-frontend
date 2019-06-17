@@ -3,15 +3,22 @@
     <p>修改密码</p>
     <el-form status-icon :model="password" :rules="rules" ref="changePwdForm" class="change-pwd-form">
       <el-form-item label="新密码" prop="newPwd">
-        <el-input v-model="password.newPwd"></el-input>
+        <el-input v-model="password.newPwd" type="password"></el-input>
       </el-form-item>
       <el-form-item label="确认密码" prop="checkPwd">
         <el-input v-model="password.checkPwd" type="password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('changePwdForm')">修改</el-button>
+        <el-button 
+          type="primary"
+          class="form-operator"
+          @click="submitForm('changePwdForm')"
+        >修改</el-button>
         <router-link :to="{name: 'user.info'}" tag="span">
-          <el-button type="primary">取消</el-button>
+          <el-button
+            type="primary"
+            class="form-operator"
+          >取消</el-button>
         </router-link>
       </el-form-item>
     </el-form>
@@ -118,6 +125,10 @@ export default {
   .change-pwd-form{
     max-width: 400px;
     margin:0 auto;
+
+    .form-operator {
+      margin-right: 20px;
+    }
   }
 }
 </style>

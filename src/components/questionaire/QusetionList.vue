@@ -1,14 +1,17 @@
 <template>
   <div id="question-list">
+    <!-- 问卷管理条目 -->
     <el-card
       v-for="(qitem, qindex) in questionnaires"
       :key="qindex"
       class="box-card list-item"
       shadow="hover"
     >
+
+      <!-- 问卷管理条目 header -->
       <div slot="header" class="list-item-header">
         <el-row>
-          <el-col :span="12">
+          <el-col :sm="24" :md="12">
             <div class="q-main-info">
               <span class="q-info">
                 {{ qindex + 1 }}
@@ -23,7 +26,7 @@
               </span>
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :sm="24" :md="12">
             <div class="q-sub-info">
               <span class="title q-info">
                 ·
@@ -42,12 +45,14 @@
               </span>
               <span class="title q-info">
                 发布日期:
-                <span class="status">{{qitem.createTime}}</span>
+                <span class="status">{{ (qitem.createTime.split("."))[0] }}</span>
               </span>
             </div>
           </el-col>
         </el-row>
       </div>
+
+      <!-- 问卷管理条目 控制按钮 -->
       <el-row 
         type="flex"
         justify="end"
@@ -100,15 +105,13 @@
         <el-popover
           placement="bottom"
           width="250"
-          trigger="hover"
+          trigger="click"
         >
           <!-- popover content -->
           <div class="popover-content">
             <p>链接：</p>
-            <el-input 
-              readonly="readonly"
-              :value="shareBaseUrl + qitem.id"
-            ></el-input>
+            <el-link type="primary" :href="shareBaseUrl + qitem.id">{{ shareBaseUrl + qitem.id }}</el-link>
+            <el-divider></el-divider>
             <p>二维码</p>
             <qrcode :value="shareBaseUrl + qitem.id" :options="{ width: 150 }"></qrcode>
           </div>
@@ -236,7 +239,7 @@ export default {
   text-align: left;
 
   .list-item {
-    margin: 10px auto;
+    margin: 20px auto;
 
     .list-item-header {
       .q-info {

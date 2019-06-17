@@ -85,9 +85,6 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           let { name, email, newPassword } = this.findPwdForm;
-          console.log(name);
-          console.log(email);
-          console.log(newPassword);
           axios.post("/auth/forget/password?email=" + email + "&uname=" + name, { password: newPassword })
             .then(res => {
               console.log("find pwd success!");

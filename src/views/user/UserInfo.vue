@@ -1,15 +1,30 @@
 <template>
   <div class="info-board">
+
+    <div class="info-operation">
+      <router-link :to="{ path: 'ChangePwd' }" tag="span">
+        <el-button type="primary" class="info-operator">修改密码</el-button>
+      </router-link>
+      <el-button
+        type="primary"
+        class="info-operator"
+        @click="toEditInfo"
+      >
+        修改个人信息
+      </el-button>
+    </div>
+
+    <!-- 信息展示 框架 -->
     <div class="info-base">
       <el-row :gutter="20">
-        <el-col :sm="24" :md="8">
+        <el-col :sm="24" :md="12">
           <div class="avator">
             <span class="avator-icon">
               <font-awesome-icon :icon="['far', 'user-circle']" size="10x"/>
             </span>
           </div>
         </el-col>
-        <el-col :sm="24" :md="16">
+        <el-col :sm="24" :md="12">
           <div class="infomation">
 
             <!-- 展示个人信息 -->
@@ -44,19 +59,11 @@
                 </el-form-item>
               </el-form>
             </div>
+
           </div>
         </el-col>
       </el-row>
     </div>
-    <router-link :to="{ path: 'ChangePwd' }" tag="span">
-      <el-button type="primary">修改密码</el-button>
-    </router-link>
-    <el-button
-      type="primary"
-      @click="toEditInfo"
-    >
-      修改个人信息
-    </el-button>
   </div>
 </template>
 
@@ -121,8 +128,6 @@ export default {
       axios.get("/users/"+this.$store.state.user.userId)
         .then(response => {
           let data = response.data;
-          console.log("user info");
-          console.log(data);
           this.userInfo = {
             name: data.name,
             username: data.username,
@@ -152,11 +157,14 @@ export default {
           // 修改密码
           axios.patch("/users/" + this.$store.state.user.userId, this.userInfoChange)
             .then(res => {
-              this.$message({ message: "修改成功！",type: "success" });
+              this.$message({ message: "修改密码成功！", type: "success" });
               this.getUserInfo();
               this.setEditState(false);
             })
-            .catch(err => { console.log(err); })
+            .catch(err => {
+              console.log(err);
+              this.$message({ message: "修改密码失败！", type: "error" });
+            })
         } else {
           console.log("error submit!");
           return false;
@@ -208,6 +216,16 @@ $border-side: 1px solid #e0e0e0;
   .infomation {
     .user-info-change-form {
       max-width: 600px;
+    }
+  }
+}
+
+.info-board {
+  .info-operation {
+    margin: 20px 0;
+
+    .info-operator {
+      margin-right: 20px;
     }
   }
 }
