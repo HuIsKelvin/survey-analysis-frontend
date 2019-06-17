@@ -73,7 +73,7 @@
         v-if="questionList[qSettingJson.activeClass].jumpLogic.length == 0"
         type="primary" 
         icon="el-icon-circle-plus-outline"
-        @click="addJumpLogic()">
+        @click="addJumpLogic('addButton')">
         新增跳转逻辑
         </el-button>
 
@@ -116,7 +116,7 @@
 
           <el-col :span="4">
             <el-button icon="el-icon-minus" size="mini" @click="deleteJump(jIndex)" circle></el-button>
-            <el-button icon="el-icon-plus" size="mini" @click="addJumpLogic()" circle></el-button>
+            <el-button icon="el-icon-plus" size="mini" @click="addJumpLogic('addIcon')" circle></el-button>
           </el-col>
 
         </el-form-item>
@@ -145,16 +145,14 @@ export default {
       rateMaxScore: ''
     }
   },
-  mounted(){
-    // console.log("this.qSettingJson")
-    // console.log(this.qSettingJson);
-  },
+  mounted(){},
   computed: {
     ...mapGetters({
       num: "numLimit",
       beginTime: "beginTime",
       endTime: "endTime",
-      questionList: "questionList"
+      questionList: "questionList",
+      pageManage: "pageManage"
     }),
     dateValue() {
       let arr = [];
@@ -193,7 +191,8 @@ export default {
     ...mapMutations({
       set_isRequired: "set_isRequired",
       set_jumpLogic: "set_jumpLogic",
-      change_questionList_value: "change_questionList_value"
+      change_questionList_value: "change_questionList_value",
+      set_pageManage: "set_pageManage"
     }),
     // 是否必答选中状态改变
     changeCheckedValue(newValue) {
@@ -236,14 +235,21 @@ export default {
       let jumpLogic = this.questionList[this.qSettingJson.activeClass].jumpLogic;
       jumpLogic.splice(jIndex,1);
       let qIndex = this.qSettingJson.activeClass;
+      this.set_pageManage({type: "iconMinusIsClick", boolean: true})
       this.set_jumpLogic({qIndex: qIndex, jumpLogic: jumpLogic});
     },
     // 增加跳转逻辑
-    addJumpLogic() {
+    addJumpLogic(string) {
+      if ( string == "addButton" ) {
+        this.set_pageManage({type: "addJumpLogicIsClick", boolean: true});
+      } else {
+        // nothing to do so far
+      }
       let jumpLogic = this.questionList[this.qSettingJson.activeClass].jumpLogic;
       jumpLogic.push({startValue: "", endValue: ""});
       let qIndex = this.qSettingJson.activeClass;
       this.set_jumpLogic({qIndex: qIndex, jumpLogic: jumpLogic});
+
     },
     changeMaxScore(newValue) {
       let obj = {}

@@ -38,25 +38,24 @@ export default {
               .then(response => {
                 // 返回问卷id
                   let qid = response.data;
-
-                  let uQL = {
-                    userId: this.$store.state.user.userId,
-                    name: this.questionnaireName,
-                    id: qid,
-                    comment: "感谢您能抽出几分钟时间来参加本次答题，现在我们就马上开始吧！",
-                    endComment: "您已完成本次问卷，感谢您的帮助与支持！",
-                    numLimit: 0,
-                    beginTime: "",
-                    endTime: "",
-                    pagination: {
-                      isPagination: false,
-                      totalPage: 0,
-                    },
-                    totalQuestionNum: 0,
-                    questionList: []
-                  }
-                  console.log("user id" + this.$store.state.user.userId);
-                  this.set_uQL(uQL); // 初始化问卷
+                  // let uQL = {
+                  //   userId: this.$store.state.user.userId,
+                  //   name: this.questionnaireName,
+                  //   id: qid,
+                  //   comment: "感谢您能抽出几分钟时间来参加本次答题，现在我们就马上开始吧！",
+                  //   endComment: "您已完成本次问卷，感谢您的帮助与支持！",
+                  //   numLimit: 0,
+                  //   beginTime: "",
+                  //   endTime: "",
+                  //   pagination: {
+                  //     isPagination: false,
+                  //     totalPage: 0,
+                  //   },
+                  //   totalQuestionNum: 0,
+                  //   questionList: []
+                  // }
+                  // console.log("user id" + this.$store.state.user.userId);
+                  // this.set_uQL(uQL); // 初始化问卷
                   this.$message.success("创建问卷成功,跳转到编辑页面");
                   this.$router.push({name:"questionEdit", params:{qid:qid}});
               })
@@ -65,24 +64,7 @@ export default {
                     this.$message.error("创建问卷失败，请重试");
                   }
               })
-                  // 本地测试
-                  // let uQL = {
-                  //   userId: "1234",
-                  //   questionnaireTitle: this.questionnaireName,
-                  //   introContents: "",
-                  //   endContents: "",
-                  //   pagination: {
-                  //     isPagination: false,
-                  //     totalPage: 0,
-                  //     index: []
-                  //   },
-                  //   totalQuestionNum: 0,
-                  //   questionList: []
-                  // }
-                  // this.set_uQL(uQL); // 清空问卷
-                  // this.$message.success("创建问卷成功,跳转到编辑页面");
-                  // let qid = this.questionnaireName;
-                  // this.$router.push({name:"questionEdit", params:{qid:qid}});
+
           }
       }
 
