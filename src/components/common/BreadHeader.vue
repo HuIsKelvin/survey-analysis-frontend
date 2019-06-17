@@ -26,9 +26,9 @@
             <img :src="userLogo" class="user-logo">
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item disabled><span class="user-id">用户账号名</span></el-dropdown-item>
-            <el-dropdown-item divided>我的个人信息</el-dropdown-item>
-            <el-dropdown-item divided><i class="el-icon-circle-close-outline"></i>退出登录</el-dropdown-item>
+            <!-- <el-dropdown-item disabled><span class="user-id">用户账号名</span></el-dropdown-item> -->
+            <el-dropdown-item divided><router-link :to="{name: 'user.info'}" tag="span">我的个人信息</router-link></el-dropdown-item>
+            <el-dropdown-item divided><span @click="signout"><i class="el-icon-circle-close-outline"></i>退出登录</span></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
 
@@ -49,7 +49,8 @@
     </div>
 </template>
 <script>
-import {mapGetters, mapMutations, mapActions} from "vuex"
+import {mapGetters, mapMutations, mapActions} from "vuex";
+import * as types from "@/store/types.js";
 
 export default {
   name: "bread-header",
@@ -165,6 +166,12 @@ export default {
         name: "preview"
       })
     },
+
+    // 退出登录
+    signout: function() {
+      this.$store.commit(types.SIGNOUT);
+      this.$router.push({name:"sign"});
+    }
   }
 }
 </script>

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import * as types from "@/store/types.js"
+import * as types from "@/store/types.js";
 
 export default {
   name: "User",
@@ -101,9 +101,9 @@ $box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     position: absolute;
     top: 2em;
-    right: 2em;
+    right: 1.5rem;
     margin-bottom: 1em;
-    left: 2em;
+    left: 1.5rem;
     min-height: calc(90vh - 150px);
     box-shadow: $box-shadow;
     padding: 3em 2em;
