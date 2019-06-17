@@ -6,12 +6,16 @@
     <div>
       <div v-if="meta">
         <div v-if="options_group.length > 0 && options_number.length > 0">
+          <div>
           <el-select v-model="column_group" placeholder="请选择因子题目（仅支持单选题）">
             <el-option v-for="option in options_group" :key="option" :label="option" :value="option"></el-option>
           </el-select>
+          </div>
+          <div>
           <el-select v-model="column_number" placeholder="请选择因变量题目">
             <el-option v-for="option in options_number" :key="option" :label="option" :value="option"></el-option>
           </el-select>
+          </div>
           <el-button type="primary" @click="commit(column_group, column_number)">分析</el-button>
         </div>
       </div>

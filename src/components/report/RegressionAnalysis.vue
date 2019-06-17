@@ -5,12 +5,16 @@
     <div>
       <div v-if="meta">
         <div v-if="options_x.length > 0 && options_y.length > 0">
+          <div>
           <el-select v-model="columnx_list" multiple placeholder="请选择自变量题目"> 
             <el-option v-for="option in options_x" :key="option" :label="option" :value="option"></el-option>
           </el-select>
+          </div>
+          <div>
           <el-select v-model="columny" placeholder="请选择因变量题目">
             <el-option v-for="option in options_y" :key="option" :label="option" :value="option"></el-option>
           </el-select>
+          </div>
           <el-button type="primary" @click="commit(columnx_list, columny)">分析</el-button>
         </div>
       </div>

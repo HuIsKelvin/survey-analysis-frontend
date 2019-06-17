@@ -1,6 +1,6 @@
 <template>
   <div id="user">
-    <el-container>
+    <el-container class="container">
       <el-header class="header">
         <el-menu
           :default-active="$route.name"
@@ -64,7 +64,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.container {
+  text-align: center;
+  margin: auto;
+}
+div {
+  margin: 5px;
+}
+
 
 </style>
 
