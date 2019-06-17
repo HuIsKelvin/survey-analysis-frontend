@@ -41,7 +41,7 @@
           </el-col>
         </el-row>
       </div>
-      <el-row type="flex" justify="end" class="q-control">
+      <el-row class="q-control">
         <!-- 编辑-按钮 -->
         <el-button class="control-button" type="primary" plain size="small" @click="editQuestionnaire(qitem.id, qindex)">
           <i class="el-icon-edit"></i>
@@ -239,6 +239,7 @@ export default {
     .list-item-header {
       .q-info {
         margin: 10px;
+        display: inline-block;
       }
 
       .q-main-info {
@@ -251,15 +252,16 @@ export default {
       }
     }
     .q-control {
-      // float: right;
-      // margin: 20px;
+      float: right;
+      margin-bottom: 10px;
       // &after {
       //   content: " ";
-      //   display: block;
+      //   display: block;  
       // }
 
       .control-button {
         // float: left;
+        margin-bottom: 10px;
       }
 
       .button-share {
