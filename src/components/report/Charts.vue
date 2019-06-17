@@ -1,5 +1,5 @@
 <template>
-<div ref="chart"  style="width: 600px;height:400px;">
+<div ref="chart">
 
 </div>
 </template>
@@ -14,15 +14,22 @@ export default {
     },
     mounted: function() {
         let charts = echarts.init(this.$refs.chart)
+
         charts.setOption(this.options)
+        window.onresize = function() {
+            charts.resize();
+        }
         //console.log(this.options)
     },
-    methods: {
-    }
 }
 </script>
 
 <style lang="scss" scoped>
+div {
+    width: 400px;
+    height: 300px;
+    margin: auto;
+}
 
 </style>
 

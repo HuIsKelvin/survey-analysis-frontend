@@ -5,12 +5,16 @@
     <div>
       <div v-if="meta">
         <div v-if="options.length > 0">
-          <el-select v-model="index" placeholder="请选择行题目">
+          <div>
+          <el-select class="analysis-item" v-model="index" placeholder="请选择行题目">
             <el-option v-for="option in options" :key="option" :label="option" :value="option"></el-option>
           </el-select>
-          <el-select v-model="column" placeholder="请选择列题目">
+          </div>
+          <div>
+          <el-select class="analysis-item" v-model="column" placeholder="请选择列题目">
             <el-option v-for="option in options" :key="option" :label="option" :value="option"></el-option>
           </el-select>
+          </div>
           <el-button type="primary" @click="commit(index, column)">分析</el-button>
         </div>
       </div>
@@ -19,7 +23,7 @@
       </div>
       <div v-if="result">
         <div v-if="result.chi2_contingency">
-        <div>
+        <div class="analysis-item" >
           <p>卡方检验结果</p>
           <el-table :data="[result.chi2_contingency]">
             <el-table-column prop="chi2" label="测试统计值"></el-table-column>
@@ -28,10 +32,12 @@
           </el-table>
         </div>
         </div>
-        <div>
+        <div class="analysis-item" >
+          <p>列联表层叠图</p>
           <charts :options="JSON.parse(result.num_bar)"></charts>
         </div>
-        <div>
+        <div class="analysis-item" >
+          <p>列联表</p>
           <el-table :data="result.crosstab['data']">
             <el-table-column
               v-for="field in result.crosstab['schema']['fields']"

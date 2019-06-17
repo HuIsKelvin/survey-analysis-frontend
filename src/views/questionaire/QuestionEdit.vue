@@ -151,7 +151,6 @@
             <!-- <el-button type="primary" @click="previewQuestionnaire">预览问卷</el-button>
             <el-button type="primary" @click="saveQuestionnaire">保存问卷</el-button>
             <el-button type="primary" @click="releaseAndShare">发布并分享</el-button> -->
-            <!-- <el-button type="primary" @click="update_questionList">重置问卷</el-button> -->
           </el-col>
 
           <el-col :span="8" class>
@@ -160,13 +159,12 @@
             <transition name="question-setting">
               <question-setting
                 ref="qSetting"
-                v-if="isClick"
+                v-if="pageManage.isClick"
                 :class="navBarFixed == true ? 'navBarWrap' :''"
                 :qSettingJson="qSettingJson"
               ></question-setting> 
             </transition>
 
-            <!-- <el-button @click="changeClass(-1)">隐藏侧栏</el-button> -->
           </el-col>
         </el-container>
       </el-row>
@@ -194,6 +192,9 @@ export default {
       navBarFixed: false,
     };
   },
+  mounted() {
+
+  },
   computed: {
     // 获取当前用户的id
     ...mapGetters({
@@ -204,7 +205,8 @@ export default {
       totalQuestionNum: "totalQuestionNum",
       questionnaireId: "questionnaireId",
       qState: "q_state",
-      isClick: "isClick",
+      // isClick: "isClick",
+      pageManage: "pageManage",
       numLimit: "numLimit",
     }),
     qList: {
@@ -254,61 +256,14 @@ export default {
     }
   },
   mounted() {
-    this.set_isClick(false);
+    this.set_pageManage({type: "isClick", boolean: false}); 
     window.addEventListener('scroll', this.watchScroll);
     
   },
   created() {
-    //点击其他不在的区域触发事件
-    document.addEventListener('click', (e) => {
-      // // 如果当前处于有高亮状态
-      // console.log("click!");
-      // console.log("isClick == " + this.isClick);
-      // console.log("this.$refs.qSetting.$el contains etarget")
-      // console.log(this.$refs.qSetting.$el.contains(e.target));
-      // console.log("e.target")
-      // console.log(e.target);
-      // console.log("this.$refs.qSetting.$el")
-      //console.log(this.$refs.qSetting.$el);
-      // console.log(e.target.contains(<i class="el-icon-minus"></i>));
-      // console.log(e.target.contains(<span>新增跳转逻辑</span>))
-      let minusIcon = document.createElement('i'); 
-      minusIcon.setAttribute('class', "el-icon-minus");
-      let addJumpLogic = document.createElement('span'); 
-      addJumpLogic.innerHTML = '新增跳转逻辑';
-
-      if (this.isClick == true) {
-        let isContains = false;
-        if(this.$refs.qSetting.$el.contains(e.target)
-          || e.target.contains(minusIcon) 
-          || e.target.contains(addJumpLogic)) {
-          isContains = true;
-        }
-        for (let i in this.$refs.qCard) {
-          // console.log("this.$refs.qCard[i].$el")
-          // console.log(this.$refs.qCard[i].$el);
-          // console.log("e.target")
-          // console.log(e.target);
-          // console.log("this.$refs.qSetting")
-          // console.log(this.$refs.qSetting);      
-          // console.log("this.$refs.qCard[i].$el.contains target")
-          // console.log(this.$refs.qCard[i].$el.contains(e.target));
-
-          if(this.$refs.qCard[i].$el.contains(e.target)) {
-            isContains = true;
-          }
-        }
-
-        if (!isContains) {
-          this.set_isClick(false);
-          this.activeClass = -1;
-        } else {
-          this.set_isClick(true);
-        }
-      }
-
-    })
-  },
+    this.getUserQuestionList();
+    this.clickListener();
+},
   methods: {
     ...mapMutations({
       add_qList_obj: "add_questionList_object",
@@ -318,17 +273,34 @@ export default {
       set_isPagination: "set_isPagination",
       set_totalQNum: "set_totalQuestionNum",
       set_state: "set_state",
-      set_isClick: "set_isClick",
+      set_pageManage: "set_pageManage",
+      set_uQL: "set_userQuestionList",
     }),
     ...mapActions("survey", {
       "setQuestionnairePreview": "setQuestionnaire"
     }),
+    // 获取当前id问卷的内容,更新state
+    getUserQuestionList() {
+      let qid = this.$route.params.qid;
+      // console.log(qid)
+      axios.get( "/questionnaires/" + qid , {
+        qid: qid
+      })
+      .then(response => {
+        console.log(response.data);
+        this.set_uQL(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+    // 问题的原始obj
     get_init() {
       let initialType = {
-        type: "",
+        type: null,
         index: 0,
         currentPage: 0,
-        title:"",
+        title:null,
         isRequired: true,
         isDraggable: true,
         content:{
@@ -365,19 +337,13 @@ export default {
 
       this.add_qList_obj(qListObj);
     },
-    changeClass(qIndex) {
-      if (qIndex>=0
-        && this.qList[qIndex].type !== "pagination"
-        && this.qList[qIndex].type !== "description") {
-        // console.log("click qCard!");
-        // console.log(qIndex);
-        this.activeClass = qIndex;
-        this.set_isClick(true);   
-      } else {
-        this.activeClass = -1;
-        this.set_isClick(false);
-      }
-
+    // 添加备注说明组件
+    addDescription() {
+      let qListObj = this.get_init();
+      qListObj.type = "description";
+      qListObj.title = "这是一段段落说明";
+      this.add_qList_obj(qListObj);
+      this.scrollTo(this.qList_length - 1);
     },
     // 添加分页组件
     addPagination() {
@@ -393,9 +359,61 @@ export default {
         page += 1;
         qListObj.currentPage = page;
       }
-      console.log(qListObj);
+      // console.log(qListObj);
       this.set_totalPage(page);
       this.add_qList_obj(qListObj);
+    },
+    // 点击改变问题卡片的高亮样式
+    changeClass(qIndex) {
+      console.log(this.qList[qIndex].type)
+      if (qIndex>=0
+        && this.qList[qIndex].type !== "pagination"
+        && this.qList[qIndex].type !== "description") {
+        // console.log("click qCard!");
+        // console.log(qIndex);
+        this.activeClass = qIndex;
+        this.set_pageManage({type: "isClick", boolean: true});   
+      } else {
+        this.activeClass = -1;
+        this.set_pageManage({type: "isClick", boolean: false});   
+      }
+    },
+    // 监听页面点击事件
+    clickListener() {
+      document.addEventListener('click', (e) => {
+        // console.log(this.pageManage.isClick)
+        if (this.pageManage.isClick == true) {
+          let isContains = false;
+
+          if(this.pageManage.addJumpLogicIsClick == false 
+            && this.pageManage.iconMinusIsClick == false) 
+            {
+              if(this.$refs.qSetting.$el.contains(e.target)) {
+                isContains = true;
+              }
+              for (let i in this.$refs.qCard) {
+                if(this.$refs.qCard[i].$el.contains(e.target)) {
+                  isContains = true;
+                }
+              }
+
+            } else {
+              isContains = true;
+              this.set_pageManage({type: "all", pageManage:{
+                isClick: true,
+                addJumpLogicIsClick: false,
+                iconMinusIsClick: false
+              }})
+            }
+          // console.log(isContains);
+          if (!isContains) {
+            this.set_pageManage({type: "isClick", boolean: false}); 
+            this.activeClass = -1;
+          } else {
+            this.set_pageManage({type: "isClick", boolean: true}); 
+          }
+        }
+      })
     },
     watchScroll () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -406,18 +424,11 @@ export default {
           this.navBarFixed = false
         }
     },
-    // 添加备注说明组件
-    addDescription() {
-      let qListObj = this.get_init();
-      qListObj.type = "description";
-      qListObj.title = "这是一段段落说明";
-      this.add_qList_obj(qListObj);
-      this.scrollTo(this.qList_length - 1);
-    },
+
     // 添加新qCard时实现滚动到对应位置
     scrollTo(qIndex) {
-      console.log("this.$refs.qCard[qIndex].scrollTop");
-      console.log(this.$refs.qCard[qIndex]);
+      // console.log("this.$refs.qCard[qIndex].scrollTop");
+      // console.log(this.$refs.qCard[qIndex]);
       // document.documentElement.scrollTop = this.$refs.qCard[qIndex].scrollTop;
       // this.$refs.qCard[qIndex].scrollTop;
     },
@@ -440,8 +451,8 @@ export default {
       }
       userQuestionList.questionList = questionList;
       // patch是直接更新当前的数据
-      console.log(this.questionnaireId);
-      console.log(userQuestionList);
+      // console.log(this.questionnaireId);
+      // console.log(userQuestionList);
       axios.patch("/questionnaires/" + this.questionnaireId, userQuestionList)
       .then(response => {
         this.$message({
@@ -499,7 +510,6 @@ export default {
       let qList = this.userQuestionList.questionList;
       // 每次拖动结束之后，更新所有的题号和分页的页码（普通题目、备注说明页码不更新）
       let update_qList = this.update_index_currentPage(qList); 
-      // console.log(update_qList);
       this.set_qList(update_qList);
     },
     dragChange(evt) {
@@ -521,16 +531,7 @@ export default {
     dragUpdate(evt) {
       // console.log(evt);
     },
-    update_questionList() {
-      let qList = this.qList;
-      let update_qList = this.update_index_currentPage(qList);
-      this.set_qList(update_qList);
-      let length = update_qList.length;
-      let totalNum = update_qList[length -1].index;
-      console.log("update_questionList");
-      console.log(totalNum);
-      this.set_totalQNum(totalNum);
-    },
+    // 更新题号和当前页
     update_index_currentPage(questionList) {
       let qList = questionList;
       let pCount = 2;

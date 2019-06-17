@@ -2,7 +2,7 @@
 <template>
     <div class="analysis-container">
         <div v-for="(question, index) in questionnaire" :key="index">
-            <dynamic-report :report="question">
+            <dynamic-report class="report-item" :report="question">
             </dynamic-report>
         </div>
         <el-dialog
@@ -57,6 +57,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.report-item {
+    max-width: 50%;
+    margin: auto;
+}
 
 </style>
 

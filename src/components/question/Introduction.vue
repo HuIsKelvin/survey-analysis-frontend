@@ -1,5 +1,5 @@
 <template>
-<el-card @click="testclick" class="question-edit-box" >
+<el-card class="question-edit-box" >
     <div class="intro-content-input title" contenteditable="true">
         <p
         @keyup="changeQuestionTitle($event)"

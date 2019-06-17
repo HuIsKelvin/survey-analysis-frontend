@@ -5,9 +5,11 @@
     <div>
       <div v-if="meta">
         <div v-if="options.length > 0">
+          <div>
           <el-select v-model="column" placeholder="请选择题目">
             <el-option v-for="option in options" :key="option" :label="option" :value="option"></el-option>
           </el-select>
+          </div>
           <el-button type="primary" @click="commit(column, popmean)">分析</el-button>
         </div>
         <div v-else>
