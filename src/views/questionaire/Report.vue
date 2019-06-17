@@ -1,5 +1,5 @@
 <template>
-  <div id="user">
+  <div id="report">
     <el-container class="container">
       <el-header class="header">
         <el-menu
@@ -64,7 +64,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container {
   text-align: center;
   margin: auto;
@@ -73,6 +73,12 @@ div {
   margin: 5px;
 }
 
+#report {
+  .header {
+    margin: 0;
+    padding: 0;
+  }
+}
 
 </style>
 

@@ -14,10 +14,6 @@
           <el-col :sm="24" :md="12">
             <div class="q-main-info">
               <span class="q-info">{{ qindex + 1 }}</span>
-              <!-- <span class="q-info">
-                ID:
-                <span>{{qitem.id}}</span>
-              </span>-->
               <span class="q-info">
                 <!-- 问卷名: -->
                 <span>{{qitem.name}}</span>
@@ -63,13 +59,13 @@
         </el-button>
 
         <!-- 分析-按钮 -->
-        <el-button class="control-button" type="primary" plain size="small" @click="$router.push({path:'/report/'+qitem.id})">
+        <el-button class="control-button" type="primary" plain size="small" @click="$router.push({path:'/report/'+qitem.id})" :disabled="qitem.peopleNum<=0">
           <i class="el-icon-document"></i>
           分析
         </el-button>
 
         <!-- 下载-按钮 -->
-        <el-button class="control-button" type="primary" plain size="small" @click="download_excel(qitem.id)">
+        <el-button class="control-button" type="primary" plain size="small" @click="download_excel(qitem.id)" :disabled="qitem.peopleNum<=0">
           <i class="el-icon-download"></i>
           下载答卷
         </el-button>
@@ -79,7 +75,7 @@
           <!-- popover content -->
           <div class="popover-content">
             <p>链接：</p>
-            <el-link type="primary" :href="shareBaseUrl + qitem.id">{{ shareBaseUrl + qitem.id }}</el-link>
+            <el-link type="primary" :href="shareBaseUrl + qitem.id" target="_blank">{{ shareBaseUrl + qitem.id }}</el-link>
             <el-divider></el-divider>
             <p>二维码</p>
             <qrcode :value="shareBaseUrl + qitem.id" :options="{ width: 150 }"></qrcode>
@@ -180,8 +176,6 @@ export default {
         { type: "warning" }
       )
         .then(res => {
-          this.set_uQL(this.questionnaires[qindex]);
-          console.log(this.questionnaires[qindex]);
           this.$router.push({ name: "questionEdit", params: { qid: qid } });
           console.log(qid);
         })

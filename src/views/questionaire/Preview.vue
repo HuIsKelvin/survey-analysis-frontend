@@ -36,3 +36,8 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+#preview {
+    background-color: #e5e9f2;
+}
+</style>
