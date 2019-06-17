@@ -42,7 +42,7 @@ export default {
                   let uQL = {
                     userId: this.$store.state.user.userId,
                     name: this.questionnaireName,
-                    questionnaireId: qid,
+                    id: qid,
                     comment: "感谢您能抽出几分钟时间来参加本次答题，现在我们就马上开始吧！",
                     endComment: "您已完成本次问卷，感谢您的帮助与支持！",
                     numLimit: 0,

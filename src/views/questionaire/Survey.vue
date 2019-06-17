@@ -26,12 +26,13 @@ export default {
     // 获取问卷数据
     // axios.get()
     let qid = this.$route.params.qid;
-    axios.get("/questionnaires/" + qid)
+    axios.get("/questionnaires/getQuesById?qid=" + qid)
       .then(res => {
         console.log("get questionnaire by qid!");
+
         // console.log(res);
         const statusCode = res.status;
-        const questionnaire = res.data;
+        const data = res.data;
 
         // 判断网络状态码
         switch(statusCode) {
@@ -43,7 +44,7 @@ export default {
 
           case 200:
             this.setQuestionnaire({
-              questionnaire: questionnaire
+              questionnaire: data
             });
             break;
         }
@@ -51,7 +52,7 @@ export default {
       })
       .catch(err => {
         console.log(err);
-        // this.$router.push({ path: "/error" });
+        this.$router.push({ path: "/error" });
       })
     this.prepareQuestionList();
   },
