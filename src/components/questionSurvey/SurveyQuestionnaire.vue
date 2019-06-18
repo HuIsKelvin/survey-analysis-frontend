@@ -111,12 +111,13 @@ export default {
       });
     },
     isPagination() {
-      if(this.questionnaire.pagination.isPagination === 'true') {
-        return true
-      } else {
-        return false
-      }
-      // return this.questionnaire.pagination.isPagination === 'true' ? true : false;
+      // console.log()
+      // if(this.questionnaire.pagination.isPagination === true) {
+      //   return true
+      // } else {
+      //   return false
+      // }
+      return this.questionnaire.pagination.isPagination === true ? true : false;
     },
     totalPage() {
       if(this.questionnaire.pagination.totalPage) {

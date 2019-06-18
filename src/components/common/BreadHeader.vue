@@ -69,6 +69,7 @@ export default {
     ...mapGetters("questionnaire", {
       userQuestionList: "userQuestionList",
       questionnaireId: "questionnaireId",
+      isPagination: "isPagination"
     })
   },
   methods: {
@@ -98,7 +99,7 @@ export default {
     },
     saveQuestionnaire() {
         let counter = 1;
-        let questionList = this.userQuestionList.questionList;
+        // let questionList = this.userQuestionList.questionList;
         let userQuestionList = this.userQuestionList;
         // if (userQuestionList.pagination.isPagintion == "false") {
         // userQuestionList.pagination.isPagintion = false
@@ -106,20 +107,21 @@ export default {
         //   userQuestionList.pagination.isPagination = true
         // }
         // userQuestionList.pagination.totalPage = parseInt(userQuestionList.pagination.totalPage);
-        
+        // console.log("saveQuestionnaire!")
         if (this.isPagination) {
-          for (let i in questionList) {
-            if (questionList[i].type == "pagination") {
+          for (let i in userQuestionList.questionList) {
+            // console.log(userQuestionList.questionList[i].type);
+            if (userQuestionList.questionList[i].type == "pagination") {
               counter++;
             } else {
-              questionList[i].currentPage = counter;
+              userQuestionList.questionList[i].currentPage = counter;
             }
           }
 
         } else {
           // do nothing so far
         }
-        userQuestionList.questionList = questionList;
+        // userQuestionList.questionList = questionList;
         // patch是直接更新当前的数据
         console.log(this.questionnaireId);
         console.log(userQuestionList);
@@ -172,6 +174,24 @@ export default {
       this.$store.commit(types.SIGNOUT);
       this.$router.push({name:"sign"});
     }
+  },
+  // 更新题号和当前页
+  update_index_currentPage(questionList) {
+    let qList = questionList;
+    let pCount = 2;
+    let qCount = 1;
+    for (let i in qList) {
+      if (qList[i].type === "pagination") {
+        qList[i].currentPage = pCount;
+        pCount++;
+      } else if (qList[i].type === "description"){
+          
+      } else {
+        qList[i].index = qCount;
+        qCount++;
+      }
+    }
+    return qList
   }
 }
 </script>

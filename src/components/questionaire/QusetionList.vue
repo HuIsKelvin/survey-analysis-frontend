@@ -176,6 +176,7 @@ export default {
         { type: "warning" }
       )
         .then(res => {
+          // this.changeQuestionnaireState(qid, false);
           this.$router.push({ name: "questionEdit", params: { qid: qid } });
           console.log(qid);
         })

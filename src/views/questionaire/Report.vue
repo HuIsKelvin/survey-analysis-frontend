@@ -10,6 +10,9 @@
           :text-color="headerNav.textColor"
           :active-text-color="headerNav.textColorActive"
         >
+          <el-menu-item index="user.manage">
+            <router-link :to="{name: 'user'}" tag="div">返回个人问卷中心</router-link>
+          </el-menu-item>
           <el-menu-item index="report.analysis">
             <router-link :to="{name: 'report.analysis'}" tag="div">统计分析</router-link>
           </el-menu-item>
