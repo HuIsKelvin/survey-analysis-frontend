@@ -3,32 +3,31 @@
   <div>
     <el-tabs tab-position="left">
       <el-tab-pane label="交叉分析">
-        <cross-analysis :meta="meta"></cross-analysis>
+        <cross-analysis class="analysis-item" :meta="meta"></cross-analysis>
       </el-tab-pane>
       <el-tab-pane label="单样本T检验">
-        <ttest1samp :meta="meta"></ttest1samp>
+        <ttest1samp class="analysis-item" :meta="meta"></ttest1samp>
       </el-tab-pane>
       <el-tab-pane label="双独立样本T检验">
-        <ttestind :meta="meta"></ttestind>
+        <ttestind class="analysis-item" :meta="meta"></ttestind>
       </el-tab-pane>
       <el-tab-pane label="双独立样本非参数检验">
-        <mannwhitneyu :meta="meta"></mannwhitneyu>
+        <mannwhitneyu class="analysis-item" :meta="meta"></mannwhitneyu>
       </el-tab-pane>
       <el-tab-pane label="配对样本T检验">
-        <ttestrel :meta="meta"></ttestrel>
+        <ttestrel class="analysis-item" :meta="meta"></ttestrel>
       </el-tab-pane>
       <el-tab-pane label="正态性检验">
-        <normaltest :meta="meta"></normaltest>
+        <normaltest class="analysis-item" :meta="meta"></normaltest>
       </el-tab-pane>
       <el-tab-pane label="单因素方差分析">
-        <foneway :meta="meta"></foneway>
+        <foneway class="analysis-item" :meta="meta"></foneway>
       </el-tab-pane>
       <el-tab-pane label="回归分析">
-        <regression-analysis :meta="meta"></regression-analysis>
+        <regression-analysis class="analysis-item" :meta="meta"></regression-analysis>
       </el-tab-pane>
       <el-tab-pane label="因子分析">
-        <factor-analysis :meta="meta"></factor-analysis>
-
+        <factor-analysis class="analysis-item" :meta="meta"></factor-analysis>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -76,5 +75,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.anlysis-item {
+  margin: auto;
+  max-width: 75%;
+}
+div {
+  margin: 5px;
+}
+
 </style>
 

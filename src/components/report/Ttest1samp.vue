@@ -5,12 +5,14 @@
     <div>
       <div v-if="meta">
         <div v-if="options.length > 0">
+          <div>
           <el-select v-model="column" placeholder="请选择题目">
             <el-option v-for="option in options" :key="option" :label="option" :value="option"></el-option>
           </el-select>
+          </div>
           <div>
             <span>总体均值:</span>
-            <el-input v-model="popmean"></el-input>
+            <el-input class="popmean-input" v-model="popmean"></el-input>
           </div>
           <el-button type="primary" @click="commit(column, popmean)">分析</el-button>
         </div>
@@ -72,5 +74,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+  div {
+    margin: 5px;
+  }
+  .popmean-input {
+    width: 100px;
+  }
 </style>
 

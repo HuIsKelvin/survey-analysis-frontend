@@ -6,12 +6,16 @@
     <div>
       <div v-if="meta">
         <div v-if="options.length > 0">
+          <div>
           <el-select v-model="column1" placeholder="请选择题目1">
             <el-option v-for="option in options" :key="option" :label="option" :value="option"></el-option>
           </el-select>
+          </div>
+          <div>
           <el-select v-model="column2" placeholder="请选择题目2">
             <el-option v-for="option in options" :key="option" :label="option" :value="option"></el-option>
           </el-select>
+          </div>
           <el-button type="primary" @click="commit(column1, column2)">分析</el-button>
         </div>
       </div>

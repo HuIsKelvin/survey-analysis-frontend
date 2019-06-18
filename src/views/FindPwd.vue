@@ -20,7 +20,11 @@ export default {
 #find-pwd {
   .find-pwd-form {
     width: 350px;
-    margin: 0 auto;
+    // margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
   }
 }
 </style>

@@ -1,27 +1,26 @@
 <template>
   <div id="question-list">
+    <!-- 问卷管理条目 -->
     <el-card
       v-for="(qitem, qindex) in questionnaires"
       :key="qindex"
       class="box-card list-item"
       shadow="hover"
     >
+
+      <!-- 问卷管理条目 header -->
       <div slot="header" class="list-item-header">
         <el-row>
-          <el-col :span="12">
+          <el-col :sm="24" :md="12">
             <div class="q-main-info">
               <span class="q-info">{{ qindex + 1 }}</span>
-              <!-- <span class="q-info">
-                ID:
-                <span>{{qitem.id}}</span>
-              </span>-->
               <span class="q-info">
                 <!-- 问卷名: -->
                 <span>{{qitem.name}}</span>
               </span>
             </div>
           </el-col>
-          <el-col :span="12">
+          <el-col :sm="24" :md="12">
             <div class="q-sub-info">
               <span class="title q-info">
                 ·
@@ -36,89 +35,60 @@
               </span>
               <span class="title q-info">
                 发布日期:
-                <span class="status">{{qitem.createTime}}</span>
+                <span class="status">{{ (qitem.createTime.split("."))[0].replace("T", " ") }}</span>
               </span>
             </div>
           </el-col>
         </el-row>
       </div>
-      <el-row type="flex" justify="end" class="q-control">
+      <el-row class="q-control">
         <!-- 编辑-按钮 -->
-        <el-button
-          class="control-button"
-          type="primary"
-          plain
-          size="small"
-          @click="editQuestionnaire(qitem.id, qindex)"
-        >
+        <el-button class="control-button" type="primary" plain size="small" @click="editQuestionnaire(qitem.id, qindex)">
           <i class="el-icon-edit"></i>
           编辑
         </el-button>
 
         <!-- 发布 或 停止-按钮 -->
-        <el-button
-          class="control-button"
-          type="primary"
-          plain
-          size="small"
-          @click="changeQuestionnaireState(qitem.id, true)"
-        >
+        <el-button class="control-button" type="primary" plain size="small" @click="changeQuestionnaireState(qitem.id, true)">
           <i class="el-icon-check"></i>
           发布
         </el-button>
-        <el-button
-          class="control-button"
-          type="primary"
-          plain
-          size="small"
-          @click="changeQuestionnaireState(qitem.id, false)"
-        >
+        <el-button class="control-button" type="primary" plain size="small" @click="changeQuestionnaireState(qitem.id, false)">
           <i class="el-icon-close"></i>
           停止
         </el-button>
 
         <!-- 分析-按钮 -->
-        <el-button class="control-button" type="primary" plain size="small" @click="$router.push({path:'/report/'+qitem.id})">
+        <el-button class="control-button" type="primary" plain size="small" @click="$router.push({path:'/report/'+qitem.id})" :disabled="qitem.peopleNum<=0">
           <i class="el-icon-document"></i>
           分析
         </el-button>
 
         <!-- 下载-按钮 -->
-        <el-button class="control-button" type="primary" plain size="small" @click="download_excel(qitem.id)">
+        <el-button class="control-button" type="primary" plain size="small" @click="download_excel(qitem.id)" :disabled="qitem.peopleNum<=0">
           <i class="el-icon-download"></i>
           下载答卷
         </el-button>
 
         <!-- 分享-按钮 -->
-        <el-popover placement="bottom" width="250" trigger="hover">
+        <el-popover placement="bottom" width="250" trigger="click">
           <!-- popover content -->
           <div class="popover-content">
             <p>链接：</p>
-            <el-input readonly="readonly" :value="shareBaseUrl + qitem.id"></el-input>
+            <el-link type="primary" :href="shareBaseUrl + qitem.id" target="_blank">{{ shareBaseUrl + qitem.id }}</el-link>
+            <el-divider></el-divider>
             <p>二维码</p>
             <qrcode :value="shareBaseUrl + qitem.id" :options="{ width: 150 }"></qrcode>
           </div>
           <!-- popover trigger -->
-          <el-button
-            class="control-button button-share"
-            type="primary"
-            plain
-            size="small"
-            slot="reference"
-          >
+          <el-button class="control-button button-share" type="primary" plain size="small" slot="reference">
             <i class="el-icon-share"></i>
             分享
           </el-button>
         </el-popover>
 
         <!-- 删除-按钮 -->
-        <el-button
-          class="control-button"
-          type="danger"
-          plain
-          size="small"
-          @click="deleteQuestionnaire(qitem.id)"
-        >
+        <el-button class="control-button" type="danger" plain size="small" @click="deleteQuestionnaire(qitem.id)">
           <i class="el-icon-delete"></i>
           删除
         </el-button>
@@ -190,7 +160,11 @@ export default {
           document.body.removeChild(elink);
         })
         .catch(error => {
-          this.$message.error(error.response.data.error);
+          // this.$message.error(error.response.data.error);
+          // this.$message.error(error.data.error);
+          console.log(error);
+          console.log(error.response);
+          if(error.response.status === 500) { this.$message.error("暂无答卷报告！"); }
         });
     },
     // 编辑问卷
@@ -202,8 +176,6 @@ export default {
         { type: "warning" }
       )
         .then(res => {
-          this.set_uQL(this.questionnaires[qindex]);
-          console.log(this.questionnaires[qindex]);
           this.$router.push({ name: "questionEdit", params: { qid: qid } });
           console.log(qid);
         })
@@ -230,7 +202,7 @@ export default {
 
     // 删除问卷
     deleteQuestionnaire(qid) {
-      this.$confirm("此操作将永久删除该问卷, 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除该问卷, 是否继续?", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
@@ -262,11 +234,12 @@ export default {
   text-align: left;
 
   .list-item {
-    margin: 10px auto;
+    margin: 20px auto;
 
     .list-item-header {
       .q-info {
         margin: 10px;
+        display: inline-block;
       }
 
       .q-main-info {
@@ -279,15 +252,16 @@ export default {
       }
     }
     .q-control {
-      // float: right;
-      // margin: 20px;
+      float: right;
+      margin-bottom: 10px;
       // &after {
       //   content: " ";
-      //   display: block;
+      //   display: block;  
       // }
 
       .control-button {
         // float: left;
+        margin-bottom: 10px;
       }
 
       .button-share {
