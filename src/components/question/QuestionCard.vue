@@ -150,7 +150,7 @@ export default {
   watch: {
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters("questionnaire", {
       isClick:"isClick",
       totalPage: "totalPage",
       questionList: "questionList",
@@ -158,7 +158,7 @@ export default {
     }),
    },
   methods: {
-    ...mapMutations({
+    ...mapMutations("questionnaire", {
       del_obj: "delete_questionList_object",
       set_isClick: "set_isClick",
       set_isPagination: "set_isPagination",

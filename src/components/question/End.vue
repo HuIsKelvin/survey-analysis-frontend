@@ -17,7 +17,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
+        ...mapGetters("questionnaire", {
             endContents: "endContents"
         })
     },
@@ -25,7 +25,7 @@ export default {
         changeQuestionEnd($event){
             this.set_end($event.target.textContent);
         },
-        ...mapMutations({
+        ...mapMutations("questionnaire", {
             set_end: "set_end_contents",
         })
 

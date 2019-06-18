@@ -22,14 +22,19 @@ export default {
     },
     computed: {
         ...mapGetters("survey", {
-            "questionnaire": "surveyQuestionnaire"
+            "questionnaire": "surveyQuestionnaire",
+        }),
+        ...mapGetters("questionnaire", {
+            "qid":"questionnaireId"
         })
     },
     methods: {
         backToEdit() {
             // FIXME: 需判断 url 历史
-            // this.$router.push({name: "questionEdit"});
-            this.$router.back(-1);
+            // this.$router.push({name:"questionEdit", params:{qid:this.$store.state.questionnaire.userQuestionList.id,id:"preview"}});
+            this.$router.push({name:"questionEdit", params:{qid:this.qid,id:"preview"}});
+            
+            // this.$router.back(-1);
         }
     }
 

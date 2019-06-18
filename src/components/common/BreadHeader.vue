@@ -65,13 +65,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters("questionnaire", {
       userQuestionList: "userQuestionList",
       questionnaireId: "questionnaireId",
     })
   },
   methods: {
-    ...mapMutations({
+    ...mapMutations("questionnaire", {
         set_state: "set_state",
     }),
     ...mapActions("survey", {

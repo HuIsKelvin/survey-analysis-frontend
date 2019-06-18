@@ -31,7 +31,7 @@ export default {
     // })
   },
   methods: {
-    ...mapMutations({
+    ...mapMutations("questionnaire", {
       set_numLimit: "set_numLimit"
     }),
     numLimitChange(newValue) {

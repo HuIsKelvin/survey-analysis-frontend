@@ -27,7 +27,7 @@ export default {
     created(){
     },
     computed: {
-        ...mapGetters({
+        ...mapGetters("questionnaire", {
             questionnaireTitle: "questionnaireTitle",
             intro: "introContents"
         })
@@ -39,7 +39,7 @@ export default {
         changeQuestionIntro($event){
             this.set_intro($event.target.textContent);
         },
-        ...mapMutations({
+        ...mapMutations("questionnaire", {
             set_intro: "set_questionnaire_intro",
             set_title: "set_questionnaire_title"
 

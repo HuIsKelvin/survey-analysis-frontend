@@ -36,7 +36,7 @@ export default {
   watch: {
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters("questionnaire", {
       totalPage: "totalPage",
       index: "index"
     }),

@@ -49,7 +49,7 @@ export default {
 
   },
   methods:{
-    ...mapMutations({
+    ...mapMutations("questionnaire", {
       change_value: "change_questionList_value"
     }),
     changeOptionValue: function($event) {

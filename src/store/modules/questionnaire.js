@@ -2,6 +2,7 @@ import * as types from "../types";
 // import createPersistedState from 'vuex-persistedstate'
 
 export default {
+  namespaced: true,
   // plugins: [createPersistedState()],
   state: {
     pageManage: {

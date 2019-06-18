@@ -55,7 +55,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
+    ...mapMutations("questionnaire", {
       set_time: "set_begin_end_time"
     }),
     changeDate() {

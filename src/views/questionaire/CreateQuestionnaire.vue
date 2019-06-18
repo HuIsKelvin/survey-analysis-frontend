@@ -20,7 +20,7 @@ export default {
     };
   },
   methods: {
-      ...mapMutations({
+      ...mapMutations("questionnaire", {
         // setID: "set_userID",
         // setTitle: "set_questionnaire_title",
         // setQlist: "set_questionList",
@@ -57,7 +57,7 @@ export default {
                   // console.log("user id" + this.$store.state.user.userId);
                   // this.set_uQL(uQL); // 初始化问卷
                   this.$message.success("创建问卷成功,跳转到编辑页面");
-                  this.$router.push({name:"questionEdit", params:{qid:qid}});
+                  this.$router.push({name:"questionEdit", params:{qid:qid,id:"create"}});
               })
               .then(error => {
                   if (error) {

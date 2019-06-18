@@ -3,7 +3,7 @@ export const SIGNOUT = "signout";
 export const SET_USERID = "set_userID";
 
 // 点击设置
-export const SET_PAGEMANAGE = "set_isClick";
+export const SET_PAGEMANAGE = "set_pageManage";
 
 //设置userQuestionList：一般用于创建新问卷时初始化情况列表
 export const SET_USERQUESTIONLIST = "set_userQuestionList";

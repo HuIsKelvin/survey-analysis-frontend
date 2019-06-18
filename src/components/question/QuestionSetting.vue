@@ -147,7 +147,7 @@ export default {
   },
   mounted(){},
   computed: {
-    ...mapGetters({
+    ...mapGetters("questionnaire", {
       num: "numLimit",
       beginTime: "beginTime",
       endTime: "endTime",
@@ -188,7 +188,7 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
+    ...mapMutations("questionnaire", {
       set_isRequired: "set_isRequired",
       set_jumpLogic: "set_jumpLogic",
       change_questionList_value: "change_questionList_value",

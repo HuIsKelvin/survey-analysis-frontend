@@ -68,7 +68,7 @@ export default {
     }
   },
   methods:{
-    ...mapMutations({
+    ...mapMutations("questionnaire", {
       add_item: "add_question_option_item",
       delete_item: "delete_question_option_item",
       change_value: "change_questionList_value"
@@ -94,7 +94,6 @@ export default {
   },
   components: {
     draggable,
-    "item-input": () => import("@/components/question/OptionItemInput.vue")
   }
 }
 </script>

@@ -197,7 +197,7 @@ export default {
   },
   computed: {
     // 获取当前用户的id
-    ...mapGetters({
+    ...mapGetters("questionnaire", {
       userQuestionList: "userQuestionList",
       intro: "introContents",
       isPagination: "isPagination",
@@ -256,16 +256,21 @@ export default {
     }
   },
   mounted() {
+    console.log(this.$store.state.questionnaire);
     this.set_pageManage({type: "isClick", boolean: false}); 
     window.addEventListener('scroll', this.watchScroll);
     
   },
   created() {
-    this.getUserQuestionList();
+    if (this.$route.params.id !== "preview") {
+      this.getUserQuestionList();
+    } else {
+      // nothing so far
+    }
     this.clickListener();
 },
   methods: {
-    ...mapMutations({
+    ...mapMutations("questionnaire", {
       add_qList_obj: "add_questionList_object",
       set_qList: "set_questionList",
       set_pagination: "set_pagination",
