@@ -27,7 +27,7 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <!-- <el-dropdown-item disabled><span class="user-id">用户账号名</span></el-dropdown-item> -->
-            <el-dropdown-item divided><router-link :to="{name: 'user.info'}" tag="span">我的个人信息</router-link></el-dropdown-item>
+            <el-dropdown-item><router-link :to="{name: 'user.info'}" tag="span">我的个人信息</router-link></el-dropdown-item>
             <el-dropdown-item divided><span @click="signout"><i class="el-icon-circle-close-outline"></i>退出登录</span></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>

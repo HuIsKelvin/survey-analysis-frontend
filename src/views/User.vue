@@ -2,32 +2,44 @@
   <div id="user">
     <el-container>
       <el-header class="header">
-        <el-menu
-          :default-active="activeIndex"
-          class="header-nav"
-          mode="horizontal"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-        >
-          <el-menu-item>
-            <span>LOGO</span>
-          </el-menu-item>
-          <el-menu-item index="1">
-            <router-link :to="{name: 'user.manage'}" tag="div">问卷管理</router-link>
-          </el-menu-item>
-          <el-menu-item index="2">
-            <router-link :to="{name: 'user.info'}" tag="div">个人信息</router-link>
-          </el-menu-item>
-          <!-- 头像 -->
-          <div class="avator"></div>
-          <el-menu-item>
-            <el-button type="danger" @click="signout">登出</el-button>
-          </el-menu-item>
-          <el-menu-item>
-            <span>{{ name }}</span>
-          </el-menu-item>
-        </el-menu>
+        <el-row>
+          <el-col :span="20">
+              <el-menu 
+                :default-active="activeIndex"
+                class="header-nav-left"
+                mode="horizontal"
+                :background-color="headerNav.bgColor"
+                :text-color="headerNav.textColor"
+                :active-text-color="headerNav.textColorActive"
+              >
+                <!-- <el-menu-item>
+                  <span>LOGO</span>
+                </el-menu-item> -->
+                <el-menu-item index="1">
+                  <router-link :to="{name: 'user.manage'}" tag="div">问卷管理</router-link>
+                </el-menu-item>
+                <el-menu-item index="2">
+                  <router-link :to="{name: 'user.info'}" tag="div">个人信息</router-link>
+                </el-menu-item>
+              </el-menu>
+          </el-col>
+          <el-col :span="4">
+            <div class="header-nav-right">
+              <span class="username">{{username}}</span>
+              <el-dropdown class="avator-dropdown">
+                <el-button type="text">
+                  <img :src="userLogo" class="user-logo">
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>
+                    <router-link :to="{name: 'user.info'}" tag="span">我的个人信息</router-link>
+                  </el-dropdown-item>
+                  <el-dropdown-item divided><span @click="signout">退出登录</span></el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
+          </el-col>
+        </el-row>
       </el-header>
       <el-main class="main-content">
         <router-view class="main-content-view"></router-view>
@@ -44,7 +56,13 @@ export default {
   data() {
     return {
       activeIndex: "1",
-      name: this.$store.state.name
+      username: this.$store.state.user.name,
+      userLogo: require("@/assets/image/user-logo.jpg"),
+      headerNav: {
+        bgColor: "#545C64",
+        textColor: "#C0C4CC",
+        textColorActive: "#76d7c4"
+      }
     };
   },
   methods: {
@@ -58,6 +76,8 @@ export default {
 
 <style lang="scss" scoped>
 $box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+$header-bg-color: #545C64;
+$header-text-color: #C0C4CC;
 
 .el-header {
   padding: 0;
@@ -73,22 +93,25 @@ $box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 .header {
   text-align: left;
   width: 100%;
-  height: 3em;
-  line-height: 3em;
+  height: 60px;
+  line-height: 60px;
+  background-color: $header-bg-color;
+  color: $header-text-color;
 
-  .avator {
-    position: absolute;
-    right: 1.5em;
-    top: 1.5em;
-    background-color: #fff;
-    width: 2em;
-    height: 2em;
-    border-radius: 50%;
+  .header-nav-right {
+    text-align: right;
+    background-color: $header-bg-color;
+
+    span {
+      margin-right: 10px;
+    }
+
+    .avator-dropdown {
+      float: right;
+      margin-right: 20px;
+    }
   }
 
-  .header-nav {
-    // width: 100%;
-  }
 }
 
 .main-content {
@@ -108,5 +131,15 @@ $box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
     box-shadow: $box-shadow;
     padding: 3em 2em;
   }
+}
+
+.user-logo{
+  height: 40px;
+  width: 40px;
+  border-radius:50%;
+  -webkit-border-radius:50%;
+  -moz-border-radius:50%;
+  // margin-top: 10px;
+  float: right;
 }
 </style>
