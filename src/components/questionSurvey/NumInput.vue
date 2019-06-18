@@ -2,6 +2,8 @@
   <div id="num-input">
     <div class="content">
       <el-input-number
+        :precision="2"
+        :step="0.1"
         v-model="content">
       </el-input-number>
     </div>
