@@ -8,15 +8,15 @@
 <template>
   <div>
     <i class="el-icon-s-comment" v-if="description"></i>
-    <div contenteditable="true" class="question-content-input">
-      <p @keyup="changeOptionValue($event)">{{this.qContent}}</p>
+    <div @keyup="changeOptionValue($event)" contenteditable="true" class="question-content-input">
+      <p>{{this.qContent}}</p>
     </div>
     <!-- <el-input 
       class="question-content-input"
       type="textarea"
       autosize
+      v-model="qContent"
       resize="none">
-    {{this.qContent}}
     </el-input> -->
   </div>
 </template>
@@ -75,6 +75,7 @@ export default {
     border-radius: .3rem;
     text-align: left;
     outline:none;
+    min-height: 2.4rem;
 }
 .question-content-input:hover{
     border-width: 1px solid transparent;
