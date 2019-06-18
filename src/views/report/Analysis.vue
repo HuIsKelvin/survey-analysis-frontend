@@ -39,7 +39,7 @@ export default {
         axiosVisual.get("base_report/"+this.$route.params.qid)
         .then(response => {
             this.questionnaire = response.data;
-            if (this.questionnaire.length === 0) {
+            if (!this.questionnaire) {
                 this.dialogVisible = true;
             }
             console.log(this.questionnaire)
