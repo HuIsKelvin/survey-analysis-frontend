@@ -6,9 +6,9 @@
           :default-active="$route.name"
           class="header-nav"
           mode="horizontal"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
+          :background-color="headerNav.bgColor"
+          :text-color="headerNav.textColor"
+          :active-text-color="headerNav.textColorActive"
         >
           <el-menu-item index="report.analysis">
             <router-link :to="{name: 'report.analysis'}" tag="div">统计分析</router-link>
@@ -35,6 +35,11 @@ export default {
     data() {
         return {
             activeIndex: null,
+            headerNav: {
+              bgColor: "#545C64",
+              textColor: "#C0C4CC",
+              textColorActive: "#76d7c4"
+            }
         }
     },
     methods: {

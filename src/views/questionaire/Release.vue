@@ -8,6 +8,7 @@
       <el-main>
         <el-card class="share">
           <h2>问卷发布成功！</h2>
+          <el-divider></el-divider>
           <div class="share-item">
             <h3>问卷ID: {{ qid }}</h3>
           </div>
@@ -51,12 +52,9 @@
 </script>
 <style lang="scss" scoped>
   .el-header {
-    // background-color: #D3DCE6;
     background-color: rgb(84, 92, 100);
-    // color: #333;
     text-align: center;
     border-bottom: 1px solid;
-    // border-bottom:rgb(216, 232, 252);
     line-height: 60px;
     position: sticky;
     top: 0;

@@ -35,7 +35,7 @@
               </span>
               <span class="title q-info">
                 发布日期:
-                <span class="status">{{ (qitem.createTime.split("."))[0] }}</span>
+                <span class="status">{{ (qitem.createTime.split("."))[0].replace("T", " ") }}</span>
               </span>
             </div>
           </el-col>
@@ -202,7 +202,7 @@ export default {
 
     // 删除问卷
     deleteQuestionnaire(qid) {
-      this.$confirm("此操作将永久删除该问卷, 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除该问卷, 是否继续?", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"

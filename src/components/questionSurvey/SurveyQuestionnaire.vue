@@ -7,7 +7,7 @@
         <h1 class="survey-title">{{ questionName }}</h1>
 
         <!-- 问卷欢迎语 -->
-        <p>{{ questionComment }}</p>
+        <p>{{ qComment }}</p>
 
         <!-- 问卷题目 -->
         <div class="survey-questions">
@@ -33,6 +33,9 @@
             </transition-group>
           </el-form>
         </div>
+
+        <!-- 问卷结束语 -->
+        <p>{{ qEndComment }}</p>
 
         <!-- 分页 -->
         <div
@@ -87,7 +90,8 @@ export default {
     return {
       // questionList: this.questionnaire.questionList,
       questionName: this.questionnaire.name,
-      questionComment: this.questionnaire.comment,
+      qComment: this.questionnaire.comment,
+      qEndComment: this.questionnaire.endComment,
       pagination: {
         // 每页显示条目数，不要改
         pageSize: 1,

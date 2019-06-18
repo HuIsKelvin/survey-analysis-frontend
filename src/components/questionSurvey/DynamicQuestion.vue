@@ -11,8 +11,8 @@
         <div class="question-prefix" v-if="setting.index">
           <span class="question-index">{{ setting.index }}</span>
           <span class="question-alarm" v-if="isRequired === true"> * </span>
-          <span v-if="setting.type === 'description'">info <i class="el-icon-info"></i> </span>
         </div>
+        <span class="prefix-icon" v-if="setting.type === 'description'"><i class="el-icon-info"></i> </span>
       </el-col>
 
       <el-col :span="22">
@@ -94,6 +94,12 @@ export default {
       margin-top: 10px;
       margin-right: 5px;
     }
+  }
+
+  .prefix-icon {
+    float: right;
+    margin-top: 10px;
+    margin-right: 5px;
   }
 
 }
