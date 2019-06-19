@@ -73,10 +73,10 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: "请输入用户名", trigger: "change" }
         ],
         username: [
-          { required: true, message: "请输入账号名", trigger: "blur" },
+          { required: true, message: "请输入账号名", trigger: "change" },
           {
             min: 4,
             max: 16,
@@ -88,7 +88,7 @@ export default {
           {
             required: true,
             validator: validEmail,
-            trigger: "blur"
+            trigger: "change"
           }
         ],
         pass: [
@@ -98,10 +98,10 @@ export default {
             message: "密码长度需为6-32个字符",
             trigger: "blur"
           },
-          { required: true, validator: validPass, trigger: "blur" }
+          { required: true, validator: validPass, trigger: "change" }
         ],
         checkPass: [
-          { required: true, validator: validCheckPass, trigger: "blur" }
+          { required: true, validator: validCheckPass, trigger: "change" }
         ]
       }
     };

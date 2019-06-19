@@ -4,8 +4,8 @@
   <div id="error">
     <el-card>
       <div class="msg">
-        <h1>404 error!</h1>
-        <p>页面走丢啦！</p>
+        <h1>error!</h1>
+        <p>{{ alertMsg }}</p>
       </div>
     </el-card>
   </div>
@@ -13,7 +13,20 @@
 
 <script>
 export default {
-  name: "Error"
+  name: "Error",
+  data() {
+    return {
+      defaultMsg: "页面走丢啦！"
+    }
+  },
+  computed: {
+    alertMsg() {
+      let msgRoute = this.$route.query.msg;
+      console.log(msgRoute);
+      if(msgRoute) { return msgRoute; }
+      else { return this.defaultMsg; }
+    }
+  }
 }
 </script>
 

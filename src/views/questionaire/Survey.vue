@@ -58,7 +58,10 @@ export default {
       })
       .catch(err => {
         console.log(err);
-        this.$router.push({ path: "/error" });
+        console.log(err.response);
+        let msg = err.response.data;
+        console.log(msg);
+        this.$router.push({ path: "/error", query: {msg: msg} });
       })
     this.prepareQuestionList();
   },

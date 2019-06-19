@@ -184,6 +184,9 @@ export default {
       )
         .then(res => {
           this.changeQuestionnaireState(qid, false);
+          axios.post("/answerSheet/deleteByQuesId/?qid="+qid)
+            .then(res => { console.log("empty"); })
+            .catch(err => { console.log(err); })
           this.$router.push({ name: "questionEdit", params: { qid: qid } });
           console.log(qid);
         })
