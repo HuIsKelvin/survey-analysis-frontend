@@ -59,7 +59,11 @@
         </el-button>
 
         <!-- 分析-按钮 -->
-        <el-button class="control-button" type="primary" plain size="small" @click="$router.push({path:'/report/'+qitem.id})" :disabled="qitem.peopleNum<=0">
+        <el-button 
+          class="control-button" type="primary" plain size="small"
+          @click="$router.push({path:'/report/'+qitem.id})"
+          :disabled="qitem.peopleNum <= 1"
+        >
           <i class="el-icon-document"></i>
           分析
         </el-button>
