@@ -5,7 +5,7 @@
         <el-row>
           <el-col :span="20">
               <el-menu 
-                :default-active="activeIndex"
+                :default-active="routeName"
                 class="header-nav-left"
                 mode="horizontal"
                 :background-color="headerNav.bgColor"
@@ -15,10 +15,10 @@
                 <!-- <el-menu-item>
                   <span>LOGO</span>
                 </el-menu-item> -->
-                <el-menu-item index="1">
+                <el-menu-item index="user.manage">
                   <router-link :to="{name: 'user.manage'}" tag="div">问卷管理</router-link>
                 </el-menu-item>
-                <el-menu-item index="2">
+                <el-menu-item index="user.info">
                   <router-link :to="{name: 'user.info'}" tag="div">个人信息</router-link>
                 </el-menu-item>
               </el-menu>
@@ -55,7 +55,7 @@ export default {
   name: "User",
   data() {
     return {
-      activeIndex: "1",
+      // activeIndex: null,
       username: this.$store.state.user.name,
       userLogo: require("@/assets/image/user-logo.jpg"),
       headerNav: {
@@ -64,6 +64,11 @@ export default {
         textColorActive: "#76d7c4"
       }
     };
+  },
+  computed: {
+    routeName() {
+      return this.$route.name;
+    }
   },
   methods: {
     signout: function() {

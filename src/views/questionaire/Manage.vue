@@ -1,7 +1,7 @@
 <template>
   <div id="manage">
     <div id="new-question">
-      <el-button type="primary" @click="$router.push({name: 'createQuestionnaire'})">新建问卷</el-button>
+      <el-button type="primary" @click="$router.push({name: 'createQuestionnaire'})">新建问坷</el-button>
     </div>
     <question-list></question-list>
   </div>
@@ -12,8 +12,7 @@ import QuestionList from "./../../components/questionaire/QusetionList";
 export default {
   components: {
     "question-list": QuestionList
-  },
-  methods: {}
+  }
 };
 </script>
 
