@@ -16,7 +16,7 @@
           <div class="share-item">
             <h3>链接</h3>
             <!-- <el-input class="link" v-model="shareUrl" readonly></el-input> -->
-            <el-link type="primary" :href="shareUrl">{{ shareUrl }}</el-link>
+            <a :href="shareUrl">{{ shareUrl }}</a>
           </div>
           <el-divider></el-divider>
           <div class="share-item">
@@ -70,6 +70,15 @@
     .share {
       margin: 20px auto;
       max-width: 600px;
+
+      h2 {
+        padding-bottom: 20px;
+      }
+
+      .share-item {
+        padding: 20px 0;
+        border-top: 1px solid #e0e0e0;
+      }
     }
   }
 </style>
