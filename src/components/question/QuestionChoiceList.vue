@@ -21,10 +21,8 @@
         </el-col>
         <!--选项主体栏-->
         <el-col :span="19">
-          <div contenteditable="true" class="question-choice-input">
-            <p
-              @keyup="changeOptioinValue($event, index)"
-              >
+          <div @keyup="changeOptionValue($event, iIndex)" contenteditable="true" class="question-choice-input">
+            <p>
               {{item}}
             </p>
           </div>
@@ -80,12 +78,12 @@ export default {
       let qIndex = this.qIndex;
       this.delete_item({qIndex: qIndex, iIndex: iIndex});
     },
-    changeOptionValue: function($event,index) {
+    changeOptionValue: function($event,iIndex) {
       // console.log($event);
       // console.log(index);
       let obj = {
         type: "options",
-        iIndex: index,
+        iIndex: iIndex,
         QIndex: this.qIndex,
         iString: $event.target.outerText
       }
