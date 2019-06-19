@@ -27,6 +27,7 @@
         <sign-up></sign-up>
         <div>
         <br />
+        <br />
         <p>
           已有账号？<span class="sign-container-switch" @click="hasAccount = true"
             >登录</span

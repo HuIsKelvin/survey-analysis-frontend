@@ -138,6 +138,7 @@ export default {
 
 <style>
 #sign-up {
-  height: 550px;
+  min-height: 550px;
+  margin-bottom: 10px;
 }
 </style>

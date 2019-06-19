@@ -27,6 +27,10 @@ export default {
     userQuestionList: {
       name: "my first questionnaire",
       id: 123456,
+      pagination: {
+        isPagination: false,
+        totalPage: 0,
+      },
       questionList: [
         {
           type: "radio",
@@ -259,7 +263,11 @@ export default {
         // 排除分页、段落说明等题目
         if(question.index <= 0) { return; }
         if(question.isRequired && question.isShow) {
-          let data = answer[question.index-1]["data"];
+          let data = answer[question.index - 1]["data"];
+          let type = question.type;
+          if ((type === "textarea" && data === " ") || (type === "sort" && data === [])) {
+            state.submitFlag = false;
+          }
           if(data === null || data === 0 || data === [] || data === " ") {
             state.submitFlag = false;
           }
@@ -282,7 +290,7 @@ export default {
         } else {
           // 用户未答该题，且不是必做题
           // 因为必做题已经检验过了
-          if(ansData === null || ansData === 0 || ansData.length === 0) {
+          if(ansData === null || ansData === 0 || ansData === " " || ansData === [] || ansData.length === 0) {
             answer[question.index-1]["data"] = null;
           }
         }
@@ -292,10 +300,10 @@ export default {
   actions: {
 
     // 用于测试，到时删除此方法
-    prepareQuestionList(context) {
-      context.commit("prepareQuestionList");
-      context.commit("generateAnswerSheet");
-    },
+    // prepareQuestionList(context) {
+    //   context.commit("prepareQuestionList");
+    //   context.commit("generateAnswerSheet");
+    // },
 
     // 将问卷对象 set 到 state
     setQuestionnaire(context, payload) {

@@ -6,7 +6,7 @@
         @change="handleRadioChange">
         <el-radio 
           v-for="(option, index) in options"
-          :key="index"
+          :key="single+index"
           :label="index+1">{{ option }}
         </el-radio>
       </el-radio-group>
