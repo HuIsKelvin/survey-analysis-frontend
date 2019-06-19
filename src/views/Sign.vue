@@ -6,6 +6,8 @@
     <el-card class="sign-card">
       <template v-if="hasAccount">
         <sign-in></sign-in>
+        <div>
+        <br />
         <p>忘记密码？
           <router-link 
             :to="{name: 'findPwd'}"
@@ -19,14 +21,18 @@
             >注册</span
           >
         </p>
+        </div>
       </template>
       <template v-else>
         <sign-up></sign-up>
+        <div>
+        <br />
         <p>
           已有账号？<span class="sign-container-switch" @click="hasAccount = true"
             >登录</span
           >
         </p>
+        </div>
       </template>
     </el-card>
   </div>
