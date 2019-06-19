@@ -1,14 +1,10 @@
 <template>
 <el-card class="question-edit-box" >
-    <div class="intro-content-input title" contenteditable="true">
-        <p
-        @keyup="changeQuestionTitle($event)"
-        >{{ questionnaireTitle }}</p>
+    <div class="intro-content-input title" @keyup="changeQuestionTitle($event)" contenteditable="true">
+        <p>{{ questionnaireTitle }}</p>
     </div>
-    <div class="intro-content-input intro" contenteditable="true">
-        <p
-        @keyup="changeQuestionIntro($event)"
-        >{{ intro }}</p>
+    <div class="intro-content-input intro" @keyup="changeQuestionIntro($event)" contenteditable="true">
+        <p>{{ intro }}</p>
     </div>
 </el-card>
 </template>

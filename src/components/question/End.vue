@@ -1,8 +1,7 @@
 <template>
 <el-card>
-    <div class="end-input" contenteditable="true">
+    <div class="end-input" @keyup="changeQuestionEnd($event)" contenteditable="true">
         <p
-        @keyup="changeQuestionEnd($event)"
         >{{endContents}}</p>
     </div>
 </el-card>

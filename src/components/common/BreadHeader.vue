@@ -69,12 +69,13 @@ export default {
     ...mapGetters("questionnaire", {
       userQuestionList: "userQuestionList",
       questionnaireId: "questionnaireId",
-      isPagination: "isPagination"
+      isPagination: "isPagination",
     })
   },
   methods: {
     ...mapMutations("questionnaire", {
         set_state: "set_state",
+        set_qList: "set_quesitonList"
     }),
     ...mapActions("survey", {
       "setQuestionnairePreview": "setQuestionnaire"
@@ -98,34 +99,11 @@ export default {
       this.dialogVisible = false;
     },
     saveQuestionnaire() {
-        let counter = 1;
-        // let questionList = this.userQuestionList.questionList;
-        let userQuestionList = this.userQuestionList;
-        // if (userQuestionList.pagination.isPagintion == "false") {
-        // userQuestionList.pagination.isPagintion = false
-        // } else {
-        //   userQuestionList.pagination.isPagination = true
-        // }
-        // userQuestionList.pagination.totalPage = parseInt(userQuestionList.pagination.totalPage);
-        // console.log("saveQuestionnaire!")
-        if (this.isPagination) {
-          for (let i in userQuestionList.questionList) {
-            // console.log(userQuestionList.questionList[i].type);
-            if (userQuestionList.questionList[i].type == "pagination") {
-              counter++;
-            } else {
-              userQuestionList.questionList[i].currentPage = counter;
-            }
-          }
-
-        } else {
-          // do nothing so far
-        }
-        // userQuestionList.questionList = questionList;
+        this.set_update_currentPage();
         // patch是直接更新当前的数据
         console.log(this.questionnaireId);
-        console.log(userQuestionList);
-        axios.patch("/questionnaires/" + this.questionnaireId, userQuestionList)
+        console.log(this.userQuestionList);
+        axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
         .then(response => {
           this.$message({
             message:'问卷已保存',
@@ -139,6 +117,8 @@ export default {
     // 发布并分享按钮
     releaseAndShare() {
       this.set_state(true);
+      this.set_update_currentPage();
+
       axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
       .then(response => {
         //跳转到发布页面Release.vue
@@ -161,6 +141,9 @@ export default {
     },
     // 预览问卷
     previewQuestionnaire() {
+      // 预览前更新currentPage
+      this.set_update_currentPage();
+      
       this.setQuestionnairePreview({
         questionnaire: this.userQuestionList
       });
@@ -173,26 +156,32 @@ export default {
     signout: function() {
       this.$store.commit(types.SIGNOUT);
       this.$router.push({name:"sign"});
+    },
+    // 预览和保存前更新currentPage到state
+    set_update_currentPage() {
+      let qList = this.userQuestionList.questionList;
+      qList = this.update_currentPage(qList)
+      this.set_qList(qList);
+    },
+    // 更新一个qList中的currentPage，返回一个qList
+    update_currentPage(questionList){
+      if (this.isPagination) {
+        let counter = 1;
+        for (let i in questionList) {
+          if (questionList[i].type == "pagination") {
+            counter++;
+          } else {
+            questionList[i].currentPage = counter;
+          }
+        }
+
+      } else {
+        // do nothing so far
+      }
+      return questionList;
     }
   },
-  // 更新题号和当前页
-  update_index_currentPage(questionList) {
-    let qList = questionList;
-    let pCount = 2;
-    let qCount = 1;
-    for (let i in qList) {
-      if (qList[i].type === "pagination") {
-        qList[i].currentPage = pCount;
-        pCount++;
-      } else if (qList[i].type === "description"){
-          
-      } else {
-        qList[i].index = qCount;
-        qCount++;
-      }
-    }
-    return qList
-  }
+
 }
 </script>
 <style lang="scss" scoped>
