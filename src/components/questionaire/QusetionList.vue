@@ -1,5 +1,9 @@
 <template>
   <div id="question-list">
+    <div>
+      <el-button type="primary" @click="getQuestionnaires">刷新问卷</el-button>
+    </div>
+
     <!-- 问卷管理条目 -->
     <el-card
       v-for="(qitem, qindex) in questionnaires"
@@ -243,6 +247,7 @@ export default {
 <style lang="scss" scoped>
 #question-list {
   text-align: left;
+  margin-top: 20px;
 
   .list-item {
     margin: 20px auto;
