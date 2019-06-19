@@ -22,7 +22,7 @@ export default {
   computed: {
     alertMsg() {
       let msgRoute = this.$route.query.msg;
-      console.log(msgRoute);
+      // console.log(msgRoute);
       if(msgRoute) { return msgRoute; }
       else { return this.defaultMsg; }
     }
