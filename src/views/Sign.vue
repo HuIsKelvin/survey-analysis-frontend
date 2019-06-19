@@ -1,7 +1,9 @@
 <template>
   <div id="sign">
     <div class="logo">
-      <img alt="Vue logo" src="../assets/logo.png" />
+      <router-link :to="{name: 'about'}">
+        <img alt="Vue logo" src="../assets/logo.png" />
+      </router-link>
     </div>
     <el-card class="sign-card">
       <template v-if="hasAccount">

@@ -43,7 +43,17 @@ span {
 
 .production-team {
   width: 500px;
-  margin: auto;
+  margin: 50px auto;
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+.about {
+  h2 {
+    margin-top: 50px;
+  }
 }
 </style>
 
