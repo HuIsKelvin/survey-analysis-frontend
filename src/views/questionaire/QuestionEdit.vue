@@ -288,7 +288,7 @@ export default {
     getUserQuestionList() {
       let qid = this.$route.params.qid;
       // console.log(qid)
-      axios.get( "/questionnaires/" + qid , {
+      axios.get( "/questionnaires/getQuesById?qid" + qid , {
         qid: qid
       })
       .then(response => {

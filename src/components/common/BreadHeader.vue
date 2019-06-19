@@ -105,6 +105,7 @@ export default {
         console.log(this.userQuestionList);
         axios.put("/questionnaires/" + this.questionnaireId, this.userQuestionList)
         .then(response => {
+          console.log(this.userQuestionList);
           this.$message({
             message:'问卷已保存',
             type: "success"
