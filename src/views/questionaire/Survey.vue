@@ -1,8 +1,9 @@
 <template>
   <div id="survey">
-    <survey-questionnaire 
+    <survey-questionnaire
       :questionnaire="questionnaire"
-      :isSubmit="true">
+      :isSubmit="true"
+      :key="questionnaire.id">
     </survey-questionnaire>
   </div>
 </template>
@@ -13,6 +14,9 @@ import SurveyQuestionnaire from "@/components/questionSurvey/SurveyQuestionnaire
 
 export default {
   name: "Survey",
+  data: {
+    isShow: false
+  },
   components: {
     "survey-questionnaire": SurveyQuestionnaire
   },
@@ -33,6 +37,7 @@ export default {
         // console.log(res);
         const statusCode = res.status;
         const data = res.data;
+        console.log(data);
 
         // 判断网络状态码
         switch(statusCode) {
@@ -46,6 +51,7 @@ export default {
             this.setQuestionnaire({
               questionnaire: data
             });
+            this.isShow = true;
             break;
         }
 

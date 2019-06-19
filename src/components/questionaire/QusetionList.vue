@@ -3,7 +3,7 @@
     <!-- 问卷管理条目 -->
     <el-card
       v-for="(qitem, qindex) in questionnaires"
-      :key="qindex"
+      :key="qindex + qitem.name"
       class="box-card list-item"
       shadow="hover"
     >
@@ -75,8 +75,10 @@
           <!-- popover content -->
           <div class="popover-content">
             <p>链接：</p>
-            <el-link type="primary" :href="shareBaseUrl + qitem.id" target="_blank">{{ shareBaseUrl + qitem.id }}</el-link>
-            <el-divider></el-divider>
+            <!-- <el-link type="primary" :href="shareBaseUrl + qitem.id" target="_blank">{{ shareBaseUrl + qitem.id }}</el-link> -->
+            <a :href="shareBaseUrl + qitem.id" target="_blank">{{ shareBaseUrl + qitem.id }}</a>
+            <!-- <el-divider></el-divider> -->
+            <br/>
             <p>二维码</p>
             <qrcode :value="shareBaseUrl + qitem.id" :options="{ width: 150 }"></qrcode>
           </div>
@@ -132,6 +134,7 @@ export default {
         .then(response => {
           // TODO: 对数据进行处理已获得更好的展示效果
           this.questionnaires = response.data._embedded.questionnaires;
+          console.log("get questionnaire by id");
           console.log(this.questionnaires);
         })
         .catch(err => {
@@ -176,7 +179,7 @@ export default {
         { type: "warning" }
       )
         .then(res => {
-          // this.changeQuestionnaireState(qid, false);
+          this.changeQuestionnaireState(qid, false);
           this.$router.push({ name: "questionEdit", params: { qid: qid } });
           console.log(qid);
         })

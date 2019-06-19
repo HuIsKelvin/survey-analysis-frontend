@@ -6,7 +6,7 @@
         @change="handleCheckedChange">
         <el-checkbox
           v-for="(option, index) in options"
-          :key="sort + index"
+          :key="index + option"
           :label="index+1">{{option}}
         </el-checkbox>
       </el-checkbox-group>
@@ -18,7 +18,7 @@
           <li
             class="result-item"
             v-for="(checkedIndex, index) in checkBox"
-            :key="result+index">
+            :key="index + 'result'">
             <span class="result-item-index">{{ index + 1 }}</span> 
             <span class="result-item-option">{{ options[checkedIndex - 1] }}</span>
           </li>
