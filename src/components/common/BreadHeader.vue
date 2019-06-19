@@ -75,7 +75,7 @@ export default {
   methods: {
     ...mapMutations("questionnaire", {
         set_state: "set_state",
-        set_qList: "set_quesitonList"
+        set_qList: "set_questionList"
     }),
     ...mapActions("survey", {
       "setQuestionnairePreview": "setQuestionnaire"
@@ -100,10 +100,10 @@ export default {
     },
     saveQuestionnaire() {
         this.set_update_currentPage();
-        // patch是直接更新当前的数据
+        // put是直接替换当前的数据
         console.log(this.questionnaireId);
         console.log(this.userQuestionList);
-        axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
+        axios.put("/questionnaires/" + this.questionnaireId, this.userQuestionList)
         .then(response => {
           this.$message({
             message:'问卷已保存',
@@ -118,8 +118,8 @@ export default {
     releaseAndShare() {
       this.set_state(true);
       this.set_update_currentPage();
-
-      axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
+      console.log(this.userQuestionList)
+      axios.put("/questionnaires/" + this.questionnaireId, this.userQuestionList)
       .then(response => {
         //跳转到发布页面Release.vue
         let qid = response.data.id;

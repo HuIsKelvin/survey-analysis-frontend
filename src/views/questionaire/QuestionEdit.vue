@@ -256,7 +256,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.state.questionnaire);
+    // console.log(this.$store.state.questionnaire);
     this.set_pageManage({type: "isClick", boolean: false}); 
     window.addEventListener('scroll', this.watchScroll);
     
@@ -437,73 +437,10 @@ export default {
       // document.documentElement.scrollTop = this.$refs.qCard[qIndex].scrollTop;
       // this.$refs.qCard[qIndex].scrollTop;
     },
-    // 保存问卷按钮
-    saveQuestionnaire() {
-      let counter = 1;
-      let questionList = this.qList;
-      let userQuestionList = this.userQuestionList;
-      if (this.isPagination) {
-        for (let i in questionList) {
-          if (questionList[i].type == "pagination") {
-            counter++;
-          } else {
-            questionList[i].currentPage = counter;
-          }
-        }
-
-      } else {
-        // do nothing
-      }
-      userQuestionList.questionList = questionList;
-      // patch是直接更新当前的数据
-      // console.log(this.questionnaireId);
-      // console.log(userQuestionList);
-      axios.patch("/questionnaires/" + this.questionnaireId, userQuestionList)
-      .then(response => {
-        this.$message({
-          message:'问卷已保存',
-          type: "success"
-        })
-      })
-      .catch(error => {
-          this.$message.error("保存问卷失败，请重试");
-      })
-    },
-    // 发布并分享按钮
-    releaseAndShare() {
-      this.set_state(true);
-      axios.patch("/questionnaires/" + this.questionnaireId, this.userQuestionList)
-      .then(response => {
-        //跳转到发布页面Release.vue
-        let qid = response.data.id;
-        this.$message({
-          message: "成功保存并发布问卷",
-          type: "success"
-        })
-        this.$router.push({name:"releaseQuestionnaire", params:{qid:qid}});
-      })
-      .catch(error => {
-          console.log(error)
-          this.$message({
-            message: "发布问卷失败，请重试",
-            type: "error"
-          })
-      })
-
-    },
     emptyPage() {
         this.set_isPagination(false);
         this.set_totalPage(0);
 
-    },
-    // 预览问卷
-    previewQuestionnaire() {
-      this.setQuestionnairePreview({
-        questionnaire: this.userQuestionList
-      });
-      this.$router.push({
-        name: "preview"
-      })
     },
     dragStart(evt) {
       // console.log("dragStart!");
@@ -536,7 +473,7 @@ export default {
     dragUpdate(evt) {
       // console.log(evt);
     },
-    // 更新题号和当前页
+    // dragEnd更新题号和当前页
     update_index_currentPage(questionList) {
       let qList = questionList;
       let pCount = 2;
