@@ -12,6 +12,12 @@
         </el-collapse>
       </div>
     </el-card>
+    <h2>前端项目</h2>
+    <img src="../assets/image/fontend_contribution.png" width="700px">
+    <h2>后端项目</h2>
+    <img src="../assets/image/backend_contribution.png" width="700px">
+    <h2>后端可视化项目</h2>
+    <img src="../assets/image/backend_visual_contribution.png" width="700px">
   </div>
 </template>
 
@@ -21,8 +27,8 @@ export default {
   data() {
     return {
       nameList: {
-        Frontend: ["胡锐坤", "刘诗", "林键宇"],
-        Backend: ["陈硕", "廖健斌", "黄子希", "林键宇"],
+        Frontend: ["胡锐坤(HulsKelvin)", "刘诗(Xnuiui)", "林键宇(tpwy)"],
+        Backend: ["陈硕(chenxshuo)", "廖健斌(helloimljb)", "黄子希(LightPangea)", "林键宇(tpwy)"],
         Design: ["李佳纯", "林凯欣", "何钰怡", "魏依璐"]
       }
     };
