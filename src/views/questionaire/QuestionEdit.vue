@@ -288,9 +288,7 @@ export default {
     getUserQuestionList() {
       let qid = this.$route.params.qid;
       // console.log(qid)
-      axios.get( "/questionnaires/getQuesById?qid" + qid , {
-        qid: qid
-      })
+      axios.get( "/questionnaires/editQuesbyId?qid=" + qid)
       .then(response => {
         console.log(response.data);
         this.set_uQL(response.data);
